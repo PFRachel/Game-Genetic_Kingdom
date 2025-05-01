@@ -1,13 +1,22 @@
-cmake_minimum_required(VERSION 3.30)
-project(Proyecto_2Datos_2)
+cmake_minimum_required(VERSION 3.25)
+project(Proyecto2Datos2 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
+# Buscar la librería SFML
+#-----------------------------------------
+include(FetchContent)
 
-add_executable(Proyecto_2Datos_2 main.cpp
-        Controladores/Juego.cpp
-        Controladores/Juego.h
-        Controladores/Entrada.cpp
-        Controladores/Entrada.h
+FetchContent_Declare(
+        raylib
+        GIT_REPOSITORY https://github.com/raysan5/raylib.git
+        GIT_TAG 5.0
+)
+
+FetchContent_MakeAvailable(raylib)
+#------------------------------------------
+add_executable(Proyecto2Datos2 main.cpp
+        Controladores/Mapa.cpp
+        Controladores/Mapa.h
         Torres/Torre.cpp
         Torres/Torre.h
         Torres/Arquero.cpp
@@ -36,4 +45,14 @@ add_executable(Proyecto_2Datos_2 main.cpp
         Algoritmos/AlgoritmoGenetico.h
         Elementos/OroManager.cpp
         Elementos/OroManager.h
+        Imagenes
+        Recursos/Audio
+
 )
+# raylib recomienda esto para usarlo con CMake
+target_link_libraries(Proyecto2Datos2 PRIVATE raylib)
+
+# Si estás en Windows, linkea librerías necesarias
+if (WIN32)
+    target_link_libraries(Proyecto2Datos2 PRIVATE winmm gdi32)
+endif()

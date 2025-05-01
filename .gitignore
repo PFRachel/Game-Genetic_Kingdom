@@ -1,5 +1,8 @@
 # Archivos generados por CLion
 .idea/
+.vs/
+cmake-build-debug/
+out/
 cmake-# Archivos generados por CLion
       .idea/
       cmake-build-*/build-*/
