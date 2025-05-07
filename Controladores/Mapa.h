@@ -19,8 +19,8 @@ const int CELL_SIZE = 40;//  tamano celda
 enum CeldaTipo {
     LIBRE,
     TORRE_ARQUERO,
-   TORRE_MAGO,
-   TORRE_ARTILLERO,
+    TORRE_MAGO,
+    TORRE_ARTILLERO,
     CAMINO,
     PUERTA,
     PUENTE
@@ -30,12 +30,21 @@ enum CeldaTipo {
 const int COSTO_ARQUERO = 20;
 const int COSTO_MAGO = 40;
 const int COSTO_ARTILLERO = 80;
+
+// Rangos de las torres
+const int RANGO_ARQUERO = 5 * CELL_SIZE;
+const int RANGO_MAGO = 3 * CELL_SIZE;
+const int RANGO_ARTILLERO = 7 * CELL_SIZE;
+
+
+
 class Mapa {
 private:
     int grid[GRID_SIZE][GRID_SIZE];
     int dinero;
     int tipoTorreSeleccionada;  // Guarda torre seleccionada
     std::vector<std::unique_ptr<Torre>> torres;
+    Torre* torreSeleccionada = nullptr;
 
 public:
     Mapa();
@@ -47,7 +56,13 @@ public:
     void SetTipoTorreSeleccionada(int tipo);
     void DescontarDinero(int cantidad);
     int GetCelda(int fila, int col) const;
+    void SeleccionarTorre(Vector2 celdaMouse);
+    bool MejorarTorre();
+
     // void Update();
-    // const std::vector<std::unique_ptr<Torre>>& GetTorres() const { return torres; }
+    // std::vector<std::unique_ptr<Torre>>& GetTorres() const { return torres; }
+    Torre* GetTorreSeleccionada() const {return torreSeleccionada; }
+
+
 };
 #endif //MAPA_H

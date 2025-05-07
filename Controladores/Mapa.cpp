@@ -69,12 +69,42 @@ void Mapa::ProcesarClick() {
         int col = pos.x / CELL_SIZE;
 
         if (fila >= 0 && fila < GRID_SIZE && col >= 0 && col < GRID_SIZE) {
-            ColocarTorre(fila, col);
+            if (CeldaLibre(fila, col))
+                ColocarTorre(fila, col);
+            else SeleccionarTorre(pos);
         }
     }
-
-
 }
+
+
+void Mapa::SeleccionarTorre(Vector2 mousePos)
+{
+    int fila = mousePos.y / CELL_SIZE;      // Consigue la casilla de la torre en la que se va a trabajar
+    int col  = mousePos.x / CELL_SIZE;
+
+    torreSeleccionada = nullptr;
+
+    for (auto& torre : torres) {
+        Vector2 pos = torre->getCelda();
+        if (pos.x == col && pos.y == fila) {
+            torreSeleccionada = torre.get();
+            break;
+        }
+    }
+}
+
+bool Mapa::MejorarTorre()
+{
+    if (!torreSeleccionada) return false;
+    int precio = torreSeleccionada->getCostoMejora();
+    if (dinero < precio) return false;
+
+    bool exito = torreSeleccionada->mejorarTorre();
+    if (exito) dinero -= precio;
+    return exito;
+}
+
+
 int Mapa::GetTipoTorreSeleccionada() const {
     return tipoTorreSeleccionada;
 }

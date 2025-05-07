@@ -20,6 +20,8 @@ public:
     void atacar(Enemigo objetivo) override;
 
     void habilidadEspecial() override;
+
+    void aumentoEstadisticas() override;
 };
 
 

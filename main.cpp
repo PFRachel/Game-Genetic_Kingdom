@@ -6,7 +6,7 @@
 #include "cmake-build-debug/_deps/raylib-src/src/raylib.h"
 
 int main() {
-    const int ancho = GRID_SIZE * CELL_SIZE + 130;
+    const int ancho = GRID_SIZE * CELL_SIZE + 180;
     const int alto = GRID_SIZE * CELL_SIZE;
 
     InitWindow(ancho, alto, "Genetic Kingdom");
@@ -30,11 +30,17 @@ int main() {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
+        juego.GetTorreSeleccionada();
         vista.Dibujar(juego, torreArq, torreMago, torreArtillero, puerta, puente);
-        vista.DibujarMenuTorres(juego.GetTipoTorreSeleccionada(), torreArq, torreMago, torreArtillero, juego.GetDinero());
+        vista.DibujarMenuTorres(juego.GetTipoTorreSeleccionada(), juego,  torreArq, torreMago, torreArtillero, juego.GetDinero());
+
         int seleccion = vista.DetectarSeleccionTorre();
         if (seleccion != -1) {
             juego.SetTipoTorreSeleccionada(seleccion);
+        }
+
+        if (vista.clickEnMejora()) {
+            juego.MejorarTorre();
         }
 
         EndDrawing();

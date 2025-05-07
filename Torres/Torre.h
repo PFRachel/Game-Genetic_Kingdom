@@ -19,11 +19,13 @@ public:
 
     // ATRIBUTOS
 
-    Vector2  getCelda()   const { return celda; }
-    Vector2  getCentro()  const { return centroCelda; }
-    int      getCosto()   const { return costo; }
-    int    getDano()    const { return dano;  }
-    int    getAlcance() const { return alcance; }
+    Vector2 getCelda()   const { return celda; }
+    Vector2 getCentro()  const { return centroCelda; }
+    int getCosto()   const { return costo; }
+    int getDano()    const { return dano;  }
+    int getAlcance() const { return alcance; }
+    int getNivelTorre() const { return nivelTorre; }
+    int getCostoMejora() const { return costoMejora; }
 
     // METODOS
     virtual void update(float dt, const std::vector<Enemigo*>& enemigos) = 0;
@@ -31,6 +33,19 @@ public:
     virtual void atacar(Enemigo objetivo) = 0;
 
     virtual void habilidadEspecial()= 0;
+
+    virtual bool mejorarTorre()
+    {
+        if (nivelTorre > 3) return false;
+        ++nivelTorre;
+        costoMejora *= 2;
+        aumentoEstadisticas();
+        return true;
+    }
+
+    virtual void aumentoEstadisticas() = 0;
+
+
 
 protected:
     Vector2 celda;
@@ -41,6 +56,8 @@ protected:
     int alcance;
     int velocidadDisparo;
     int tiempoRecarga;
+    int nivelTorre;
+    int costoMejora;
 
 };
 

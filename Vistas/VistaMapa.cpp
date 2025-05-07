@@ -48,12 +48,37 @@ void VistaMapa::Dibujar(const Mapa& mapa,
         }
     }
 
+    Vector2 mouse = GetMousePosition();
+    int filaMouse = mouse.y / CELL_SIZE;
+    int colMouse = mouse.x / CELL_SIZE;
+    if (filaMouse>=0 && filaMouse<GRID_SIZE && colMouse>=0 && colMouse<GRID_SIZE)
+    {
+        int tipo = mapa.GetTipoTorreSeleccionada();
+        float radio = 0.f;
+        switch (tipo) {
+        case TORRE_ARQUERO:   radio = RANGO_ARQUERO; break;   // usa los mismos números que en tu ctor
+        case TORRE_MAGO:      radio = RANGO_MAGO; break;
+        case TORRE_ARTILLERO: radio = RANGO_ARTILLERO; break;
+        }
+
+        Vector2 centro = { colMouse*CELL_SIZE + CELL_SIZE/2.0f,
+                           filaMouse*CELL_SIZE + CELL_SIZE/2.0f };
+
+        DibujarRadio(centro, radio, Color{0,0,0,80});          // gris semitransparente
+    }
+
+    // 2. — Radio de la torre seleccionada (si existe)
+    if (auto t = mapa.GetTorreSeleccionada())
+    {
+        DibujarRadio(t->getCentro(), (float)t->getAlcance(), Color{222, 53, 53, 80}, 3);
+    }
+
     char dineroTexto[50];
     sprintf(dineroTexto, "Dinero: %i", mapa.GetDinero());
     DrawText(dineroTexto, GRID_SIZE * CELL_SIZE + 10, 10, 20, BLACK);
 }
 
-void VistaMapa::DibujarMenuTorres(int torreSeleccionada,
+void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
                                    Texture2D arqImg, Texture2D magoImg, Texture2D artilleroImg,
                                    int dinero) {
     int baseX = GRID_SIZE * CELL_SIZE + 20;
@@ -107,7 +132,48 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada,
         DrawText(precioTexto, baseX + 50, y + 35, 20,
                 (dinero >= torres[i].costo) ? DARKGRAY : RED);
     }
+
+    Torre* sel = mapa.GetTorreSeleccionada();
+    if (!sel) return;          // nada seleccionado
+
+    int infoX = baseX;
+    int infoY = baseY + 3 * 70 + 30;   // justo debajo del último botón
+
+    DrawText("INFO TORRE", infoX, infoY, 20, DARKBLUE); infoY += 25;
+
+    char buf[64];
+    sprintf(buf, "Nivel: %d", sel->getNivelTorre());
+    DrawText(buf, infoX, infoY, 18, BLACK); infoY += 20;
+
+    sprintf(buf, "Daño : %d", sel->getDano());
+    DrawText(buf, infoX, infoY, 18, BLACK); infoY += 20;
+
+    sprintf(buf, "Rango: %d", sel->getAlcance() / CELL_SIZE);
+    DrawText(buf, infoX, infoY, 18, BLACK); infoY += 25;
+
+    // -------- botón Upgrade -----------
+    const float bw = 100, bh = 30;
+    Rectangle botonMejora = { (float)infoX, (float)infoY, bw, bh };
+    DrawRectangleRec(botonMejora, LIGHTGRAY);
+    DrawRectangleLinesEx(botonMejora, 1, BLACK);
+
+    sprintf(buf, "Upgrade\n(%d)", sel->getCostoMejora());
+    Color colorOK = (mapa.GetDinero() >= sel->getCostoMejora() && sel->getCostoMejora()<3)
+                  ? DARKGREEN : MAROON;
+    DrawText(buf, infoX + 5, infoY + 5, 16, colorOK);
+
+    mejoraBtn = botonMejora;
+
 }
+
+bool VistaMapa::clickEnMejora()
+{
+    if (mejoraBtn.width <= 0) return false;   // no hay botón
+    return IsMouseButtonPressed(MOUSE_LEFT_BUTTON)
+           && CheckCollisionPointRec(GetMousePosition(), mejoraBtn);
+}
+
+
 int VistaMapa::DetectarSeleccionTorre() {
     int baseX = GRID_SIZE * CELL_SIZE + 20;
     int baseY = 70;
@@ -129,6 +195,16 @@ int VistaMapa::DetectarSeleccionTorre() {
     }
 
     return -1;
+}
+
+void VistaMapa::DibujarRadio(const Vector2& centro, float radio, Color color, float grosor)
+{
+    DrawCircleLines(centro.x, centro.y, radio, color);
+    if (grosor > 1) {
+        // repetir para simular grosor porque DrawCircleLines es 1 px
+        for (int i=1;i<grosor;i++)
+            DrawCircleLines(centro.x, centro.y, radio+i, color);
+    }
 }
 
 

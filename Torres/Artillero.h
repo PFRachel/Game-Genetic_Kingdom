@@ -20,6 +20,8 @@ public:
 
     void habilidadEspecial() override;
 
+    void aumentoEstadisticas() override;
+
 };
 
 
