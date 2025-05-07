@@ -151,22 +151,31 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
     sprintf(buf, "Rango: %d", sel->getAlcance() / CELL_SIZE);
     DrawText(buf, infoX, infoY, 18, BLACK); infoY += 25;
 
-    // -------- botón Upgrade -----------
-    const float bw = 100, bh = 30;
+
+    const float bw = 150, bh = 40;
+
     Rectangle botonMejora = { (float)infoX, (float)infoY, bw, bh };
     DrawRectangleRec(botonMejora, LIGHTGRAY);
     DrawRectangleLinesEx(botonMejora, 1, BLACK);
 
-    sprintf(buf, "Upgrade\n(%d)", sel->getCostoMejora());
-    Color colorOK = (mapa.GetDinero() >= sel->getCostoMejora() && sel->getCostoMejora()<3)
-                  ? DARKGREEN : MAROON;
-    DrawText(buf, infoX + 5, infoY + 5, 16, colorOK);
+    if (sel->getNivelTorre() >= 3)
+    {
+        DrawText("MAX", infoX + 50, infoY + 10, 20, GRAY);
+    }
+    else
+    {
 
+        sprintf(buf, "Mejorar(%d) ", sel->getCostoMejora());
+        Color colorOK = (mapa.GetDinero() >= sel->getCostoMejora() && sel->getCostoMejora()<3)
+                      ? DARKGREEN : MAROON;
+        DrawText(buf, infoX + 25, infoY + 10, 18, colorOK);
+    }
     mejoraBtn = botonMejora;
+
 
 }
 
-bool VistaMapa::clickEnMejora()
+bool VistaMapa::DetectarclickEnMejora()
 {
     if (mejoraBtn.width <= 0) return false;   // no hay botón
     return IsMouseButtonPressed(MOUSE_LEFT_BUTTON)

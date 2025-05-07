@@ -20,9 +20,10 @@ public:
 
     void DibujarRadio(const Vector2& centro, float radio, Color color, float grosor = 2);
 
-    bool clickEnMejora();
+    bool DetectarclickEnMejora();
 
     // ATRIBUTOS
+
     Rectangle mejoraBtn = {0};
 };
 

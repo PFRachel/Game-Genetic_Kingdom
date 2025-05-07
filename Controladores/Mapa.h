@@ -12,7 +12,7 @@
 #include "../Torres/Torre.h"
 
 #include "../cmake-build-debug/_deps/raylib-src/src/raylib.h"
-const int GRID_SIZE = 20;
+const int GRID_SIZE = 30;
 const int CELL_SIZE = 40;//  tamano celda
 
 

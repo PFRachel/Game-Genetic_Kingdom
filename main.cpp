@@ -35,11 +35,12 @@ int main() {
         vista.DibujarMenuTorres(juego.GetTipoTorreSeleccionada(), juego,  torreArq, torreMago, torreArtillero, juego.GetDinero());
 
         int seleccion = vista.DetectarSeleccionTorre();
+
         if (seleccion != -1) {
             juego.SetTipoTorreSeleccionada(seleccion);
         }
 
-        if (vista.clickEnMejora()) {
+        if (vista.DetectarclickEnMejora()) {
             juego.MejorarTorre();
         }
 
