@@ -15,6 +15,7 @@ public:
     void DibujarMenuTorres(int torreSeleccionada,
                            Texture2D arqImg, Texture2D magoImg, Texture2D artilleroImg,
                            int dinero);
+
     int DetectarSeleccionTorre();
 };
 

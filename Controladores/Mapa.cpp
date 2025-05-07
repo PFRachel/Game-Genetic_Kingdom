@@ -3,6 +3,8 @@
 //
 #include "Mapa.h"
 #include <cstdio>
+#include <iostream>
+#include <ostream>
 #include <queue> // Bfs ver caminos
 Mapa::Mapa() {
     // Inicializa todas las celdas como LIBRE
@@ -20,6 +22,7 @@ Mapa::Mapa() {
     dinero = 500;
     //torre por defecto
     tipoTorreSeleccionada = TORRE_ARQUERO;
+
 }
 bool Mapa::CeldaLibre(int fila, int col) {
     return grid[fila][col] == LIBRE;
@@ -27,17 +30,37 @@ bool Mapa::CeldaLibre(int fila, int col) {
 void Mapa::ColocarTorre(int fila, int col) {
     if (!CeldaLibre(fila, col)) return;
 
+    Vector2 celda = { (float)col, (float)fila};
     int costo = 0;
     switch (tipoTorreSeleccionada) {
-        case TORRE_ARQUERO: costo = COSTO_ARQUERO; break;
-        case TORRE_MAGO: costo = COSTO_MAGO; break;
-        case TORRE_ARTILLERO: costo = COSTO_ARTILLERO; break;
+        case TORRE_ARQUERO:     // Se crea un puntero con la clase del tipo de torre creado
+            costo = COSTO_ARQUERO;
+            if (dinero < costo) return;
+            torres.emplace_back(std::make_unique<Arquero>(celda, COSTO_ARQUERO));
+            break;
+
+        case TORRE_MAGO:
+            costo = COSTO_MAGO;
+            if (dinero < costo) return;
+            torres.emplace_back(std::make_unique<Mago>(celda, COSTO_MAGO));
+            break;
+
+        case TORRE_ARTILLERO:
+            costo = COSTO_ARTILLERO;
+            if (dinero < costo) return;
+            torres.emplace_back(std::make_unique<Artillero>(celda, COSTO_ARTILLERO));
+            break;
+
         default: return;
     }
-    if (dinero < costo) return;
 
     grid[fila][col] = tipoTorreSeleccionada;
     dinero -= costo;
+
+    for (auto& element : torres)
+    {
+        std::cout << element->getDano() << std::endl;
+    }
 }
 void Mapa::ProcesarClick() {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
