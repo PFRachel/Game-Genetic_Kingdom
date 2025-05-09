@@ -43,3 +43,4 @@ void Enemigo::dibujar() {
     std::string vidaStr = std::to_string((int)vida);
     DrawText(vidaStr.c_str(), (int)posicion.x, (int)(posicion.y - 5), 10, BLACK);
 }
+

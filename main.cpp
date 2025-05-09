@@ -1,5 +1,6 @@
-//
-// Inicia el juego y tiene los loop importantes
+// Este es el punto de entrada del juego "Genetic Kingdom".
+// Inicializa la ventana, carga recursos, configura el mapa y genera la oleada de enemigos.
+// Contiene el bucle principal donde se actualizan y dibujan todos los elementos del juego.
 //
 #include "Controladores/Mapa.h"
 #include "Vistas/VistaMapa.h"

@@ -1,3 +1,7 @@
+// Esta clase gestiona una oleada de enemigos en el juego. Permite generar una cantidad determinada
+// de enemigos aleatorios, actualizar su movimiento frame a frame y dibujarlos en pantalla.
+// Usa la clase `FabricaEnemigos` para la creación de enemigos y asigna un camino de entrada
+// que seguirán a lo largo del juego.
 #include "Oleada.h"
 #include "../Enemigos/FabricaEnemigos.h"
 
@@ -7,14 +11,6 @@ void Oleada::generar(int cantidad, const std::vector<Vector2>& caminoEntrada) {
     contadorFrames = 0;
     cantidadTotal = cantidad;
     camino = caminoEntrada; // guarda copia interna
-
-    // si quieres generarlos todos de una:
-    for (int i = 0; i < cantidad; ++i) {
-        Enemigo* e = FabricaEnemigos::crearAleatorio();
-        e->camino = caminoEntrada;
-        e->posicion = caminoEntrada[0]; // inicio en puerta
-        enemigos.push_back(e);
-    }
 }
 void Oleada::actualizarTodos() {
     contadorFrames++;
