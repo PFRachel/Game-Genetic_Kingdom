@@ -8,15 +8,8 @@
 #include <vector>
 #include "../Enemigos/Enemigo.h"
 
-enum class tipoAtaque {Flechas, Magia, Artilleria};
-
 class Torre {
 public:
-
-    Torre(Vector2 celda, int costo);        // Constructor
-
-    virtual ~Torre() = default;
-
     // ATRIBUTOS
 
     Vector2 getCelda()   const { return celda; }
@@ -30,7 +23,7 @@ public:
     // METODOS
     virtual void update(float dt, const std::vector<Enemigo*>& enemigos) = 0;
 
-    virtual void atacar(Enemigo objetivo) = 0;
+    virtual void atacar(Enemigo* objetivo) = 0;
 
     virtual void habilidadEspecial()= 0;
 
@@ -48,16 +41,23 @@ public:
 
 
 protected:
+
+    Torre(Vector2 celda, int costo);        // Constructor
+
+    virtual ~Torre() = default;
+
     Vector2 celda;
     Vector2 centroCelda;
 
     int costo;
-    int dano;
+    float dano;
+    float velocidadDisparo;
+    float tiempoRecarga;
+    float cdRestante;
     int alcance;
-    int velocidadDisparo;
-    int tiempoRecarga;
     int nivelTorre;
     int costoMejora;
+
 
 };
 

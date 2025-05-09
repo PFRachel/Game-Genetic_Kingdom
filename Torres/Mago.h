@@ -17,7 +17,7 @@ public:
 
     void update(float dt, const std::vector<Enemigo*>& enemigos) override;
 
-    void atacar(Enemigo objetivo) override;
+    void atacar(Enemigo* objetivo) override;
 
     void habilidadEspecial() override;
 
