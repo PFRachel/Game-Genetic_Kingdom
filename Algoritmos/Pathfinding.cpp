@@ -86,7 +86,9 @@ std::vector<Coordenada> Pathfinding::CalcularRuta(const Mapa& mapa)
 
 
             bool esDiagonal = (k >= 4);
-            if (esDiagonal && !ortogonalesLibres(mapa, r, c, k)) continue;
+            if (esDiagonal) {
+                if (!transitable(r,  nc) || !transitable(nr, c)) continue;
+            }
 
             int nuevoG = g[r][c] + 1;
             if (nuevoG < g[nr][nc]) {
