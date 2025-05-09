@@ -23,7 +23,7 @@ Mago::Mago(Vector2 celda, int costo) : Torre(celda, costo)
     cdRestante -= frameTime;
     if(cdRestante>0.f) return;
 
-    float distanciaMinima = alcance*alcance;
+    float distanciaMinima = alcance;
 
     for (auto* enemigoEvaluado : enemigos)
     {

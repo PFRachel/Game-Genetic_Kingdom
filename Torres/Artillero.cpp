@@ -24,7 +24,7 @@ Artillero::Artillero(Vector2 celda, int costo) : Torre(celda, costo)
     if(cdRestante>0.f) return;
 
     Enemigo* masLejano = nullptr;
-    float distanciaMinima = alcance*alcance;
+    float distanciaMinima = alcance;
     float disntanciaMaximaEnemigo = 0.0f;
 
     for (auto* enemigo : enemigos)

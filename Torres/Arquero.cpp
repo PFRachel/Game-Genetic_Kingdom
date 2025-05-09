@@ -4,6 +4,8 @@
 
 #include "Arquero.h"
 
+#include <rgestures.h>
+
 #include "raymath.h"
 #include "../Controladores/Mapa.h"
 
@@ -24,7 +26,7 @@ Arquero::Arquero(Vector2 celda, int costo) : Torre(celda, costo)
     if(cdRestante>0.f) return;
 
     Enemigo* masCercano = nullptr;
-    float distanciaMinima = alcance*alcance;
+    float distanciaMinima = alcance;
 
     for (auto* enemigo : enemigos)
     {
