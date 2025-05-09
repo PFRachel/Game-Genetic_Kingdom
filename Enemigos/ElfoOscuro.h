@@ -1,14 +1,15 @@
 //
-// Created by Rachel on 22/04/2025.
+//
 //
 
 #ifndef ELFOOSCURO_H
 #define ELFOOSCURO_H
+# include "Enemigo.h"
 
 
-
-class ElfoOscuro {
-
+class ElfoOscuro : public Enemigo {
+public:
+    ElfoOscuro();
 };
 
 

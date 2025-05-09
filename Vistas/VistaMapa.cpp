@@ -7,7 +7,7 @@ void VistaMapa::Dibujar(const Mapa& mapa,
                         Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero,
                         Texture2D puertaImg, Texture2D puenteImg) {
     // Configurar escala base para todas las texturas
-    const float escala = 0.8f; // Ajustar según necesidad
+    const float escala = 1.2f; // Ajustar según necesidad
     const float padding = (1.0f - escala) * CELL_SIZE / 2;
 
     for (int fila = 0; fila < GRID_SIZE; fila++) {

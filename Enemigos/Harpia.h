@@ -1,13 +1,15 @@
 //
-// Created by Rachel on 22/04/2025.
+//
 //
 
 #ifndef HARPIA_H
 #define HARPIA_H
+#pragma once
+#include "Enemigo.h"
 
-
-
-class Harpia {
+class Harpia :public Enemigo {
+public:
+    Harpia();
 
 };
 

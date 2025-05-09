@@ -13,7 +13,6 @@ Mapa::Mapa() {
             grid[fila][col] = LIBRE;
         }
     }
-
     // Posicionar puerta y puente
     grid[0][0] = PUERTA;
     grid[GRID_SIZE - 1][GRID_SIZE - 1] = PUENTE;
@@ -22,7 +21,6 @@ Mapa::Mapa() {
     dinero = 500;
     //torre por defecto
     tipoTorreSeleccionada = TORRE_ARQUERO;
-
 }
 bool Mapa::CeldaLibre(int fila, int col) {
     return grid[fila][col] == LIBRE;
@@ -123,3 +121,12 @@ void Mapa::DescontarDinero(int cantidad) {
 int Mapa::GetCelda(int fila, int col) const {
     return grid[fila][col];
 }
+Vector2 Mapa::obtenerPosicionPuerta() const {
+    for (int fila = 0; fila < GRID_SIZE; ++fila)
+        for (int col = 0; col < GRID_SIZE; ++col)
+            if (grid[fila][col] == PUERTA)
+                return { col * CELL_SIZE * 1.0f, fila * CELL_SIZE * 1.0f };
+    return { 0, 0 };
+}
+
+
