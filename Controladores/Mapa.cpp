@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <iostream>
 #include <ostream>
+#include "../Algoritmos/Pathfinding.h"
 #include <queue> // Bfs ver caminos
 Mapa::Mapa() {
     // Inicializa todas las celdas como LIBRE
@@ -27,8 +28,27 @@ Mapa::Mapa() {
 bool Mapa::CeldaLibre(int fila, int col) {
     return grid[fila][col] == LIBRE;
 }
+
+
+bool Mapa::IntentarColocarTemporal(int fila, int col)
+{
+    int backup = grid[fila][col];
+    grid[fila][col] = 10;               // simular torre y hacer pathfinding
+
+    bool HayCamino = Pathfinding::ExisteCamino(*this);
+
+    if (!HayCamino) grid[fila][col] = backup;    // revertir si no hay camino
+    return HayCamino;
+}
+
+
 void Mapa::ColocarTorre(int fila, int col) {
     if (!CeldaLibre(fila, col)) return;
+
+    //Validación, podriamos ponerle después un sonido
+    if (!IntentarColocarTemporal(fila, col)) {
+        return;
+    }
 
     Vector2 celda = { (float)col, (float)fila};
     int costo = 0;

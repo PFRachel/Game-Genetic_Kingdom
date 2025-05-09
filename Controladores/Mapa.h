@@ -13,17 +13,28 @@
 
 #include "../cmake-build-debug/_deps/raylib-src/src/raylib.h"
 const int GRID_SIZE = 30;
-const int CELL_SIZE = 40;//  tamano celda
+const int CELL_SIZE = 40;//  tamaño celda
 
+//Los valores de este enum representan lo que hay en la casilla a la hora de hacer pathfinding
+//Mayor que 10 representaría que hay obstáculos
+enum CeldaTipo : int {
+    LIBRE = 0,
+    PUERTA = 1,
+    PUENTE = 2,
+    TORRE_ARQUERO = 10,
+    TORRE_MAGO    = 11,
+    TORRE_ARTILLERO = 12
+};
 
-enum CeldaTipo {
-    LIBRE,
-    TORRE_ARQUERO,
-    TORRE_MAGO,
-    TORRE_ARTILLERO,
-    CAMINO,
-    PUERTA,
-    PUENTE
+struct Coordenada {
+    int fila;
+    int col;
+
+    bool operator<(const Coordenada& other) const noexcept
+    {
+        return (fila < other.fila) ||
+               (fila == other.fila && col < other.col);
+    }
 };
 
 // Costos de torres
@@ -49,6 +60,7 @@ private:
 public:
     Mapa();
     bool CeldaLibre(int fila, int col);
+    bool IntentarColocarTemporal(int fila, int col);
     void ColocarTorre(int fila, int col);
     void ProcesarClick();
     int GetTipoTorreSeleccionada() const;
