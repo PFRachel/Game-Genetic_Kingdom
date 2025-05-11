@@ -54,6 +54,5 @@ Vector2 Enemigo::getPos() const {
 
     return { centroX, centroY };
 }
-
 //===========================================
 

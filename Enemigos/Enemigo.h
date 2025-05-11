@@ -20,6 +20,7 @@ protected:
     int objetivoActual;  // índice del siguiente paso en el camino
     //=============================================================
     Vector2 getPos() const;// posicion para cada enemigos por celdas
+
     //=============================================================
 public:
     Enemigo();//constructor de enemigo
