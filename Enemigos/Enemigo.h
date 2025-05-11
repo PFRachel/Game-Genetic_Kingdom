@@ -8,6 +8,7 @@
 #pragma once // se asegura que se copile una vez, archivoCabecera
 #include <vector>
 #include "../cmake-build-debug/_deps/raylib-src/src/raylib.h"
+#include "../Controladores/Mapa.h"
 class Enemigo {
 protected:
     int vida;
@@ -17,6 +18,9 @@ protected:
     float resistenciaArtilleria;
     int valorRecompensa;
     int objetivoActual;  // índice del siguiente paso en el camino
+    //=============================================================
+    Vector2 getPos() const;// posicion para cada enemigos por celdas
+    //=============================================================
 public:
     Enemigo();//constructor de enemigo
     Vector2 posicion;//posicion actual del enemigo

@@ -43,4 +43,17 @@ void Enemigo::dibujar() {
     std::string vidaStr = std::to_string((int)vida);
     DrawText(vidaStr.c_str(), (int)posicion.x, (int)(posicion.y - 5), 10, BLACK);
 }
+//===========================================
+Vector2 Enemigo::getPos() const {
+    int col = static_cast<int>(posicion.x) / CELL_SIZE;
+    int fila = static_cast<int>(posicion.y) / CELL_SIZE;
+
+    // centro de la celda
+    float centroX = col * CELL_SIZE + CELL_SIZE / 2.0f;
+    float centroY = fila * CELL_SIZE + CELL_SIZE / 2.0f;
+
+    return { centroX, centroY };
+}
+
+//===========================================
 
