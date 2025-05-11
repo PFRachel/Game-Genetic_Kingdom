@@ -4,11 +4,17 @@
 
 #ifndef PATHFINDING_H
 #define PATHFINDING_H
+#include "../Controladores/Mapa.h"
 
 
 
-class Pathfinding {
+class Pathfinding
+{
+public:
 
+    static bool ExisteCamino(const Mapa& mapa);
+
+    static std::vector<Coordenada> CalcularRuta(const Mapa& mapa);
 };
 
 
