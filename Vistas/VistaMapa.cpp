@@ -84,9 +84,15 @@ void VistaMapa::Dibujar(const Mapa& mapa,
 void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
                                    Texture2D arqImg, Texture2D magoImg, Texture2D artilleroImg,
                                    int dinero) {
+
+
     int baseX = GRID_SIZE * CELL_SIZE + 20;
     int baseY = 70;
     DrawText("TORRES", baseX, 40, 25, BLACK);
+
+    char rondaTxt[32];
+    sprintf(rondaTxt, "Ronda: %d", mapa.getNumRonda());
+    DrawText(rondaTxt, baseX, 750, 22, BLACK);
 
     struct TorreOpcion {
         const char* nombre;
@@ -136,11 +142,28 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
                 (dinero >= torres[i].costo) ? DARKGRAY : RED);
     }
 
-    Torre* sel = mapa.GetTorreSeleccionada();
-    if (!sel) return;          // nada seleccionado
 
     int infoX = baseX;
     int infoY = baseY + 3 * 70 + 30;   // justo debajo del último botón
+    const float bw = 150, bh = 40;
+
+    infoY += bh + 10;
+
+    Rectangle botonWave = { (float)infoX, (float)infoY, bw, bh };
+    DrawRectangleRec(botonWave, LIGHTGRAY);
+    DrawRectangleLinesEx(botonWave, 1, BLACK);
+
+    if (mapa.HayOleadaActiva())
+        DrawText("Ola en curso", infoX + 8, infoY + 200, 18, GRAY);
+    else
+        DrawText("Iniciar Ola",  infoX + 15, infoY + 200, 18, DARKGREEN);
+
+    oleadaBtn = botonWave;
+
+    Torre* sel = mapa.GetTorreSeleccionada();
+
+    if (!sel) return;          // nada seleccionado
+
 
     DrawText("INFO TORRE", infoX, infoY, 20, DARKBLUE); infoY += 25;
 
@@ -157,8 +180,6 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
     sprintf(buf, "Cadencia: %f", sel->getVelocidadDisparo() / CELL_SIZE);
     DrawText(buf, infoX, infoY, 18, BLACK); infoY += 30;
 
-
-    const float bw = 150, bh = 40;
 
     Rectangle botonMejora = { (float)infoX, (float)infoY, bw, bh };
     DrawRectangleRec(botonMejora, LIGHTGRAY);
@@ -194,6 +215,8 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
     }
     habilidadEspecialBtn = botonEsp;
 
+
+
 }
 
 bool VistaMapa::DetectarclickEnMejora()
@@ -208,6 +231,13 @@ bool VistaMapa::DetectarclickEnHabilidadEspecial()
     return (habilidadEspecialBtn.width > 0) &&
            IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
            CheckCollisionPointRec(GetMousePosition(), habilidadEspecialBtn);
+}
+
+bool VistaMapa::DetectarClickOleada()
+{
+    return (oleadaBtn.width > 0) &&
+           IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
+           CheckCollisionPointRec(GetMousePosition(), oleadaBtn);
 }
 
 

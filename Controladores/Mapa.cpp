@@ -6,6 +6,7 @@
 #include <iostream>
 #include <ostream>
 #include "../Algoritmos/Pathfinding.h"
+
 #include <queue> // Bfs ver caminos
 Mapa::Mapa() {
     // Inicializa todas las celdas como LIBRE
@@ -23,6 +24,7 @@ Mapa::Mapa() {
     dinero = 500;
     //torre por defecto
     tipoTorreSeleccionada = TORRE_ARQUERO;
+
 
 
 }
@@ -101,7 +103,36 @@ void Mapa::UpdateMapa(float tiempo) {
 
     for (auto& torre : torres)
         torre->update(tiempo, enemigos);    // cada torre maneja cooldown y habilidad
+
+    if (oleadaActual) {
+        oleadaActual->actualizarTodos();
+
+        enemigos = oleadaActual->enemigos;
+
+        enemigos.erase(
+        std::remove_if(enemigos.begin(), enemigos.end(),
+            [](Enemigo* enemigo) { return enemigo->estaMuerto(); }),
+        enemigos.end()
+    );
+    }
+
+
 }
+
+bool Mapa::IniciarOleada() {
+    if (oleadaActual) return false;
+
+    if (oleadaActual->camino.empty()) oleadaActual->camino = Pathfinding::Camino(*this);
+
+    oleadaActual = std::make_unique<Oleada>();
+    oleadaActual->generar(7 + numRonda*2, oleadaActual->camino); // ola cada vez más grande
+    enemigos.clear();
+    enemigos.reserve(50);
+
+    numRonda++;
+    return true;
+}
+
 
 
 void Mapa::SeleccionarTorre(Vector2 mousePos)

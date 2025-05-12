@@ -9,13 +9,6 @@
 #include <array>
 #include <limits>
 
-std::vector<Vector2> Pathfinding::caminoSimple(Vector2 posPuerta) {
-    std::vector<Vector2> camino;
-    for (int i = 0; i < 10; ++i) {
-        camino.push_back({ posPuerta.x + i * 50, posPuerta.y + i * 50 });
-    }
-    return camino;
-}
 
 
 namespace {
@@ -108,4 +101,19 @@ std::vector<Coordenada> Pathfinding::CalcularRuta(const Mapa& mapa)
         }
     }
     return {};
+}
+
+std::vector<Vector2> Pathfinding::Camino(const Mapa& mapa) {
+    // 1) Obtén la ruta en índices de celda
+    auto ruta = CalcularRuta(mapa);
+    std::vector<Vector2> camino;
+    camino.reserve(ruta.size());
+
+    // 2) Transforma cada celda (fila,col) en Vector2(worldX, worldY)
+    for (auto& cel : ruta) {
+        float x = cel.col * CELL_SIZE;
+        float y = cel.fila * CELL_SIZE;
+        camino.push_back({ x, y });
+    }
+    return camino;
 }

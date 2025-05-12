@@ -31,7 +31,7 @@ int main() {
     // Crear camino y oleada
     srand(time(NULL));
     Vector2 posPuerta = juego.obtenerPosicionPuerta();
-    std::vector<Vector2> camino = Pathfinding::caminoSimple(posPuerta);
+    std::vector<Vector2> camino = Pathfinding::Camino(juego);
     Oleada oleada;
     oleada.generar(7, camino);
     // Bucle principal
@@ -48,7 +48,7 @@ int main() {
         vista.Dibujar(juego, torreArq, torreMago, torreArtillero, puerta, puente);
         vista.DibujarMenuTorres(juego.GetTipoTorreSeleccionada(), juego,  torreArq, torreMago, torreArtillero, juego.GetDinero());
         oleada.actualizarTodos();
-        oleada.dibujarTodos();
+        juego.GetEnemigos(oleada.enemigos);
         int seleccion = vista.DetectarSeleccionTorre();
 
         if (seleccion != -1) {
@@ -61,6 +61,10 @@ int main() {
 
         if (vista.DetectarclickEnHabilidadEspecial()) {
             juego.UsarHabilidadTorre();
+        }
+
+        if (vista.DetectarClickOleada()) {
+            juego.IniciarOleada();
         }
 
         EndDrawing();

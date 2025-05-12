@@ -15,7 +15,7 @@ public:
 
     static std::vector<Coordenada> CalcularRuta(const Mapa& mapa);
 
-    static std::vector<Vector2> caminoSimple(Vector2 posPuerta);
+    static std::vector<Vector2>Camino(const Mapa& mapa);
 };
 
 #endif //PATHFINDING_H

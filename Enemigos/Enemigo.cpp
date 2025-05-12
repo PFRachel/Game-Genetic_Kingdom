@@ -25,24 +25,33 @@ void Enemigo::actualizar() {
         }
     }
 }
+
 void Enemigo::dibujar() {
-    Vector2 centro = { posicion.x + 10, posicion.y + 10 };
+    if (!estaMuerto()) {
+        Vector2 centro = { posicion.x + 10, posicion.y + 10 };
 
-    switch (tipoForma) {
-        case 0: // Rectángulo (Ogro)
-            DrawRectangleV(posicion, {20, 20}, color);
-        break;
-        case 1: // Círculo (Harpía)
-            DrawCircleV(centro, 10, color);
-        break;
+        switch (tipoForma) {
+            case 0: // Rectángulo (Ogro)
+                DrawRectangleV(posicion, {20, 20}, color);
+            break;
+            case 1: // Círculo (Harpía)
+                DrawCircleV(centro, 10, color);
+            break;
 
 
+        }
+        // Vida sobre la cabeza
+        std::string vidaStr = std::to_string((int)vida);
+        DrawText(vidaStr.c_str(), (int)posicion.x, (int)(posicion.y - 5), 10, BLACK);
     }
-
-    // Vida sobre la cabeza
-    std::string vidaStr = std::to_string((int)vida);
-    DrawText(vidaStr.c_str(), (int)posicion.x, (int)(posicion.y - 5), 10, BLACK);
 }
+
+bool Enemigo::estaMuerto() {
+    if (vida<=0) return true;
+    return false;
+
+}
+
 //===========================================
 Vector2 Enemigo::getPos() const {
     int col = static_cast<int>(posicion.x) / CELL_SIZE;

@@ -9,12 +9,13 @@
 
 class Oleada {
 private:
-    std::vector<Enemigo*> enemigos;
+
     int cantidadTotal = 0;
     int enemigosGenerados = 0;
     int contadorFrames = 0;
-    std::vector<Vector2> camino;
 public:
+    std::vector<Enemigo*> enemigos;
+    std::vector<Vector2> camino;
     void generar(int cantidad, const std::vector<Vector2>& caminoEntrada);
     void actualizarTodos();
     void dibujarTodos();

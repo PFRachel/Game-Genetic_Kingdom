@@ -24,10 +24,13 @@ public:
 
     bool DetectarclickEnHabilidadEspecial();
 
+    bool DetectarClickOleada();
+
     // ATRIBUTOS
 
     Rectangle mejoraBtn = {0};
     Rectangle habilidadEspecialBtn = {0};
+    Rectangle oleadaBtn = {0};
 };
 
 

@@ -3,6 +3,7 @@
 //
 #ifndef MAPA_H
 #define MAPA_H
+#include <utility>
 #include <vector>
 #include <memory>
 #include "../Torres/Arquero.h"
@@ -10,7 +11,9 @@
 #include "../Torres/Artillero.h"
 #include "../Torres/Torre.h"
 #include "../cmake-build-debug/_deps/raylib-src/src/raylib.h"
+#include "Oleada.h"
 
+class Oleada;
 
 const int GRID_SIZE = 20;
 const int CELL_SIZE = 40;//  tamaño celda
@@ -57,6 +60,8 @@ private:
     std::vector<std::unique_ptr<Torre>> torres;
     std::vector<Enemigo*> enemigos;
     Torre* torreSeleccionada = nullptr;
+    std::unique_ptr<Oleada> oleadaActual;
+    int numRonda = 0;
 
 
 public:
@@ -75,11 +80,21 @@ public:
     bool MejorarTorre();
     bool UsarHabilidadTorre();
     Vector2 obtenerPosicionPuerta() const;
+    bool IniciarOleada();
+
+
 
     // void Update();
     // std::vector<std::unique_ptr<Torre>>& GetTorres() const { return torres; }
     Torre* GetTorreSeleccionada() const {return torreSeleccionada; }
 
+    const std::vector<Enemigo*>& getEnemigos() const {return enemigos; }
+    int getNumRonda() const {return numRonda; }
+    bool HayOleadaActiva() const {return oleadaActual != nullptr ;}
+
+    void GetEnemigos(std::vector<Enemigo*> enemigosOleada) {
+        enemigos = std::move(enemigosOleada); // CUIDAO
+    }
 
 };
 #endif //MAPA_H

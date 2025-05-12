@@ -11,11 +11,7 @@
 #include "../Controladores/Mapa.h"
 class Enemigo {
 protected:
-    int vida;
     float velocidad;
-    float resistenciaFlechas;
-    float resistenciaMagia;
-    float resistenciaArtilleria;
     int valorRecompensa;
     int objetivoActual;  // índice del siguiente paso en el camino
     //=============================================================
@@ -27,11 +23,16 @@ public:
     Vector2 posicion;//posicion actual del enemigo
     std::vector<Vector2> camino; //lista posiciones donde camina
     Color color;// color de cada enmigo
+    int vida;
+    float resistenciaFlechas;
+    float resistenciaMagia;
+    float resistenciaArtilleria;
     int tipoForma; // 0 = rectángulo, 1 = triángulo, 2 = círculo, formas enemigos
     virtual void actualizar();//mueve enemigo
     virtual void dibujar();// dibuja enemigo
     virtual ~Enemigo() = default;
     int getRecompensa() const { return valorRecompensa; }
+    bool estaMuerto();
 
 
 };
