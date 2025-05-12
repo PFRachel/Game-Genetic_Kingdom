@@ -148,7 +148,7 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
     sprintf(buf, "Nivel: %d", sel->getNivelTorre());
     DrawText(buf, infoX, infoY, 18, BLACK); infoY += 20;
 
-    sprintf(buf, "Daño : %d", sel->getDano());
+    sprintf(buf, "Daño : %f", sel->getDano());
     DrawText(buf, infoX, infoY, 18, BLACK); infoY += 20;
 
     sprintf(buf, "Rango: %d", sel->getAlcance() / CELL_SIZE);

@@ -6,8 +6,6 @@
 
 #include <iostream>
 #include <rgestures.h>
-#include <bits/ostream.tcc>
-
 #include "raymath.h"
 #include "../Controladores/Mapa.h"
 
