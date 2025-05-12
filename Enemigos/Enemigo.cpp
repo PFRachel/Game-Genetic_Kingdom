@@ -24,6 +24,7 @@ void Enemigo::actualizar() {
             posicion.y += direccion.y * velocidad;
         }
     }
+
 }
 
 void Enemigo::dibujar() {

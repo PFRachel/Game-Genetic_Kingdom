@@ -105,9 +105,15 @@ void Mapa::UpdateMapa(float tiempo) {
         torre->update(tiempo, enemigos);    // cada torre maneja cooldown y habilidad
 
     if (oleadaActual) {
-        oleadaActual->actualizarTodos();
+
+
+
+        oleadaActual->actualizarTodos(); // PETA ACA
 
         enemigos = oleadaActual->enemigos;
+        oleadaActual->dibujarTodos();
+
+        std::cout << "HOLA" << std::endl;
 
         enemigos.erase(
         std::remove_if(enemigos.begin(), enemigos.end(),
@@ -116,16 +122,21 @@ void Mapa::UpdateMapa(float tiempo) {
     );
     }
 
-
 }
 
 bool Mapa::IniciarOleada() {
+
     if (oleadaActual) return false;
 
-    if (oleadaActual->camino.empty()) oleadaActual->camino = Pathfinding::Camino(*this);
+    if (camino.empty()) camino = Pathfinding::Camino(*this);
+
+    if (camino.empty()) {
+        TraceLog(LOG_ERROR, "Pathfinding no encontró ruta; oleada cancelada");
+        return false;
+    }
 
     oleadaActual = std::make_unique<Oleada>();
-    oleadaActual->generar(7 + numRonda*2, oleadaActual->camino); // ola cada vez más grande
+    oleadaActual->generar(7 + numRonda*2, camino); // ola cada vez más grande
     enemigos.clear();
     enemigos.reserve(50);
 

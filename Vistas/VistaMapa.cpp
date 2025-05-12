@@ -92,7 +92,7 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
 
     char rondaTxt[32];
     sprintf(rondaTxt, "Ronda: %d", mapa.getNumRonda());
-    DrawText(rondaTxt, baseX, 750, 22, BLACK);
+    DrawText(rondaTxt, baseX + 25, 700, 22, BLACK);
 
     struct TorreOpcion {
         const char* nombre;
@@ -149,14 +149,14 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
 
     infoY += bh + 10;
 
-    Rectangle botonWave = { (float)infoX, (float)infoY, bw, bh };
+    Rectangle botonWave = { (float)infoX, (float)infoY + 380, bw, bh };
     DrawRectangleRec(botonWave, LIGHTGRAY);
     DrawRectangleLinesEx(botonWave, 1, BLACK);
 
     if (mapa.HayOleadaActiva())
-        DrawText("Ola en curso", infoX + 8, infoY + 200, 18, GRAY);
+        DrawText("Ola en curso", infoX + 8, infoY + 390, 18, GRAY);
     else
-        DrawText("Iniciar Ola",  infoX + 15, infoY + 200, 18, DARKGREEN);
+        DrawText("Iniciar Ola",  infoX + 15, infoY + 390, 18, DARKGREEN);
 
     oleadaBtn = botonWave;
 

@@ -87,6 +87,7 @@ public:
     // void Update();
     // std::vector<std::unique_ptr<Torre>>& GetTorres() const { return torres; }
     Torre* GetTorreSeleccionada() const {return torreSeleccionada; }
+    std::vector<Vector2> camino;
 
     const std::vector<Enemigo*>& getEnemigos() const {return enemigos; }
     int getNumRonda() const {return numRonda; }
