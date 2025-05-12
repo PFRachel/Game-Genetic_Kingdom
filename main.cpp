@@ -16,6 +16,7 @@ int main() {
     Mapa juego;
     VistaMapa vista;
 
+
     // Cargar texturas
     Texture2D puerta = LoadTexture("../Imagenes/puerta.png");
     Texture2D puente = LoadTexture("../Imagenes/Puente.png");
@@ -25,7 +26,10 @@ int main() {
 
     // Bucle principal
     while (!WindowShouldClose()) {
+
+        float tiempoJuego = GetFrameTime();
         juego.ProcesarClick();
+        juego.UpdateMapa(tiempoJuego);
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -42,6 +46,10 @@ int main() {
 
         if (vista.DetectarclickEnMejora()) {
             juego.MejorarTorre();
+        }
+
+        if (vista.DetectarclickEnHabilidadEspecial()) {
+            juego.UsarHabilidadTorre();
         }
 
         EndDrawing();

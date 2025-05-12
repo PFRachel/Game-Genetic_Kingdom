@@ -13,7 +13,6 @@ Artillero::Artillero(Vector2 celda, int costo) : Torre(celda, costo)
     dano = 50.0f;
     alcance = 7 * CELL_SIZE;
     velocidadDisparo = 5.0f;
-    cdRestante = 0.f;
     tiempoRecarga = 100;
     costoMejora = 160;
 }
@@ -64,10 +63,12 @@ Artillero::Artillero(Vector2 celda, int costo) : Torre(celda, costo)
 
 }
 
-    void Artillero::habilidadEspecial()
+    void Artillero::habilidadEspecial(const std::vector<Enemigo*>& enemigos)
 {
-
-
+    for (auto* enemigo : enemigos) {
+        atacar(enemigo);
+    }
+    cdhabilidadEspecial = tiempoRecarga;
 }
 
     void Artillero::aumentoEstadisticas()

@@ -12,15 +12,14 @@ Mago::Mago(Vector2 celda, int costo) : Torre(celda, costo)
     dano = 30;  // Dano reducido
     alcance = 3 * CELL_SIZE;   // Alcance elevado
     velocidadDisparo = 2.0f;  // Ataque rapido
-    cdRestante = 0.f;
-    tiempoRecarga = 30; // Habilidad especial
+    tiempoRecarga = 60; // Habilidad especial
     costoMejora = 80;
 }
 
     void Mago::update(float frameTime, const std::vector<Enemigo*>& enemigos)
 {
 
-    cdRestante -= frameTime;
+    updateTimers(frameTime);
     if(cdRestante>0.f) return;
 
     float distanciaMinima = alcance;
@@ -44,9 +43,16 @@ Mago::Mago(Vector2 celda, int costo) : Torre(celda, costo)
 
 }
 
-    void Mago::habilidadEspecial()
-{
+void Mago::instakill(Enemigo *objetivo) {
 
+}
+
+
+void Mago::habilidadEspecial(const std::vector<Enemigo*>& enemigos){
+    for (auto* enemigo : enemigos) {
+        instakill(enemigo);
+    }
+    cdhabilidadEspecial = tiempoRecarga;
 }
 
 

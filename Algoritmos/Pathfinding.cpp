@@ -3,6 +3,9 @@
 //
 
 #include "Pathfinding.h"
+
+#include <algorithm>
+
 #include "../Controladores/Mapa.h"
 #include <queue>
 #include <array>

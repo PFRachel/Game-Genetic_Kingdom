@@ -22,9 +22,12 @@ public:
 
     bool DetectarclickEnMejora();
 
+    bool DetectarclickEnHabilidadEspecial();
+
     // ATRIBUTOS
 
     Rectangle mejoraBtn = {0};
+    Rectangle habilidadEspecialBtn = {0};
 };
 
 

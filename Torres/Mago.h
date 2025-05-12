@@ -19,9 +19,11 @@ public:
 
     void atacar(Enemigo* objetivo) override;
 
-    void habilidadEspecial() override;
+    void habilidadEspecial(const std::vector<Enemigo*>& enemigos) override;
 
     void aumentoEstadisticas() override;
+
+    void instakill(Enemigo* objetivo);
 };
 
 

@@ -9,7 +9,7 @@
 Torre::Torre(Vector2 celda, int costo)
     : celda(celda), costo(costo), dano(0), alcance(0), velocidadDisparo(0) ,
     centroCelda{celda.x * CELL_SIZE + CELL_SIZE/2.0f, celda.y * CELL_SIZE + CELL_SIZE/2.0f},
-    tiempoRecarga(0), nivelTorre(0), costoMejora(0)
+    tiempoRecarga(0), nivelTorre(0), costoMejora(0), cdRestante(0.f), cdhabilidadEspecial(0.f)
 
 
 {

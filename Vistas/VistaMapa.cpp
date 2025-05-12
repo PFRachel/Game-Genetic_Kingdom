@@ -3,6 +3,9 @@
 //
 #include <cstdio>  // Para sprintf
 #include "VistaMapa.h"
+
+#include <cmath>
+
 void VistaMapa::Dibujar(const Mapa& mapa,
                         Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero,
                         Texture2D puertaImg, Texture2D puenteImg) {
@@ -151,6 +154,9 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
     sprintf(buf, "Rango: %d", sel->getAlcance() / CELL_SIZE);
     DrawText(buf, infoX, infoY, 18, BLACK); infoY += 25;
 
+    sprintf(buf, "Cadencia: %f", sel->getVelocidadDisparo() / CELL_SIZE);
+    DrawText(buf, infoX, infoY, 18, BLACK); infoY += 30;
+
 
     const float bw = 150, bh = 40;
 
@@ -172,6 +178,21 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
     }
     mejoraBtn = botonMejora;
 
+    infoY += bh + 10;                      // baja un poco
+
+    Rectangle botonEsp = { (float)infoX, (float)infoY, bw, bh };
+    DrawRectangleRec(botonEsp, LIGHTGRAY);
+    DrawRectangleLinesEx(botonEsp, 1, BLACK);
+
+    if (sel->puedeUsarHabilidad()) {
+        DrawText("Especial", infoX + 30, infoY + 10, 18, DARKBLUE);
+    } else {
+        char falta[8];
+        sprintf(falta, "%ds", (int)ceil(sel->getCdHabilidadEspcial()));
+        DrawText(falta, infoX + 45 - MeasureText(falta,18)/2,
+                 infoY + 10, 18, GRAY);
+    }
+    habilidadEspecialBtn = botonEsp;
 
 }
 
@@ -181,6 +202,14 @@ bool VistaMapa::DetectarclickEnMejora()
     return IsMouseButtonPressed(MOUSE_LEFT_BUTTON)
            && CheckCollisionPointRec(GetMousePosition(), mejoraBtn);
 }
+
+bool VistaMapa::DetectarclickEnHabilidadEspecial()
+{
+    return (habilidadEspecialBtn.width > 0) &&
+           IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
+           CheckCollisionPointRec(GetMousePosition(), habilidadEspecialBtn);
+}
+
 
 
 int VistaMapa::DetectarSeleccionTorre() {

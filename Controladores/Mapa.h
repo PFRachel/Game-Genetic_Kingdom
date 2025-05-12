@@ -12,7 +12,7 @@
 #include "../Torres/Torre.h"
 
 #include "../cmake-build-debug/_deps/raylib-src/src/raylib.h"
-const int GRID_SIZE = 30;
+const int GRID_SIZE = 20;
 const int CELL_SIZE = 40;//  tamaño celda
 
 //Los valores de este enum representan lo que hay en la casilla a la hora de hacer pathfinding
@@ -55,10 +55,13 @@ private:
     int dinero;
     int tipoTorreSeleccionada;  // Guarda torre seleccionada
     std::vector<std::unique_ptr<Torre>> torres;
+    std::vector<Enemigo*> enemigos;
     Torre* torreSeleccionada = nullptr;
+
 
 public:
     Mapa();
+    void UpdateMapa(float tiempo);
     bool CeldaLibre(int fila, int col);
     bool IntentarColocarTemporal(int fila, int col);
     void ColocarTorre(int fila, int col);
@@ -70,6 +73,7 @@ public:
     int GetCelda(int fila, int col) const;
     void SeleccionarTorre(Vector2 celdaMouse);
     bool MejorarTorre();
+    bool UsarHabilidadTorre();
 
     // void Update();
     // std::vector<std::unique_ptr<Torre>>& GetTorres() const { return torres; }

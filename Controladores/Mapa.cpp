@@ -24,6 +24,7 @@ Mapa::Mapa() {
     //torre por defecto
     tipoTorreSeleccionada = TORRE_ARQUERO;
 
+
 }
 bool Mapa::CeldaLibre(int fila, int col) {
     return grid[fila][col] == LIBRE;
@@ -96,6 +97,12 @@ void Mapa::ProcesarClick() {
     }
 }
 
+void Mapa::UpdateMapa(float tiempo) {
+
+    for (auto& torre : torres)
+        torre->update(tiempo, enemigos);    // cada torre maneja cooldown y habilidad
+}
+
 
 void Mapa::SeleccionarTorre(Vector2 mousePos)
 {
@@ -123,6 +130,17 @@ bool Mapa::MejorarTorre()
     if (exito) dinero -= precio;
     return exito;
 }
+
+bool Mapa::UsarHabilidadTorre()
+{
+    if (!torreSeleccionada) return false;
+    if (!torreSeleccionada->puedeUsarHabilidad()) return false;
+
+    torreSeleccionada->habilidadEspecial(enemigos);
+
+    return true;
+}
+
 
 
 int Mapa::GetTipoTorreSeleccionada() const {
