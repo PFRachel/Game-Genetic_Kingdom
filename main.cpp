@@ -1,9 +1,13 @@
-//
-// Inicia el juego y tiene los loop importantes
+// Este es el punto de entrada del juego "Genetic Kingdom".
+// Inicializa la ventana, carga recursos, configura el mapa y genera la oleada de enemigos.
+// Contiene el bucle principal donde se actualizan y dibujan todos los elementos del juego.
 //
 #include "Controladores/Mapa.h"
 #include "Vistas/VistaMapa.h"
 #include "cmake-build-debug/_deps/raylib-src/src/raylib.h"
+#include "Algoritmos/Pathfinding.h"
+#include "Controladores/Oleada.h"
+#include <ctime>
 
 int main() {
     const int ancho = GRID_SIZE * CELL_SIZE + 180;
@@ -24,6 +28,12 @@ int main() {
     Texture2D torreMago = LoadTexture("../Imagenes/TorreMagos.png");
     Texture2D torreArtillero = LoadTexture("../Imagenes/TorresArtilleros.png");
 
+    // Crear camino y oleada
+    srand(time(NULL));
+    Vector2 posPuerta = juego.obtenerPosicionPuerta();
+    std::vector<Vector2> camino = Pathfinding::caminoSimple(posPuerta);
+    Oleada oleada;
+    oleada.generar(7, camino);
     // Bucle principal
     while (!WindowShouldClose()) {
 
@@ -37,7 +47,8 @@ int main() {
         juego.GetTorreSeleccionada();
         vista.Dibujar(juego, torreArq, torreMago, torreArtillero, puerta, puente);
         vista.DibujarMenuTorres(juego.GetTipoTorreSeleccionada(), juego,  torreArq, torreMago, torreArtillero, juego.GetDinero());
-
+        oleada.actualizarTodos();
+        oleada.dibujarTodos();
         int seleccion = vista.DetectarSeleccionTorre();
 
         if (seleccion != -1) {

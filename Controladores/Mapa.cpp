@@ -161,3 +161,12 @@ void Mapa::DescontarDinero(int cantidad) {
 int Mapa::GetCelda(int fila, int col) const {
     return grid[fila][col];
 }
+Vector2 Mapa::obtenerPosicionPuerta() const {
+    for (int fila = 0; fila < GRID_SIZE; ++fila)
+        for (int col = 0; col < GRID_SIZE; ++col)
+            if (grid[fila][col] == PUERTA)
+                return { col * CELL_SIZE * 1.0f, fila * CELL_SIZE * 1.0f };
+    return { 0, 0 };
+}
+
+

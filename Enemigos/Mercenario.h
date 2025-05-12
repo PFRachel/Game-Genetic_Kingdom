@@ -4,10 +4,12 @@
 
 #ifndef MERCENARIO_H
 #define MERCENARIO_H
+#pragma once
+#include "Enemigo.h"
 
-
-
-class Mercenario {
+class Mercenario : public Enemigo {
+public:
+    Mercenario();
 
 };
 

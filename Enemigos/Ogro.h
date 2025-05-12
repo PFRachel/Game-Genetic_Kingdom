@@ -1,16 +1,16 @@
 //
-// Created by Rachel on 22/04/2025.
+//  Creamos al enemigo Ogro
 //
 
 #ifndef OGRO_H
 #define OGRO_H
+#include "Enemigo.h"
 
 
 
-class Ogro {
+class Ogro: public Enemigo {
+public:
+    Ogro();
 
 };
-
-
-
 #endif //OGRO_H

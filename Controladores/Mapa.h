@@ -74,6 +74,7 @@ public:
     void SeleccionarTorre(Vector2 celdaMouse);
     bool MejorarTorre();
     bool UsarHabilidadTorre();
+    Vector2 obtenerPosicionPuerta() const;
 
     // void Update();
     // std::vector<std::unique_ptr<Torre>>& GetTorres() const { return torres; }
