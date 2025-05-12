@@ -108,18 +108,34 @@ void Mapa::UpdateMapa(float tiempo) {
 
 
 
-        oleadaActual->actualizarTodos(); // PETA ACA
+        oleadaActual->actualizarTodos();
 
-        enemigos = oleadaActual->enemigos;
-        oleadaActual->dibujarTodos();
+        auto& listaEnemigos = oleadaActual->enemigos;
 
-        std::cout << "HOLA" << std::endl;
 
-        enemigos.erase(
-        std::remove_if(enemigos.begin(), enemigos.end(),
-            [](Enemigo* enemigo) { return enemigo->estaMuerto(); }),
-        enemigos.end()
-    );
+        listaEnemigos.erase(std::remove_if(listaEnemigos.begin(), listaEnemigos.end(),
+               [this](Enemigo* enemigoEvaluado)
+               {
+                   if (enemigoEvaluado->estaMuerto())
+                   {
+                       dinero += enemigoEvaluado->getRecompensa();
+                       std::cout << dinero << std::endl;
+                       delete enemigoEvaluado;
+                       return true;
+                   }
+                   return false;
+               }),
+               listaEnemigos.end());
+
+        enemigos = listaEnemigos;
+
+
+
+        if (enemigos.empty() && oleadaActual->enemigosGenerados >= oleadaActual->cantidadTotal)
+        {
+            oleadaActual.reset();          // ola finalizada
+        }
+
     }
 
 }
@@ -130,10 +146,7 @@ bool Mapa::IniciarOleada() {
 
     if (camino.empty()) camino = Pathfinding::Camino(*this);
 
-    if (camino.empty()) {
-        TraceLog(LOG_ERROR, "Pathfinding no encontró ruta; oleada cancelada");
-        return false;
-    }
+    std::cout << "HOLA" << std::endl;
 
     oleadaActual = std::make_unique<Oleada>();
     oleadaActual->generar(7 + numRonda*2, camino); // ola cada vez más grande

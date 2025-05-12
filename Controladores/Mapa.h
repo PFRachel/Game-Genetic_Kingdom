@@ -92,10 +92,6 @@ public:
     const std::vector<Enemigo*>& getEnemigos() const {return enemigos; }
     int getNumRonda() const {return numRonda; }
     bool HayOleadaActiva() const {return oleadaActual != nullptr ;}
-
-    void GetEnemigos(std::vector<Enemigo*> enemigosOleada) {
-        enemigos = std::move(enemigosOleada); // CUIDAO
-    }
-
+    Oleada* getOleada() { return oleadaActual.get(); }
 };
 #endif //MAPA_H

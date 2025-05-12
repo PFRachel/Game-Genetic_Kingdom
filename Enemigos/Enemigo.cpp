@@ -15,7 +15,7 @@ void Enemigo::actualizar() {
         Vector2 direccion = { destino.x - posicion.x, destino.y - posicion.y };
         float distancia = sqrt(direccion.x * direccion.x + direccion.y * direccion.y);
 
-        if (distancia < 11.0f) {
+        if (distancia < CELL_SIZE * 0.25f) { // CELL_SIZE * 0.25f  11.0f
             objetivoActual++;
         } else {
             direccion.x /= distancia;
@@ -53,7 +53,8 @@ bool Enemigo::estaMuerto() {
 
 }
 
-//===========================================
+//
+
 Vector2 Enemigo::getPos() const {
     int col = static_cast<int>(posicion.x) / CELL_SIZE;
     int fila = static_cast<int>(posicion.y) / CELL_SIZE;
@@ -64,5 +65,5 @@ Vector2 Enemigo::getPos() const {
 
     return { centroX, centroY };
 }
-//===========================================
+//
 

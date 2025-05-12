@@ -36,13 +36,19 @@ int main() {
 
         float tiempoJuego = GetFrameTime();
         juego.ProcesarClick();
-        juego.UpdateMapa(tiempoJuego);
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
+        juego.UpdateMapa(tiempoJuego);
         juego.GetTorreSeleccionada();
         vista.Dibujar(juego, torreArq, torreMago, torreArtillero, puerta, puente);
+
+        if (juego.getOleada())
+        {
+            juego.getOleada()->dibujarTodos();
+        }
+
         vista.DibujarMenuTorres(juego.GetTipoTorreSeleccionada(), juego,  torreArq, torreMago, torreArtillero, juego.GetDinero());
 
         int seleccion = vista.DetectarSeleccionTorre();

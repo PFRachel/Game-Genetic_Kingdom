@@ -28,7 +28,7 @@ Artillero::Artillero(Vector2 celda, int costo) : Torre(celda, costo)
 
     for (auto* enemigo : enemigos)
     {
-        float distanciaEnemigo = Vector2Distance(centroCelda, celda); //enemigo->getpos()):
+        float distanciaEnemigo = Vector2Distance(centroCelda, enemigo->getPos()); //enemigo->getpos()):
         if (distanciaEnemigo<=distanciaMinima)
         {
             if (distanciaEnemigo>disntanciaMaximaEnemigo)
@@ -39,13 +39,13 @@ Artillero::Artillero(Vector2 celda, int costo) : Torre(celda, costo)
         }
     }
 
-    float alrededoresEnemigo = 0.0f; // masLejano->getpos()*masLejano->getpos()
+    float alrededoresEnemigo = 3 * CELL_SIZE;
 
     for (auto* enemigoEvaluado : enemigos)
     {
         if (masLejano)
         {
-            float distanciaEnemigo = Vector2Distance(centroCelda, celda); //enemigo->getpos()):
+            float distanciaEnemigo = Vector2Distance(masLejano->getPos(), enemigoEvaluado->getPos()); //enemigo->getpos()):
             if (distanciaEnemigo<=alrededoresEnemigo)
             {
                 atacar(enemigoEvaluado);
@@ -59,7 +59,7 @@ Artillero::Artillero(Vector2 celda, int costo) : Torre(celda, costo)
 
     void Artillero:: atacar(Enemigo* objetivo)
 {
-    // Enemigo.resistencia
+    objetivo->vida -= 10;
 
 }
 

@@ -14,11 +14,6 @@ void Oleada::generar(int cantidad, const std::vector<Vector2>& caminoEntrada) {
 }
 void Oleada::actualizarTodos() {
 
-    if (camino.empty()) {
-        TraceLog(LOG_ERROR, "Oleada: camino vacío; no se generan enemigos");
-        return;
-    }
-
     contadorFrames++;
 
     if (enemigosGenerados < cantidadTotal && contadorFrames % 20 == 0) {

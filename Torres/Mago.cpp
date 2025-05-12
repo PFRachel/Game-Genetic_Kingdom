@@ -26,7 +26,7 @@ Mago::Mago(Vector2 celda, int costo) : Torre(celda, costo)
 
     for (auto* enemigoEvaluado : enemigos)
     {
-        float distanciaEnemigo = Vector2Distance(centroCelda, celda); //enemigo->getpos()):
+        float distanciaEnemigo = Vector2Distance(centroCelda, enemigoEvaluado->getPos()); //enemigo->getpos()):
 
         if (distanciaEnemigo<=distanciaMinima)
         {
@@ -40,7 +40,7 @@ Mago::Mago(Vector2 celda, int costo) : Torre(celda, costo)
 }
     void Mago::atacar(Enemigo* objetivo)
 {
-
+    objetivo->vida -= 10;
 }
 
 void Mago::instakill(Enemigo *objetivo) {

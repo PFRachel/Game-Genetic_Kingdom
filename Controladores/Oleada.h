@@ -8,14 +8,12 @@
 #include <vector>
 
 class Oleada {
-private:
-
-    int cantidadTotal = 0;
-    int enemigosGenerados = 0;
-    int contadorFrames = 0;
 public:
     std::vector<Enemigo*> enemigos;
     std::vector<Vector2> camino;
+    int cantidadTotal = 0;
+    int enemigosGenerados = 0;
+    int contadorFrames = 0;
     void generar(int cantidad, const std::vector<Vector2>& caminoEntrada);
     void actualizarTodos();
     void dibujarTodos();

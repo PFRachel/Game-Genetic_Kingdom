@@ -37,7 +37,7 @@ Arquero::Arquero(Vector2 celda, int costo) : Torre(celda, costo)
 
     for (auto* enemigo : enemigos)
     {
-        float distanciaEnemigo = Vector2Distance(centroCelda, celda); //enemigo->getpos()):
+        float distanciaEnemigo = Vector2Distance(centroCelda, enemigo->getPos()); //enemigo->getpos()):
         if (distanciaEnemigo<=distanciaMinima)
         {
             masCercano = enemigo;
