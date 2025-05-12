@@ -4,11 +4,9 @@
 
 #ifndef PATHFINDING_H
 #define PATHFINDING_H
-#pragma once
+
 #include "../Controladores/Mapa.h"
 #include "../cmake-build-debug/_deps/raylib-src/src/raylib.h"
-
-
 
 class Pathfinding{
 public:

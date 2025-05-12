@@ -5,13 +5,13 @@
 #define MAPA_H
 #include <vector>
 #include <memory>
-
 #include "../Torres/Arquero.h"
 #include "../Torres/Mago.h"
 #include "../Torres/Artillero.h"
 #include "../Torres/Torre.h"
-
 #include "../cmake-build-debug/_deps/raylib-src/src/raylib.h"
+
+
 const int GRID_SIZE = 20;
 const int CELL_SIZE = 40;//  tamaño celda
 

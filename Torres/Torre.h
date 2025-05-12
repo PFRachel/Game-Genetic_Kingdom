@@ -6,7 +6,8 @@
 #define TORRE_H
 #include "raylib.h"
 #include <vector>
-#include "../Enemigos/Enemigo.h"
+
+class Enemigo;
 
 class Torre {
 public:

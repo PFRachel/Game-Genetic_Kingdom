@@ -5,10 +5,10 @@
 #ifndef MAGO_H
 #define MAGO_H
 #include "Torre.h"
-class Enemigo;
 #include <vector>
 //Subclase Torre + ataque mágico
 
+class Enemigo;
 
 class Mago : public Torre {
 public:

@@ -5,9 +5,9 @@
 #ifndef ARQUERO_H
 #define ARQUERO_H
 #include "Torre.h"
-class Enemigo;
 #include <vector>
 
+class Enemigo;
 
 //Subclase Torre + ataque tipo flecha
 class Arquero : public Torre{
