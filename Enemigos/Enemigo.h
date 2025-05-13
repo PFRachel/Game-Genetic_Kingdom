@@ -52,14 +52,20 @@ public:
     // cruza dos padres (padreA y padreB) para crear un hijo nuevo
     static Enemigo* crossover(const Enemigo* padreA, const Enemigo* padreB);
 
-    // muta los genes con una probabilidad dada
+    // muta los genes
     void mutar(float tasaMutacion);
 
-    // tras la simulación, calcula 'fitness' a partir de:
-    //   - cuantos pasos de camino completó
-    //   - cuántos frames vivió (currentFrame − spawnFrame)
+
     void evaluarFitness(int currentFrame, int maxPasosCamino);
 
+
+    // Getters
+    float getFitness() const { return fitness; }
+    const std::vector<float>& getGenes() const { return genes; }
+
+    // Setters GA
+    void setGenes(const std::vector<float>& nuevosGenes);
+    void actualizarDesdeGenes();
 
 };
 #endif //ENEMIGO_H

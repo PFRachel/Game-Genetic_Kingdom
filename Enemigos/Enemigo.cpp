@@ -90,3 +90,44 @@ void Enemigo::evaluarFitness(int currentFrame, int maxPasosCamino) {
     std::cout << "Fitness: " << fitness << std::endl;
 }
 
+void Enemigo::inicializarGenesAleatorios() {
+    // Asegura espacio para 5 genes
+    genes.resize(5);
+
+    // Generador de factor aleatorio en [1.00, 1.35]
+    auto factorAleatorio = []() {
+        return 1.0f + GetRandomValue(0, 35) / 100.0f;
+    };
+
+    // 1) Generar genes aplicando el factor a los valores base
+    genes[0] = velocidad * factorAleatorio();    // velocidad
+    genes[1] = vida * factorAleatorio();         // vida
+    genes[2] = std::min(resistenciaFlechas    * factorAleatorio(), 0.99f);
+    genes[3] = std::min(resistenciaMagia      * factorAleatorio(), 0.99f);
+    genes[4] = std::min(resistenciaArtilleria * factorAleatorio(), 0.99f);
+
+    // 2) Decodificar de nuevo en los atributos del enemigo
+    velocidad             = genes[0];
+    vida                  = static_cast<int>(genes[1]);
+    resistenciaFlechas    = genes[2];
+    resistenciaMagia      = genes[3];
+    resistenciaArtilleria = genes[4];
+}
+
+// Asigna nuevos genes y decodifica inmediatamente
+void Enemigo::setGenes(const std::vector<float>& nuevosGenes) {
+    genes = nuevosGenes;
+    actualizarDesdeGenes();
+}
+
+// Decodifica los genes actuales en los atributos de la instancia
+void Enemigo::actualizarDesdeGenes() {
+    if (genes.size() < 5) return;  // o lanza assert
+
+    velocidad             = genes[0];
+    vida                  = static_cast<int>(genes[1]);
+    resistenciaFlechas    = genes[2];
+    resistenciaMagia      = genes[3];
+    resistenciaArtilleria = genes[4];
+}
+

@@ -103,40 +103,38 @@ void Mapa::UpdateMapa(float tiempo) {
     frameCounter++;
 
     for (auto& torre : torres)
-        torre->update(tiempo, enemigos);    // cada torre maneja cooldown y habilidad
+        torre->update(tiempo, enemigos);
 
     if (oleadaActual) {
-
+        // 1) Simula la oleada (spawn & movimiento)
         oleadaActual->actualizarTodos(frameCounter);
 
+        // 2) Limpia los muertos de la lista activa (sin delete)
         auto& listaEnemigos = oleadaActual->enemigos;
-
-
         listaEnemigos.erase(std::remove_if(listaEnemigos.begin(), listaEnemigos.end(),
-               [this](Enemigo* enemigoEvaluado)
-               {
-                   if (enemigoEvaluado->estaMuerto())
-                   {
-                       dinero += enemigoEvaluado->getRecompensa();
-                       std::cout << dinero << std::endl;
-                       //delete enemigoEvaluado;
-                       return true;
-                   }
-                   return false;
-               }),
-               listaEnemigos.end());
-
+           [this](Enemigo* e) {
+               if (e->estaMuerto()) {
+                   dinero += e->getRecompensa();
+                   return true;
+               }
+               return false;
+           }),
+           listaEnemigos.end());
         enemigos = listaEnemigos;
 
 
-
-        if (enemigos.empty() && oleadaActual->enemigosGenerados >= oleadaActual->cantidadTotal)
+        if (enemigos.empty()
+    && oleadaActual->enemigosGenerados >= oleadaActual->cantidadTotal)
         {
-            oleadaActual.reset();          // ola finalizada
+
+            oleadaActual->evaluarPoblacion(frameCounter, camino.size());
+
+
+            oleadaActual.reset();
+
+
         }
-
     }
-
 }
 
 bool Mapa::IniciarOleada() {
