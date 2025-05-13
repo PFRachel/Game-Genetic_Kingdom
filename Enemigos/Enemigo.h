@@ -14,9 +14,13 @@ protected:
     float velocidad;
     int valorRecompensa;
     int objetivoActual;  // índice del siguiente paso en el camino
-    //=============================================================
 
-    //=============================================================
+    // Atributos de los algoritmos genéticos
+    std::vector<float> genes;   // longitud fija: [velocidad, vida, resFlechas, resMagia, resArti]
+    float fitness;              // valor calculado al terminar la oleada
+
+
+
 public:
     Enemigo();//constructor de enemigo
     Vector2 posicion;//posicion actual del enemigo
@@ -27,12 +31,34 @@ public:
     float resistenciaMagia;
     float resistenciaArtilleria;
     int tipoForma; // 0 = rectángulo, 1 = triángulo, 2 = círculo, formas enemigos
+
+    //Para GA
+    int spawnFrame;             // frame (o tick) en el que apareció este enemigo
+
     virtual void actualizar();//mueve enemigo
     virtual void dibujar();// dibuja enemigo
     virtual ~Enemigo() = default;
     int getRecompensa() const { return valorRecompensa; }
     bool estaMuerto();
     Vector2 getPos() const;// posicion para cada enemigos por celdas
+
+    //Métodos de los algoritmos genéticos
+    // inicializa 'genes' aleatoriamente y luego decodifica a los atributos
+    void inicializarGenesAleatorios();
+
+    // copia este enemigo (incluye sus genes y atributos)
+    virtual Enemigo* clone() const = 0;
+
+    // cruza dos padres (padreA y padreB) para crear un hijo nuevo
+    static Enemigo* crossover(const Enemigo* padreA, const Enemigo* padreB);
+
+    // muta los genes con una probabilidad dada
+    void mutar(float tasaMutacion);
+
+    // tras la simulación, calcula 'fitness' a partir de:
+    //   - cuantos pasos de camino completó
+    //   - cuántos frames vivió (currentFrame − spawnFrame)
+    void evaluarFitness(int currentFrame, int maxPasosCamino);
 
 
 };

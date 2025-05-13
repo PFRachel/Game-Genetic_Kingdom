@@ -5,6 +5,11 @@
 #include <cmath>
 #include <string>
 #include <iostream>
+#include "Ogro.h"
+#include "ElfoOscuro.h"
+#include "Harpia.h"
+#include "Mercenario.h"
+
 
 Enemigo::Enemigo() : velocidad(1.0f), vida(100), resistenciaFlechas(0.0f),
                      resistenciaMagia(0.0f), resistenciaArtilleria(0.0f), objetivoActual(0) {}
@@ -53,6 +58,7 @@ bool Enemigo::estaMuerto() {
 
 }
 
+
 //
 
 Vector2 Enemigo::getPos() const {
@@ -66,4 +72,21 @@ Vector2 Enemigo::getPos() const {
     return { centroX, centroY };
 }
 //
+
+void Enemigo::evaluarFitness(int currentFrame, int maxPasosCamino) {
+
+    float normDist = 0.0f;
+    if (maxPasosCamino > 0)
+        normDist = float(objetivoActual) / float(maxPasosCamino);
+
+
+    int tiempoVivido = currentFrame - spawnFrame;
+    float normTime = 0.0f;
+    if (currentFrame > 0)
+        normTime = float(tiempoVivido) / float(currentFrame);
+
+    // Fitness combinado 50/50
+    fitness = 0.5f * normDist + 0.5f * normTime;
+    std::cout << "Fitness: " << fitness << std::endl;
+}
 

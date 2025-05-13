@@ -10,6 +10,7 @@
 class Harpia :public Enemigo {
 public:
     Harpia();
+    Enemigo* clone() const override;
 
 };
 

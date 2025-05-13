@@ -15,3 +15,7 @@ ElfoOscuro::ElfoOscuro() {
     color = PURPLE;  // azul
     tipoForma = 0;  // Triángulo
 }
+
+Enemigo* ElfoOscuro::clone() const {
+    return new ElfoOscuro(*this);
+}

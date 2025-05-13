@@ -100,15 +100,14 @@ void Mapa::ProcesarClick() {
 }
 
 void Mapa::UpdateMapa(float tiempo) {
+    frameCounter++;
 
     for (auto& torre : torres)
         torre->update(tiempo, enemigos);    // cada torre maneja cooldown y habilidad
 
     if (oleadaActual) {
 
-
-
-        oleadaActual->actualizarTodos();
+        oleadaActual->actualizarTodos(frameCounter);
 
         auto& listaEnemigos = oleadaActual->enemigos;
 
@@ -120,7 +119,7 @@ void Mapa::UpdateMapa(float tiempo) {
                    {
                        dinero += enemigoEvaluado->getRecompensa();
                        std::cout << dinero << std::endl;
-                       delete enemigoEvaluado;
+                       //delete enemigoEvaluado;
                        return true;
                    }
                    return false;
@@ -144,9 +143,9 @@ bool Mapa::IniciarOleada() {
 
     if (oleadaActual) return false;
 
-    if (camino.empty()) camino = Pathfinding::Camino(*this);
+    frameCounter = 0;
 
-    std::cout << "HOLA" << std::endl;
+    camino = Pathfinding::Camino(*this);
 
     oleadaActual = std::make_unique<Oleada>();
     oleadaActual->generar(7 + numRonda*2, camino); // ola cada vez más grande

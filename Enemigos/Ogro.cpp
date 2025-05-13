@@ -12,3 +12,7 @@ Ogro::Ogro() {
     color = GREEN;
     tipoForma = 0; // rectángulo
 }
+
+Enemigo* Ogro::clone() const {
+    return new Ogro(*this);
+}

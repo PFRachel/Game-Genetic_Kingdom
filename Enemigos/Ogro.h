@@ -11,6 +11,7 @@
 class Ogro: public Enemigo {
 public:
     Ogro();
+    Enemigo* clone() const override;
 
 };
 #endif //OGRO_H

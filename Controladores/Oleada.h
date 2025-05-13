@@ -15,7 +15,7 @@ public:
     int enemigosGenerados = 0;
     int contadorFrames = 0;
     void generar(int cantidad, const std::vector<Vector2>& caminoEntrada);
-    void actualizarTodos();
+    void actualizarTodos(int currentFrame);
     void dibujarTodos();
 };
 

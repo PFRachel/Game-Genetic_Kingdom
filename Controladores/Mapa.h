@@ -62,6 +62,7 @@ private:
     Torre* torreSeleccionada = nullptr;
     std::unique_ptr<Oleada> oleadaActual;
     int numRonda = 0;
+    int frameCounter = 0;
 
 
 public:
@@ -93,5 +94,7 @@ public:
     int getNumRonda() const {return numRonda; }
     bool HayOleadaActiva() const {return oleadaActual != nullptr ;}
     Oleada* getOleada() { return oleadaActual.get(); }
+    int GetFrameCounter() const { return frameCounter; }
+
 };
 #endif //MAPA_H

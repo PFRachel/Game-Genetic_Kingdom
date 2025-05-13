@@ -12,12 +12,13 @@ void Oleada::generar(int cantidad, const std::vector<Vector2>& caminoEntrada) {
     cantidadTotal = cantidad;
     camino = caminoEntrada; // guarda copia interna
 }
-void Oleada::actualizarTodos() {
+void Oleada::actualizarTodos(int currentFrame) {
 
     contadorFrames++;
 
     if (enemigosGenerados < cantidadTotal && contadorFrames % 20 == 0) {
         Enemigo* e = FabricaEnemigos::crearAleatorio();
+        e->spawnFrame = currentFrame;
         e->camino = camino;
 
         float offsetY = GetRandomValue(-5, 5);
