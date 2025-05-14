@@ -36,6 +36,10 @@ void Enemigo::dibujar() {
     if (!estaMuerto()) {
         Vector2 centro = { posicion.x + 10, posicion.y + 10 };
 
+        // DEBUG FANTASMAS
+        Color debugCol = {255, 0, 0, 80};
+        DrawCircleV(centro, 12.0f, debugCol);
+
         switch (tipoForma) {
             case 0: // Rectángulo (Ogro)
                 DrawRectangleV(posicion, {20, 20}, color);

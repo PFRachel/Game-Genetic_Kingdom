@@ -67,8 +67,9 @@ void Oleada::evaluarPoblacion(int currentFrame, int maxPasosCamino) {
 void Oleada::actualizarTodos(int currentFrame) {
     contadorFrames++;
 
+    static constexpr int kSpawnFrameInterval = 120;
     // Generación progresiva dentro de la oleada
-    if (enemigosGenerados < cantidadTotal && contadorFrames % 20 == 0) {
+    if (enemigosGenerados < cantidadTotal && contadorFrames % kSpawnFrameInterval == 0) {
 
 
 
@@ -97,7 +98,7 @@ void Oleada::actualizarTodos(int currentFrame) {
         std::cout << "[Spawn] gén " << generacionActual
                   << " enemigo " << enemigosGenerados
                   << "/" << cantidadTotal
-                  << " velocidad=" << e->getVelocidad() << "\n";
+                  << " pos=(" << e->posicion.x << "," << e->posicion.y << ")\n";
 
 
     }

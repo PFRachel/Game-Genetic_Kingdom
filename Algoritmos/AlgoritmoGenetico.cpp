@@ -128,7 +128,7 @@ std::vector<Enemigo*> AlgoritmoGenetico::generarNuevaPoblacion(
         }
     }
 
-    // luego rellenas/clampas sólo si hace falta:
+
     while ((int)poblacionNueva.size() < n)
         poblacionNueva.push_back(padres[0]->clone());
 

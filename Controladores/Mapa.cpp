@@ -115,12 +115,18 @@ void Mapa::UpdateMapa(float tiempo) {
            [this](Enemigo* e) {
                if (e->estaMuerto()) {
                    dinero += e->getRecompensa();
+                   // ——— DEBUG: enemigo eliminado ———
+                std::cout << "[Eliminado] recompensa: " << e->getRecompensa()
+                          << ", torres dinero total: " << dinero << "\n";
+
                    return true;
                }
                return false;
            }),
            listaEnemigos.end());
         enemigos = listaEnemigos;
+
+
 
 
 
