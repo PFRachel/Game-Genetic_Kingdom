@@ -220,13 +220,7 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
     }
     habilidadEspecialBtn = botonEsp;
 
-    int spawned = mapa.getOleada()->enemigosGenerados;
-    int total   = mapa.getOleada()->cantidadTotal;
-    sprintf(buf, "Spawns: %d / %d", spawned, total);
-    DrawText(buf,
-             GRID_SIZE*CELL_SIZE + 20,   // junto a tu menú
-             500,                        // ajusta según layout
-             20, RED);
+    
 
 
 
