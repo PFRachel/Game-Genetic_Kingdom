@@ -80,10 +80,10 @@ void Mapa::ColocarTorre(int fila, int col) {
     grid[fila][col] = tipoTorreSeleccionada;
     dinero -= costo;
 
-    for (auto& element : torres)
-    {
-        std::cout << element->getDano() << std::endl;
-    }
+    //for (auto& element : torres)
+    //{
+        //std::cout << element->getDano() << std::endl;
+    //}
 }
 void Mapa::ProcesarClick() {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -123,16 +123,14 @@ void Mapa::UpdateMapa(float tiempo) {
         enemigos = listaEnemigos;
 
 
-        if (enemigos.empty()
-    && oleadaActual->enemigosGenerados >= oleadaActual->cantidadTotal)
+
+
+        if (!esperandoNuevaOla
+            && enemigos.empty()
+            && oleadaActual->enemigosGenerados >= oleadaActual->cantidadTotal)
         {
-
             oleadaActual->evaluarPoblacion(frameCounter, camino.size());
-
-
-            oleadaActual.reset();
-
-
+            esperandoNuevaOla = true;
         }
     }
 }
@@ -151,6 +149,25 @@ bool Mapa::IniciarOleada() {
     enemigos.reserve(50);
 
     numRonda++;
+    return true;
+}
+
+bool Mapa::ContinuarOleada() {
+    if (!oleadaActual || !esperandoNuevaOla) return false;
+    esperandoNuevaOla = false;
+
+    // 1) Recalcular la ruta puerta→puente con el mapa *actual* (incluyendo torres)
+    camino = Pathfinding::Camino(*this);
+
+    // 2) Generar la siguiente generación sobre la MISMA instancia,
+    //    pasándole el nuevo camino
+    oleadaActual->generar(/*cantidadInicial=*/0, camino);
+
+    // 3) Aumentar la ronda para la UI
+    numRonda++;
+
+    // 4) Limpiar lista gráfica
+    enemigos.clear();
     return true;
 }
 

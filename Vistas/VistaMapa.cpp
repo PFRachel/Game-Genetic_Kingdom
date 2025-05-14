@@ -153,10 +153,15 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
     DrawRectangleRec(botonWave, LIGHTGRAY);
     DrawRectangleLinesEx(botonWave, 1, BLACK);
 
-    if (mapa.HayOleadaActiva())
+    if (mapa.HayOleadaActiva()) {
         DrawText("Ola en curso", infoX + 8, infoY + 390, 18, GRAY);
-    else
-        DrawText("Iniciar Ola",  infoX + 15, infoY + 390, 18, DARKGREEN);
+    }
+    else if (mapa.EstaEsperandoNuevaOla()) {
+        DrawText("Continuar Ola", infoX + 8, infoY + 390, 18, DARKGREEN);
+    }
+    else {
+        DrawText("Iniciar Ola", infoX + 15, infoY + 390, 18, DARKGREEN);
+    }
 
     oleadaBtn = botonWave;
 

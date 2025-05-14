@@ -66,7 +66,15 @@ int main() {
         }
 
         if (vista.DetectarClickOleada()) {
-            juego.IniciarOleada();
+
+            if (!juego.getOleada()) {
+                juego.IniciarOleada();
+
+
+                //    avanzamos a la siguiente generación GA
+            } else if (juego.EstaEsperandoNuevaOla()) {
+                juego.ContinuarOleada();
+            }
         }
 
         EndDrawing();

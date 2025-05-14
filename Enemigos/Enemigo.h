@@ -13,7 +13,6 @@ class Enemigo {
 protected:
     float velocidad;
     int valorRecompensa;
-    int objetivoActual;  // índice del siguiente paso en el camino
 
     // Atributos de los algoritmos genéticos
     std::vector<float> genes;   // longitud fija: [velocidad, vida, resFlechas, resMagia, resArti]
@@ -35,12 +34,16 @@ public:
     //Para GA
     int spawnFrame;             // frame (o tick) en el que apareció este enemigo
 
+    int objetivoActual;  // índice del siguiente paso en el camino
+
     virtual void actualizar();//mueve enemigo
     virtual void dibujar();// dibuja enemigo
     virtual ~Enemigo() = default;
     int getRecompensa() const { return valorRecompensa; }
     bool estaMuerto();
     Vector2 getPos() const;// posicion para cada enemigos por celdas
+
+    float getVelocidad() const { return velocidad; }
 
     //Métodos de los algoritmos genéticos
     // inicializa 'genes' aleatoriamente y luego decodifica a los atributos

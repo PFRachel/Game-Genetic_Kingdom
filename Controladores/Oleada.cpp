@@ -11,8 +11,15 @@ void Oleada::generar(int cantidad, const std::vector<Vector2>& caminoEntrada) {
     if (generacionActual == 0) {
         tamanoPoblacion = cantidad;
     } else {
-        tamanoPoblacion = cantidad + 2;
+        tamanoPoblacion += 2;
     }
+    cantidadTotal = tamanoPoblacion;
+
+
+    std::cout << "[Oleada] generaciónActual="<<generacionActual
+              << " tamPobl="<<tamanoPoblacion
+              << " cantidadTotal="<<cantidadTotal<<"\n";
+
     // Ajustar parámetros de oleada
     cantidadTotal      = tamanoPoblacion;
     camino             = caminoEntrada;
@@ -42,14 +49,18 @@ void Oleada::generar(int cantidad, const std::vector<Vector2>& caminoEntrada) {
         for (auto* e : poblacionVieja) delete e;
         // Asignar nueva población
         poblacion = std::move(nuevaPob);
+        std::cout << "[Oleada] población lista con " << poblacion.size() << " individuos.\n";
     }
 
     generacionActual++;
+
 }
 
 void Oleada::evaluarPoblacion(int currentFrame, int maxPasosCamino) {
     for (auto* e : poblacion) {
         e->evaluarFitness(currentFrame, maxPasosCamino);
+        std::cout << "[GA][Fitness] Enemigo tipo="<<e->tipoForma
+              << " fitness="<<e->getFitness()<<"\n";
     }
 }
 
@@ -59,28 +70,36 @@ void Oleada::actualizarTodos(int currentFrame) {
     // Generación progresiva dentro de la oleada
     if (enemigosGenerados < cantidadTotal && contadorFrames % 20 == 0) {
 
-        // ——— DEBUG ———
-        std::cout
-            << "[Debug] Generación " << generacionActual
-            << " spawnIndex=" << enemigosGenerados
-            << " cantidadTotal=" << cantidadTotal
-            << " poblacion.size()=" << poblacion.size()
-            << "\n";
-        // ————————
 
 
         // Saca de la población el siguiente enemigo a mostrar
         Enemigo* e = poblacion[enemigosGenerados];
+        e->objetivoActual = 0;
         // Registra frame de aparición
         e->spawnFrame = currentFrame;
 
         // Asigna ruta y posición inicial con offset
         e->camino = camino;
-        float offsetY = GetRandomValue(-5, 5);
-        e->posicion = { camino[0].x, camino[0].y + offsetY };
+        float maxOffset = CELL_SIZE * 0.4f;  // 40% del tamaño de celda
+        float offsetX   = GetRandomValue(-maxOffset, maxOffset);
+        float offsetY   = GetRandomValue(-maxOffset, maxOffset);
+
+
+        e->posicion = {
+            camino[0].x + offsetX,
+            camino[0].y + offsetY
+          };
 
         enemigos.push_back(e);
         enemigosGenerados++;
+
+
+        std::cout << "[Spawn] gén " << generacionActual
+                  << " enemigo " << enemigosGenerados
+                  << "/" << cantidadTotal
+                  << " velocidad=" << e->getVelocidad() << "\n";
+
+
     }
 
     // Actualiza movimiento de enemigos en pantalla

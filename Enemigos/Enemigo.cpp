@@ -46,6 +46,10 @@ void Enemigo::dibujar() {
 
 
         }
+
+        // — DEBUG VISUAL: un puntito en la posición exacta —
+        DrawPixel((int)centro.x, (int)centro.y, RED);
+
         // Vida sobre la cabeza
         std::string vidaStr = std::to_string((int)vida);
         DrawText(vidaStr.c_str(), (int)posicion.x, (int)(posicion.y - 5), 10, BLACK);
@@ -87,7 +91,7 @@ void Enemigo::evaluarFitness(int currentFrame, int maxPasosCamino) {
 
     // Fitness combinado 50/50
     fitness = 0.5f * normDist + 0.5f * normTime;
-    std::cout << "Fitness: " << fitness << std::endl;
+
 }
 
 void Enemigo::inicializarGenesAleatorios() {

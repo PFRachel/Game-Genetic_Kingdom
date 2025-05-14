@@ -3,6 +3,7 @@
 //
 
 #include "AlgoritmoGenetico.h"
+#include "iostream"
 #include "../cmake-build-debug/_deps/raylib-src/src/raylib.h"  // GetRandomValue
 #include <algorithm>    // std::min, std::shuffle
 #include <cstdlib>
@@ -29,6 +30,12 @@ std::vector<Enemigo*> AlgoritmoGenetico::seleccionarTorneo(
                 mejorFit = f;
             }
         }
+
+        std::cout << "[GA][Torneo] Padre " << p
+              << " seleccionado: índice " << (std::distance(poblacion.begin(),
+                            std::find(poblacion.begin(), poblacion.end(), mejor)))
+              << ", fitness=" << mejor->getFitness() << "\n";
+
         padres.push_back(mejor);
     }
     return padres;
@@ -44,11 +51,14 @@ Enemigo* AlgoritmoGenetico::crossoverPuntoUnico(
     int L = padreA->getGenes().size();
     int punto = GetRandomValue(1, L - 1);
 
+    std::cout << "[GA][Crossover] punto de corte=" << punto << "\n";
+
     std::vector<float> nuevosGenes(L);
     for (int i = 0; i < L; ++i) {
         nuevosGenes[i] = (i < punto)
             ? padreA->getGenes()[i]
             : padreB->getGenes()[i];
+        if (i < 5) std::cout << "  gen["<<i<<"]="<<nuevosGenes[i]<<"\n";
     }
     // Decodificar genes
     hijo->setGenes(nuevosGenes);
@@ -65,10 +75,16 @@ void AlgoritmoGenetico::mutarIndividuo(
     for (int i = 0; i < L; ++i) {
         if (GetRandomValue(0, 100) / 100.0f < tasaMutacion) {
             // pequeña variación ±10%
+            float antes = g[i]; //para el print
             float factor = 1.0f + (GetRandomValue(-10, 10) / 100.0f);
             g[i] *= factor;
             if (i >= 2 && i <= 4) // resistencias clamp
                 g[i] = std::min(g[i], 0.99f);
+
+            std::cout << "[GA][Mutación] gen " << i
+                  << " mutado: " << antes
+                  << " -> " << g[i]
+                  << " (factor=" << factor << ")\n";
         }
     }
     // Decodificar nuevamente en atributos
@@ -83,6 +99,10 @@ std::vector<Enemigo*> AlgoritmoGenetico::generarNuevaPoblacion(
     float pCrossover,
     float pMutacion
 ) {
+
+    std::cout << "[GA] Generando nueva población. Tamaño inicial: "
+              << poblacionActual.size()
+              << ", objetivo: " << n << "\n";
     std::vector<Enemigo*> poblacionNueva;
     poblacionNueva.reserve(n);
     // Seleccionar padres suficientes
@@ -90,18 +110,31 @@ std::vector<Enemigo*> AlgoritmoGenetico::generarNuevaPoblacion(
 
     for (int i = 0; i < n; i += 2) {
         Enemigo* a = padres[i];
-        Enemigo* b = padres[i+1 % padres.size()];
-        if (GetRandomValue(0, 100) / 100.0f < pCrossover) {
-            auto c1 = crossoverPuntoUnico(a, b);
-            auto c2 = crossoverPuntoUnico(b, a);
-            mutarIndividuo(c1, pMutacion);
-            mutarIndividuo(c2, pMutacion);
+        Enemigo* b = padres[(i + 1) % padres.size()];
+
+        if (GetRandomValue(0,100)/100.0f < pCrossover) {
+            auto c1 = crossoverPuntoUnico(a,b);
+            mutarIndividuo(c1,pMutacion);
             poblacionNueva.push_back(c1);
-            poblacionNueva.push_back(c2);
+            if ((int)poblacionNueva.size() < n) {
+                auto c2 = crossoverPuntoUnico(b,a);
+                mutarIndividuo(c2,pMutacion);
+                poblacionNueva.push_back(c2);
+            }
         } else {
             poblacionNueva.push_back(a->clone());
-            poblacionNueva.push_back(b->clone());
+            if ((int)poblacionNueva.size() < n)
+                poblacionNueva.push_back(b->clone());
         }
     }
+
+    // luego rellenas/clampas sólo si hace falta:
+    while ((int)poblacionNueva.size() < n)
+        poblacionNueva.push_back(padres[0]->clone());
+
+
+
+    std::cout << "[GA] Población nueva generada. Tamaño final: "
+              << poblacionNueva.size() << "\n";
     return poblacionNueva;
 }

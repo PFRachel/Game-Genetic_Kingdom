@@ -65,6 +65,9 @@ private:
     int frameCounter = 0;
 
 
+    bool esperandoNuevaOla = false;
+
+
 public:
     Mapa();
     void UpdateMapa(float tiempo);
@@ -81,7 +84,14 @@ public:
     bool MejorarTorre();
     bool UsarHabilidadTorre();
     Vector2 obtenerPosicionPuerta() const;
+
     bool IniciarOleada();
+    bool ContinuarOleada();
+
+    bool EstaEsperandoNuevaOla() const {
+        return esperandoNuevaOla;
+    }
+    bool HayOleadaActiva()      const { return oleadaActual != nullptr && !esperandoNuevaOla; }
 
 
 
@@ -92,7 +102,7 @@ public:
 
     const std::vector<Enemigo*>& getEnemigos() const {return enemigos; }
     int getNumRonda() const {return numRonda; }
-    bool HayOleadaActiva() const {return oleadaActual != nullptr ;}
+
     Oleada* getOleada() { return oleadaActual.get(); }
     int GetFrameCounter() const { return frameCounter; }
 
