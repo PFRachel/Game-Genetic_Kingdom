@@ -59,7 +59,7 @@ Artillero::Artillero(Vector2 celda, int costo) : Torre(celda, costo)
 
     void Artillero:: atacar(Enemigo* objetivo)
 {
-    objetivo->vida -= 10;
+    objetivo->vida -= dano;
 
 }
 
