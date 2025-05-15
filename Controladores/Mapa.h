@@ -103,7 +103,9 @@ public:
     const std::vector<Enemigo*>& getEnemigos() const {return enemigos; }
     int getNumRonda() const {return numRonda; }
 
-    Oleada* getOleada() { return oleadaActual.get(); }
+    ///Oleada (Oleada* getOleada() { return oleadaActual.get(); }
+    Oleada* getOleada() { return oleadaActual.get(); }                     // versión no const
+    const Oleada* getOleada() const { return oleadaActual.get(); }        // versión const
     int GetFrameCounter() const { return frameCounter; }
 
 };

@@ -57,10 +57,14 @@ void Oleada::generar(int cantidad, const std::vector<Vector2>& caminoEntrada) {
 }
 
 void Oleada::evaluarPoblacion(int currentFrame, int maxPasosCamino) {
+    registrosFitness.clear();  // limpiar para cada nueva evaluación
+
     for (auto* e : poblacion) {
         e->evaluarFitness(currentFrame, maxPasosCamino);
-        std::cout << "[GA][Fitness] Enemigo tipo="<<e->tipoForma
-              << " fitness="<<e->getFitness()<<"\n";
+        std::string linea = "[GA][Fitness] Enemigo tipo=" + std::to_string(e->tipoForma)
+                          + " fitness=" + std::to_string(e->getFitness()).substr(0, 7);
+        registrosFitness.push_back(linea);
+        std::cout << linea << "\n";  // sigue mostrándolo en consola si quieres
     }
 }
 
@@ -70,9 +74,6 @@ void Oleada::actualizarTodos(int currentFrame) {
     static constexpr int kSpawnFrameInterval = 120;
     // Generación progresiva dentro de la oleada
     if (enemigosGenerados < cantidadTotal && contadorFrames % kSpawnFrameInterval == 0) {
-
-
-
         // Saca de la población el siguiente enemigo a mostrar
         Enemigo* e = poblacion[enemigosGenerados];
         e->objetivoActual = 0;
@@ -104,14 +105,49 @@ void Oleada::actualizarTodos(int currentFrame) {
     }
 
     // Actualiza movimiento de enemigos en pantalla
+    //for (auto* e : enemigos) {
+        //e->actualizar();
+    //}
+    // Actualiza movimiento y detecta muertes
     for (auto* e : enemigos) {
-        e->actualizar();
+        if (!e->estaMuerto()) {
+            e->actualizar();
+        } else if (!e->yaContabilizado) {
+            e->yaContabilizado = true;  // para que no se registre dos veces
+            e->evaluarFitness(currentFrame, camino.size());
+
+            std::cout << "[MUERTO] Enemigo eliminado. Fitness: " << e->getFitness() << std::endl;
+
+            enemigosMuertos++; // opcional, si tienes un contador en Oleada
+        }
     }
+
 }
-
-
 void Oleada::dibujarTodos() {
     for (auto& e : enemigos) {
         e->dibujar();
     }
 }
+//estadistica
+void Oleada::registrarMutacion() {
+    mutacionesAplicadas++;
+}
+int Oleada::getGeneracion() const {
+    return generacionActual;
+}
+int Oleada::getMuertos() const {
+    return enemigosMuertos;
+}
+
+int Oleada::getMutaciones() const {
+    return mutacionesAplicadas;
+}
+
+float Oleada::getProbabilidadMutacion() const {
+    return tasaMutacion;
+}
+
+
+
+
+

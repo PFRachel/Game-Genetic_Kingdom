@@ -76,6 +76,15 @@ int main() {
                 juego.ContinuarOleada();
             }
         }
+        if (vista.DetectarClickEstadisticas()) {
+            vista.mostrandoEstadisticas = !vista.mostrandoEstadisticas;
+        }
+
+        if (vista.mostrandoEstadisticas) {
+            vista.DibujarVentanaEstadisticas(juego);
+        }
+
+
 
         EndDrawing();
     }

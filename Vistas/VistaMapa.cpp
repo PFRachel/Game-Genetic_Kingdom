@@ -89,7 +89,15 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
     int baseX = GRID_SIZE * CELL_SIZE + 20;
     int baseY = 70;
     DrawText("TORRES", baseX, 40, 25, BLACK);
+    //Boton para ver las estadisticas
+    Rectangle statsBtn = { (float)baseX + 25, 650, 120, 35 };
+    botonEstadisticas = statsBtn;
 
+    DrawRectangleRec(statsBtn, GRAY);
+    DrawRectangleLinesEx(statsBtn, 2, BLACK);
+    DrawText("Estadísticas", (int)statsBtn.x + 5, (int)statsBtn.y + 5, 18, BLACK);
+    ///------------------------------------
+    ///
     char rondaTxt[32];
     sprintf(rondaTxt, "Ronda: %d", mapa.getNumRonda());
     DrawText(rondaTxt, baseX + 25, 700, 22, BLACK);
@@ -219,11 +227,6 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
                  infoY + 10, 18, GRAY);
     }
     habilidadEspecialBtn = botonEsp;
-
-    
-
-
-
 }
 
 bool VistaMapa::DetectarclickEnMejora()
@@ -281,5 +284,44 @@ void VistaMapa::DibujarRadio(const Vector2& centro, float radio, Color color, fl
             DrawCircleLines(centro.x, centro.y, radio+i, color);
     }
 }
+// boton para estadisticas mostrar
+bool VistaMapa::DetectarClickEstadisticas() {
+    return CheckCollisionPointRec(GetMousePosition(), botonEstadisticas) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
+}
+void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {
+    Rectangle ventana = { 200, 100, 600, 400 };
+    DrawRectangleRec(ventana, RAYWHITE);
+    DrawRectangleLinesEx(ventana, 3, BLACK);
+
+    int y = 120;
+
+    DrawText("ESTADÍSTICAS DEL JUEGO", 220, y, 22,  DARKGRAY); y += 40;
+
+    char buffer[128];
+    auto oleada = mapa.getOleada();
+    if (oleada !=  nullptr) {/* aquí verifica que oleada sea válido, según sea puntero o referencia */
+        sprintf(buffer, "Generación actual: %d", oleada->getGeneracion());
+        DrawText(buffer, 220, y, 18, BLACK); y += 25;
+
+        sprintf(buffer, "Enemigos muertos en esta oleada: %d", oleada->getMuertos());
+        DrawText(buffer, 220, y, 18, BLACK); y += 25;
+
+        sprintf(buffer, "Mutaciones ocurridas: %d", oleada->getMutaciones());
+        DrawText(buffer, 220, y, 18, BLACK); y += 25;
+
+        sprintf(buffer, "Probabilidad de mutación: %.2f%%", oleada->getProbabilidadMutacion() * 100);
+        DrawText(buffer, 220, y, 18, BLACK); y += 25;
+
+        DrawText("Fitness de Enemigos:", 220, y, 18, BLACK);
+        y += 25;
+
+        for (const std::string& linea : mapa.getOleada()->getRegistrosFitness()) {
+            DrawText(linea.c_str(), 220, y, 17, BLACK);
+            y += 28;
+        }
+
+    }
+}
+
 
 

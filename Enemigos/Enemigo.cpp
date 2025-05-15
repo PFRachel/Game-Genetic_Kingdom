@@ -63,11 +63,7 @@ void Enemigo::dibujar() {
 bool Enemigo::estaMuerto() {
     if (vida<=0) return true;
     return false;
-
 }
-
-
-//
 
 Vector2 Enemigo::getPos() const {
     int col = static_cast<int>(posicion.x) / CELL_SIZE;

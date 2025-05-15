@@ -80,10 +80,7 @@ void Mapa::ColocarTorre(int fila, int col) {
     grid[fila][col] = tipoTorreSeleccionada;
     dinero -= costo;
 
-    //for (auto& element : torres)
-    //{
-        //std::cout << element->getDano() << std::endl;
-    //}
+
 }
 void Mapa::ProcesarClick() {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {

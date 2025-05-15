@@ -6,7 +6,7 @@
 #pragma once
 #include "../Enemigos/Enemigo.h"
 #include <vector>
-
+#include <string>
 class Oleada {
 public:
 
@@ -22,6 +22,10 @@ public:
     int tamanoPoblacion   = 10;
     float tasaCrossover   = 0.8f;
     float tasaMutacion    = 0.05f;
+    //estadistica
+    int enemigosMuertos = 0;
+    int mutacionesAplicadas = 0;
+    //==================
 
     std::vector<Enemigo*> poblacion;
     std::vector<Enemigo*> enemigos;
@@ -31,6 +35,18 @@ public:
     void evaluarPoblacion(int currentFrame, int maxPasosCamino); //Calcula el fitness
     void actualizarTodos(int currentFrame);
     void dibujarTodos();
+    //estadisticaaint getGeneracion() const;
+
+    void registrarMutacion(); // ← llamada cuando hay una mutación
+    void setFitnessPorIndividuo(const std::vector<float>& fitness);
+    int getMuertos() const;
+    int getMutaciones() const;
+    int getGeneracion() const;
+    float getProbabilidadMutacion() const;
+    std::vector<std::string> registrosFitness;
+    const std::vector<std::string>& getRegistrosFitness() const { return registrosFitness; }
+
+
 };
 
 

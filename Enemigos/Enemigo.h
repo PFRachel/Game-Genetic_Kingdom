@@ -60,6 +60,7 @@ public:
 
 
     void evaluarFitness(int currentFrame, int maxPasosCamino);
+    bool yaContabilizado = false;
 
 
     // Getters
