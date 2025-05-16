@@ -19,7 +19,7 @@ Artillero::Artillero(Vector2 celda, int costo) : Torre(celda, costo)
 
     void Artillero::update(float frameTime, const std::vector<Enemigo*>& enemigos)
 {
-    cdRestante -= frameTime;
+    updateTimers(frameTime);
     if(cdRestante>0.f) return;
 
     Enemigo* masLejano = nullptr;
@@ -59,7 +59,7 @@ Artillero::Artillero(Vector2 celda, int costo) : Torre(celda, costo)
 
     void Artillero:: atacar(Enemigo* objetivo)
 {
-    objetivo->vida -= 10;
+    objetivo->vida -= dano;
 
 }
 

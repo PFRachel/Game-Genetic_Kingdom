@@ -80,10 +80,7 @@ void Mapa::ColocarTorre(int fila, int col) {
     grid[fila][col] = tipoTorreSeleccionada;
     dinero -= costo;
 
-    for (auto& element : torres)
-    {
-        std::cout << element->getDano() << std::endl;
-    }
+
 }
 void Mapa::ProcesarClick() {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -100,53 +97,54 @@ void Mapa::ProcesarClick() {
 }
 
 void Mapa::UpdateMapa(float tiempo) {
+    frameCounter++;
 
     for (auto& torre : torres)
-        torre->update(tiempo, enemigos);    // cada torre maneja cooldown y habilidad
+        torre->update(tiempo, enemigos);
 
     if (oleadaActual) {
+        // 1) Simula la oleada (spawn & movimiento)
+        oleadaActual->actualizarTodos(frameCounter);
 
-
-
-        oleadaActual->actualizarTodos();
-
+        // 2) Limpia los muertos de la lista activa (sin delete)
         auto& listaEnemigos = oleadaActual->enemigos;
-
-
         listaEnemigos.erase(std::remove_if(listaEnemigos.begin(), listaEnemigos.end(),
-               [this](Enemigo* enemigoEvaluado)
-               {
-                   if (enemigoEvaluado->estaMuerto())
-                   {
-                       dinero += enemigoEvaluado->getRecompensa();
-                       std::cout << dinero << std::endl;
-                       delete enemigoEvaluado;
-                       return true;
-                   }
-                   return false;
-               }),
-               listaEnemigos.end());
+           [this](Enemigo* e) {
+               if (e->estaMuerto()) {
+                   dinero += e->getRecompensa();
+                   // ——— DEBUG: enemigo eliminado ———
+                std::cout << "[Eliminado] recompensa: " << e->getRecompensa()
+                          << ", torres dinero total: " << dinero << "\n";
 
+                   return true;
+               }
+               return false;
+           }),
+           listaEnemigos.end());
         enemigos = listaEnemigos;
 
 
 
-        if (enemigos.empty() && oleadaActual->enemigosGenerados >= oleadaActual->cantidadTotal)
+
+
+
+        if (!esperandoNuevaOla
+            && enemigos.empty()
+            && oleadaActual->enemigosGenerados >= oleadaActual->cantidadTotal)
         {
-            oleadaActual.reset();          // ola finalizada
+            oleadaActual->evaluarPoblacion(frameCounter, camino.size());
+            esperandoNuevaOla = true;
         }
-
     }
-
 }
 
 bool Mapa::IniciarOleada() {
 
     if (oleadaActual) return false;
 
-    if (camino.empty()) camino = Pathfinding::Camino(*this);
+    frameCounter = 0;
 
-    std::cout << "HOLA" << std::endl;
+    camino = Pathfinding::Camino(*this);
 
     oleadaActual = std::make_unique<Oleada>();
     oleadaActual->generar(7 + numRonda*2, camino); // ola cada vez más grande
@@ -154,6 +152,25 @@ bool Mapa::IniciarOleada() {
     enemigos.reserve(50);
 
     numRonda++;
+    return true;
+}
+
+bool Mapa::ContinuarOleada() {
+    if (!oleadaActual || !esperandoNuevaOla) return false;
+    esperandoNuevaOla = false;
+
+    // 1) Recalcular la ruta puerta→puente con el mapa *actual* (incluyendo torres)
+    camino = Pathfinding::Camino(*this);
+
+    // 2) Generar la siguiente generación sobre la MISMA instancia,
+    //    pasándole el nuevo camino
+    oleadaActual->generar(/*cantidadInicial=*/0, camino);
+
+    // 3) Aumentar la ronda para la UI
+    numRonda++;
+
+    // 4) Limpiar lista gráfica
+    enemigos.clear();
     return true;
 }
 

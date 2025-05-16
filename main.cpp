@@ -66,8 +66,25 @@ int main() {
         }
 
         if (vista.DetectarClickOleada()) {
-            juego.IniciarOleada();
+
+            if (!juego.getOleada()) {
+                juego.IniciarOleada();
+
+
+                //    avanzamos a la siguiente generación GA
+            } else if (juego.EstaEsperandoNuevaOla()) {
+                juego.ContinuarOleada();
+            }
         }
+        if (vista.DetectarClickEstadisticas()) {
+            vista.mostrandoEstadisticas = !vista.mostrandoEstadisticas;
+        }
+
+        if (vista.mostrandoEstadisticas) {
+            vista.DibujarVentanaEstadisticas(juego);
+        }
+
+
 
         EndDrawing();
     }

@@ -62,6 +62,10 @@ private:
     Torre* torreSeleccionada = nullptr;
     std::unique_ptr<Oleada> oleadaActual;
     int numRonda = 0;
+    int frameCounter = 0;
+
+
+    bool esperandoNuevaOla = false;
 
 
 public:
@@ -80,7 +84,14 @@ public:
     bool MejorarTorre();
     bool UsarHabilidadTorre();
     Vector2 obtenerPosicionPuerta() const;
+
     bool IniciarOleada();
+    bool ContinuarOleada();
+
+    bool EstaEsperandoNuevaOla() const {
+        return esperandoNuevaOla;
+    }
+    bool HayOleadaActiva()      const { return oleadaActual != nullptr && !esperandoNuevaOla; }
 
 
 
@@ -91,7 +102,11 @@ public:
 
     const std::vector<Enemigo*>& getEnemigos() const {return enemigos; }
     int getNumRonda() const {return numRonda; }
-    bool HayOleadaActiva() const {return oleadaActual != nullptr ;}
-    Oleada* getOleada() { return oleadaActual.get(); }
+
+    ///Oleada (Oleada* getOleada() { return oleadaActual.get(); }
+    Oleada* getOleada() { return oleadaActual.get(); }                     // versión no const
+    const Oleada* getOleada() const { return oleadaActual.get(); }        // versión const
+    int GetFrameCounter() const { return frameCounter; }
+
 };
 #endif //MAPA_H

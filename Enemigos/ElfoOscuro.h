@@ -10,6 +10,7 @@
 class ElfoOscuro : public Enemigo {
 public:
     ElfoOscuro();
+    Enemigo* clone() const override;
 };
 
 

@@ -15,3 +15,8 @@ Mercenario::Mercenario() {
     color = RED;
     tipoForma = 1;
 }
+
+
+Enemigo* Mercenario::clone() const {
+    return new Mercenario(*this);
+}

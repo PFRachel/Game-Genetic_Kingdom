@@ -10,6 +10,7 @@
 class Mercenario : public Enemigo {
 public:
     Mercenario();
+    Enemigo* clone() const override;
 
 };
 

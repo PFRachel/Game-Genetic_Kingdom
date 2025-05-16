@@ -14,3 +14,7 @@ Harpia::Harpia() {
     color = BLUE;
     tipoForma = 1; // círculo
 }
+
+Enemigo* Harpia::clone() const {
+    return new Harpia(*this);
+}

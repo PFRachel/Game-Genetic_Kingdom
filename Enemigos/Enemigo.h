@@ -13,10 +13,13 @@ class Enemigo {
 protected:
     float velocidad;
     int valorRecompensa;
-    int objetivoActual;  // índice del siguiente paso en el camino
-    //=============================================================
 
-    //=============================================================
+    // Atributos de los algoritmos genéticos
+    std::vector<float> genes;   // longitud fija: [velocidad, vida, resFlechas, resMagia, resArti]
+    float fitness;              // valor calculado al terminar la oleada
+
+
+
 public:
     Enemigo();//constructor de enemigo
     Vector2 posicion;//posicion actual del enemigo
@@ -27,6 +30,12 @@ public:
     float resistenciaMagia;
     float resistenciaArtilleria;
     int tipoForma; // 0 = rectángulo, 1 = triángulo, 2 = círculo, formas enemigos
+
+    //Para GA
+    int spawnFrame;             // frame (o tick) en el que apareció este enemigo
+
+    int objetivoActual;  // índice del siguiente paso en el camino
+
     virtual void actualizar();//mueve enemigo
     virtual void dibujar();// dibuja enemigo
     virtual ~Enemigo() = default;
@@ -34,6 +43,33 @@ public:
     bool estaMuerto();
     Vector2 getPos() const;// posicion para cada enemigos por celdas
 
+    float getVelocidad() const { return velocidad; }
+
+    //Métodos de los algoritmos genéticos
+    // inicializa 'genes' aleatoriamente y luego decodifica a los atributos
+    void inicializarGenesAleatorios();
+
+    // copia este enemigo (incluye sus genes y atributos)
+    virtual Enemigo* clone() const = 0;
+
+    // cruza dos padres (padreA y padreB) para crear un hijo nuevo
+    static Enemigo* crossover(const Enemigo* padreA, const Enemigo* padreB);
+
+    // muta los genes
+    void mutar(float tasaMutacion);
+
+
+    void evaluarFitness(int currentFrame, int maxPasosCamino);
+    bool yaContabilizado = false;
+
+
+    // Getters
+    float getFitness() const { return fitness; }
+    const std::vector<float>& getGenes() const { return genes; }
+
+    // Setters GA
+    void setGenes(const std::vector<float>& nuevosGenes);
+    void actualizarDesdeGenes();
 
 };
 #endif //ENEMIGO_H

@@ -25,6 +25,12 @@ public:
     bool DetectarclickEnHabilidadEspecial();
 
     bool DetectarClickOleada();
+    // informacion de estadistica
+    Rectangle botonEstadisticas = {0};
+    bool mostrandoEstadisticas = false;
+    bool DetectarClickEstadisticas();
+    void DibujarVentanaEstadisticas(const Mapa& mapa);
+
 
     // ATRIBUTOS
 
