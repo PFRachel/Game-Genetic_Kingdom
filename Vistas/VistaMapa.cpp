@@ -293,7 +293,22 @@ void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {
     DrawRectangleRec(ventana, RAYWHITE);
     DrawRectangleLinesEx(ventana, 3, BLACK);
 
-    int y = 120;
+    // SCROLL SOLO SI EL MOUSE ESTÁ DENTRO DE LA VENTANA
+    if (CheckCollisionPointRec(GetMousePosition(), ventana)) {
+        scrollOffsetY += GetMouseWheelMove() * 20.0f;
+    }
+
+    // Límite superior (no subir más allá del inicio)
+    if (scrollOffsetY > 0) scrollOffsetY = 0;
+
+    // Límite inferior (aproximado, si tenés muchos registros puede ajustarse)
+    const int contenidoTotal = 300 + mapa.getOleada()->getRegistrosFitness().size() * 28;
+    const float maxOffset = -(contenidoTotal - ventana.height + 20);
+    if (scrollOffsetY < maxOffset) scrollOffsetY = maxOffset;
+    // ACTIVAR SCISSOR MODE PARA RECORTAR DIBUJO DENTRO DE LA VENTANA
+    BeginScissorMode(ventana.x, ventana.y, ventana.width, ventana.height);
+
+    int y = 120 + (int)scrollOffsetY;
 
     DrawText("ESTADÍSTICAS DEL JUEGO", 220, y, 22,  DARKGRAY); y += 40;
 
@@ -306,7 +321,7 @@ void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {
         sprintf(buffer, "Enemigos muertos en esta oleada: %d", oleada->getMuertos());
         DrawText(buffer, 220, y, 18, BLACK); y += 25;
 
-        sprintf(buffer, "Mutaciones ocurridas: %d", oleada->getMutaciones());
+        sprintf(buffer, "Mutaciones ocurridas: %d", oleada->getGeneracion());//oleada->getMutaciones());
         DrawText(buffer, 220, y, 18, BLACK); y += 25;
 
         sprintf(buffer, "Probabilidad de mutación: %.2f%%", oleada->getProbabilidadMutacion() * 100);

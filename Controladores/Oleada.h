@@ -47,6 +47,7 @@ public:
     const std::vector<std::string>& getRegistrosFitness() const { return registrosFitness; }
 
 
+
 };
 
 

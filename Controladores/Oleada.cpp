@@ -146,8 +146,3 @@ int Oleada::getMutaciones() const {
 float Oleada::getProbabilidadMutacion() const {
     return tasaMutacion;
 }
-
-
-
-
-

@@ -30,6 +30,7 @@ public:
     bool mostrandoEstadisticas = false;
     bool DetectarClickEstadisticas();
     void DibujarVentanaEstadisticas(const Mapa& mapa);
+    float scrollOffsetY = 0.0f;// scroll para la parte de fitnness
 
 
     // ATRIBUTOS

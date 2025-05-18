@@ -108,5 +108,6 @@ public:
     const Oleada* getOleada() const { return oleadaActual.get(); }        // versión const
     int GetFrameCounter() const { return frameCounter; }
 
+
 };
 #endif //MAPA_H
