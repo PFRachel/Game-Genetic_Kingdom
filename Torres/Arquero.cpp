@@ -55,7 +55,7 @@ Arquero::Arquero(Vector2 celda, int costo) : Torre(celda, costo)
 
     void Arquero::atacar(Enemigo* objetivo)
 {
-    objetivo->vida -= dano;
+    objetivo->recibirDano((float)dano, TipoAtaque::Flechas);
 
 }
 

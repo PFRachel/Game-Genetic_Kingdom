@@ -40,7 +40,7 @@ Mago::Mago(Vector2 celda, int costo) : Torre(celda, costo)
 }
     void Mago::atacar(Enemigo* objetivo)
 {
-    objetivo->vida -= dano;
+    objetivo->recibirDano((float)dano, TipoAtaque::Magia);
 }
 
 void Mago::instakill(Enemigo *objetivo) {

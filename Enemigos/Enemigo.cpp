@@ -60,6 +60,25 @@ void Enemigo::dibujar() {
     }
 }
 
+void Enemigo::recibirDano(float base, TipoAtaque tipo)
+{
+    float resistencia = 1.0f;
+    switch (tipo) {
+    case TipoAtaque::Flechas:     resistencia = resistenciaFlechas;     break;
+    case TipoAtaque::Magia:       resistencia = resistenciaMagia;       break;
+    case TipoAtaque::Artilleria:  resistencia = resistenciaArtilleria;  break;
+    }
+
+    float factor;
+    if      (resistencia >= 1.0f) factor = 0.0f;          // inmune
+    else if (resistencia <= 0.5f) factor = 1.5f;          // débil
+    else                           factor = 1.0f - resistencia;
+
+    vida -= base * factor;
+    if (vida < 0) vida = 0;
+
+}
+
 bool Enemigo::estaMuerto() {
     if (vida<=0) return true;
     return false;
