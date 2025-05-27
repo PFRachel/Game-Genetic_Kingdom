@@ -2,6 +2,8 @@
 //  lógica central del juego(MAPA)
 //
 #include "Mapa.h"
+
+#include <algorithm>
 #include <cstdio>
 #include <iostream>
 #include <ostream>
@@ -56,32 +58,33 @@ void Mapa::ColocarTorre(int fila, int col) {
     Vector2 celda = { (float)col, (float)fila};
     int costo = 0;
     switch (tipoTorreSeleccionada) {
-        case TORRE_ARQUERO:     // Se crea un puntero con la clase del tipo de torre creado
-            costo = COSTO_ARQUERO;
-            if (dinero < costo) return;
-            torres.emplace_back(std::make_unique<Arquero>(celda, COSTO_ARQUERO));
-            break;
-
-        case TORRE_MAGO:
-            costo = COSTO_MAGO;
-            if (dinero < costo) return;
-            torres.emplace_back(std::make_unique<Mago>(celda, COSTO_MAGO));
-            break;
-
-        case TORRE_ARTILLERO:
-            costo = COSTO_ARTILLERO;
-            if (dinero < costo) return;
-            torres.emplace_back(std::make_unique<Artillero>(celda, COSTO_ARTILLERO));
-            break;
-
+        case TORRE_ARQUERO:  costo = COSTO_ARQUERO;  break;
+        case TORRE_MAGO:     costo = COSTO_MAGO;     break;
+        case TORRE_ARTILLERO:costo = COSTO_ARTILLERO;break;
         default: return;
+    }
+
+    if (dinero < costo) {
+        grid[fila][col] = LIBRE;
+        return;
+    }
+
+    switch (tipoTorreSeleccionada) {
+        case TORRE_ARQUERO:
+            torres.emplace_back(std::make_unique<Arquero>(celda, costo));
+            break;
+        case TORRE_MAGO:
+            torres.emplace_back(std::make_unique<Mago>(celda, costo));
+            break;
+        case TORRE_ARTILLERO:
+            torres.emplace_back(std::make_unique<Artillero>(celda, costo));
+            break;
     }
 
     grid[fila][col] = tipoTorreSeleccionada;
     dinero -= costo;
-
-
 }
+
 void Mapa::ProcesarClick() {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
         Vector2 pos = GetMousePosition();

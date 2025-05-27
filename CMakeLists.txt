@@ -49,6 +49,9 @@ add_executable(Proyecto2Datos2 main.cpp
         Vistas/VistaMapa.h
         Controladores/Oleada.cpp
         Controladores/Oleada.h
+        Audio/Audio.h
+        Vistas/VistaPantallas.cpp
+        Vistas/VistaPantallas.h
 )
 # raylib recomienda esto para usarlo con CMake
 target_link_libraries(Proyecto2Datos2 PRIVATE raylib)

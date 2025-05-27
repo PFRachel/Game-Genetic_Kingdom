@@ -288,6 +288,7 @@ void VistaMapa::DibujarRadio(const Vector2& centro, float radio, Color color, fl
 bool VistaMapa::DetectarClickEstadisticas() {
     return CheckCollisionPointRec(GetMousePosition(), botonEstadisticas) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 }
+
 void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {
     Rectangle ventana = { 200, 100, 600, 400 };
     DrawRectangleRec(ventana, RAYWHITE);
