@@ -71,6 +71,8 @@ int main() {
                 juego.IniciarOleada();
 
 
+
+
                 //    avanzamos a la siguiente generación GA
             } else if (juego.EstaEsperandoNuevaOla()) {
                 juego.ContinuarOleada();
