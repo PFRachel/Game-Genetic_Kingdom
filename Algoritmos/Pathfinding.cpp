@@ -111,8 +111,8 @@ std::vector<Vector2> Pathfinding::Camino(const Mapa& mapa) {
 
     // 2) Transforma cada celda (fila,col) en Vector2(worldX, worldY)
     for (auto& cel : ruta) {
-        float x = cel.col * CELL_SIZE;
-        float y = cel.fila * CELL_SIZE;
+        float x = cel.col * CELL_SIZE + CELL_SIZE * 0.5f;
+        float y = cel.fila * CELL_SIZE + CELL_SIZE * 0.5f;
         camino.push_back({ x, y });
     }
     return camino;

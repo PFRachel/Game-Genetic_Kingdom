@@ -99,6 +99,7 @@ void Oleada::actualizarTodos(int currentFrame) {
         std::cout << "[Spawn] gén " << generacionActual
                   << " enemigo " << enemigosGenerados
                   << "/" << cantidadTotal
+                    << " vida=" << e->vida
                   << " pos=(" << e->posicion.x << "," << e->posicion.y << ")\n";
 
 
