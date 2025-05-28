@@ -64,9 +64,6 @@ private:
     int numRonda = 0;
     int frameCounter = 0;
 
-    // ANIMACION
-    std::vector<Flecha> flechas;
-
 
     bool esperandoNuevaOla = false;
 
@@ -87,6 +84,7 @@ public:
     bool MejorarTorre();
     bool UsarHabilidadTorre();
     Vector2 obtenerPosicionPuerta() const;
+    const std::vector<unique_ptr<Proyectiles>>& getProyectiles() const {return proyectiles;};
 
     bool IniciarOleada();
     bool ContinuarOleada();
@@ -102,6 +100,7 @@ public:
     // std::vector<std::unique_ptr<Torre>>& GetTorres() const { return torres; }
     Torre* GetTorreSeleccionada() const {return torreSeleccionada; }
     std::vector<Vector2> camino;
+    std::vector<unique_ptr<Proyectiles>> proyectiles;
 
     const std::vector<Enemigo*>& getEnemigos() const {return enemigos; }
     int getNumRonda() const {return numRonda; }

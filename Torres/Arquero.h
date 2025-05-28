@@ -5,6 +5,7 @@
 #ifndef ARQUERO_H
 #define ARQUERO_H
 #include "Torre.h"
+#include "../Proyectiles/Flechas.h"
 #include <vector>
 using namespace std;
 
@@ -13,16 +14,7 @@ using namespace std;
 class Enemigo;
 
 
-struct Flecha {
-    Vector2 pos;          // pos actual (px)
-    Vector2 vel;          // vector velocidad
-    Enemigo* objetivo;    // puntero (no owning)
-    float   dano;
-    bool    impactada = false;
 
-    void update(float dt);
-    void draw() const;
-};
 
 //Subclase Torre + ataque tipo flecha
 class Arquero : public Torre{
@@ -31,10 +23,10 @@ public:
     // ATRIBUTOS
     bool usandoHabilidad;
     float duracionHabilidad;
-    vector<Flecha> FlechasPantalla;
+    vector<Flechas> FlechasPantalla;
 
 
-    explicit Arquero(Vector2 celda, int costo);
+    explicit Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego);
 
     void update(float dt, const std::vector<Enemigo*>& enemigos) override;
 
@@ -44,7 +36,7 @@ public:
 
     void aumentoEstadisticas() override;
 
-    vector<Flecha> getFlechasPantalla(){ return FlechasPantalla; }
+    vector<Flechas> getFlechasPantalla(){ return FlechasPantalla; }
 
 };
 

@@ -12,7 +12,7 @@ class Enemigo;
 
 class Artillero: public Torre {
 public:
-    explicit Artillero(Vector2 celda, int costo);
+    explicit Artillero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego);
 
     void update(float dt, const std::vector<Enemigo*>& enemigos) override;
 

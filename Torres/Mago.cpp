@@ -7,7 +7,7 @@
 #include "raymath.h"
 #include "../Controladores/Mapa.h"
 
-Mago::Mago(Vector2 celda, int costo) : Torre(celda, costo)
+Mago::Mago(Vector2 celda, int costo,  std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego) : Torre(celda, costo, proyectilesEnJuego)
 {
     dano = 30;  // Dano reducido
     alcance = 3 * CELL_SIZE;   // Alcance elevado

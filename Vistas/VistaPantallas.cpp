@@ -47,7 +47,7 @@ void VistaPantallas::dibujarJuego(int w, int h, Mapa& juego, VistaMapa vista, Te
         Vector2 posPuerta = juego.obtenerPosicionPuerta();
 
         juego.GetTorreSeleccionada();
-        vista.Dibujar(juego, torreArq, torreMago, torreArtillero, puerta, puente, suelo);
+        vista.Dibujar(juego, torreArq, torreMago, torreArtillero, puerta, puente, suelo, juego.getProyectiles());
 
         if (juego.getOleada())
         {

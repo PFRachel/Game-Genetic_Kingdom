@@ -8,8 +8,8 @@
 #include <iostream>
 #include <ostream>
 #include "../Algoritmos/Pathfinding.h"
-
 #include <queue> // Bfs ver caminos
+
 Mapa::Mapa() {
     // Inicializa todas las celdas como LIBRE
     for (int fila = 0; fila < GRID_SIZE; fila++) {
@@ -71,13 +71,13 @@ void Mapa::ColocarTorre(int fila, int col) {
 
     switch (tipoTorreSeleccionada) {
         case TORRE_ARQUERO:
-            torres.emplace_back(std::make_unique<Arquero>(celda, costo));
+            torres.emplace_back(std::make_unique<Arquero>(celda, costo, &proyectiles));
             break;
         case TORRE_MAGO:
-            torres.emplace_back(std::make_unique<Mago>(celda, costo));
+            torres.emplace_back(std::make_unique<Mago>(celda, costo, &proyectiles));
             break;
         case TORRE_ARTILLERO:
-            torres.emplace_back(std::make_unique<Artillero>(celda, costo));
+            torres.emplace_back(std::make_unique<Artillero>(celda, costo, &proyectiles));
             break;
     }
 
@@ -105,12 +105,26 @@ void Mapa::UpdateMapa(float tiempo) {
     for (auto& torre : torres)
         torre->update(tiempo, enemigos);
 
+    std::cout << proyectiles.size() << std::endl;
+    for (auto& p : proyectiles)         // p es unique_ptr
+        p->update(tiempo);
+    proyectiles.erase(
+        std::remove_if(proyectiles.begin(), proyectiles.end(),
+            [](const std::unique_ptr<Proyectiles>& p)
+            {
+                return p->impactada ||
+                       p->pos.x < 0 || p->pos.x > GRID_SIZE*CELL_SIZE ||
+                       p->pos.y < 0 || p->pos.y > GRID_SIZE*CELL_SIZE;
+            }),
+        proyectiles.end());
+
+
+
 
     if (oleadaActual) {
-        // 1) Simula la oleada (spawn & movimiento)
         oleadaActual->actualizarTodos(frameCounter);
 
-        // 2) Limpia los muertos de la lista activa (sin delete)
+
         auto& listaEnemigos = oleadaActual->enemigos;
         listaEnemigos.erase(std::remove_if(listaEnemigos.begin(), listaEnemigos.end(),
            [this](Enemigo* e) {

@@ -8,7 +8,7 @@
 
 void VistaMapa::Dibujar(const Mapa& mapa,
                         Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero,
-                        Texture2D puertaImg, Texture2D puenteImg, Texture2D suelo) {
+                        Texture2D puertaImg, Texture2D puenteImg, Texture2D suelo, const std::vector<unique_ptr<Proyectiles>>& ProyectilesDibujar) {
     // Configurar escala base para todas las texturas
     DrawTexture(suelo, -225, -50, WHITE);
 
@@ -82,6 +82,9 @@ void VistaMapa::Dibujar(const Mapa& mapa,
     char dineroTexto[50];
     sprintf(dineroTexto, "Dinero: %i", mapa.GetDinero());
     DrawText(dineroTexto, GRID_SIZE * CELL_SIZE + 10, 10, 20, BLACK);
+
+    for (const auto& p : ProyectilesDibujar)
+        if (p) p->draw();
 }
 
 void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
@@ -230,6 +233,8 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
                  infoY + 10, 18, GRAY);
     }
     habilidadEspecialBtn = botonEsp;
+
+
 }
 
 bool VistaMapa::DetectarclickEnMejora()

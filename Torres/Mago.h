@@ -4,6 +4,8 @@
 
 #ifndef MAGO_H
 #define MAGO_H
+#include <memory>
+
 #include "Torre.h"
 #include <vector>
 //Subclase Torre + ataque mágico
@@ -13,7 +15,7 @@ class Enemigo;
 class Mago : public Torre {
 public:
 
-    explicit Mago(Vector2 celda, int costo);
+    explicit Mago(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego);
 
     void update(float dt, const std::vector<Enemigo*>& enemigos) override;
 

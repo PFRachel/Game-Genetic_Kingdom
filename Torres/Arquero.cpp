@@ -7,10 +7,10 @@
 #include <iostream>
 #include <rgestures.h>
 #include "raymath.h"
-#include "../Controladores/Mapa.h"
 #include "../Enemigos/Enemigo.h"
+#include "../Proyectiles/Flechas.h"
 
-Arquero::Arquero(Vector2 celda, int costo) : Torre(celda, costo)
+Arquero::Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego) : Torre(celda, costo, proyectilesEnJuego)
 {
     dano = 10;  // Dano reducido
     alcance = 5 * CELL_SIZE;   // Alcance elevado
@@ -19,6 +19,7 @@ Arquero::Arquero(Vector2 celda, int costo) : Torre(celda, costo)
     costoMejora = 40;
     usandoHabilidad = false;
     duracionHabilidad = 0.f;
+    proyectilesMapa = proyectilesEnJuego;
 
 
 }
@@ -52,22 +53,15 @@ Arquero::Arquero(Vector2 celda, int costo) : Torre(celda, costo)
         cdRestante = intervaloActual;
     }
 
-    
+
 
 }
 
     void Arquero::atacar(Enemigo* objetivo)
 {
-    Vector2 dir = Vector2Subtract(objetivo->getPos(), centroCelda);
-    dir = Vector2Normalize(dir);
-
-    Flecha f;
-    f.pos       = centroCelda;
-    f.vel       = Vector2Scale(dir, 400);   // 400 px/seg
-    f.objetivo  = objetivo;
-    f.dano      = dano;
-
-    FlechasPantalla.push_back(f);
+    Vector2 dir = Vector2Normalize(Vector2Subtract(objetivo->getPos(),
+                                                   centroCelda));
+    proyectilesMapa->push_back(std::make_unique<Flechas>(centroCelda, Vector2Scale(dir, 400.0f), objetivo, dano));
 
 }
 
@@ -88,23 +82,7 @@ Arquero::Arquero(Vector2 celda, int costo) : Torre(celda, costo)
 }
 
 
-void Flecha::update(float dt) {
-    pos.x += vel.x * dt;
-    pos.y += vel.y * dt;
 
-    // ¿llegó?
-    if (!impactada && Vector2Distance(pos, objetivo->getPos()) < 8.0f) {
-        objetivo->recibirDano(float(dano), TipoAtaque::Flechas);
-        impactada = true;
-    }
-}
-
-void Flecha::draw() const {
-    if (!impactada)
-        DrawLineEx(pos,
-                   { pos.x - vel.x*0.1f, pos.y - vel.y*0.1f },
-                   3, DARKBROWN);   // flecha = línea gorda
-}
 
 
 

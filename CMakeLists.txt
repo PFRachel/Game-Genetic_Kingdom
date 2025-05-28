@@ -42,8 +42,6 @@ add_executable(Proyecto2Datos2 main.cpp
         Algoritmos/Pathfinding.h
         Algoritmos/AlgoritmoGenetico.cpp
         Algoritmos/AlgoritmoGenetico.h
-        Elementos/OroManager.cpp
-        Elementos/OroManager.h
         Imagenes
         Vistas/VistaMapa.cpp
         Vistas/VistaMapa.h
@@ -52,6 +50,12 @@ add_executable(Proyecto2Datos2 main.cpp
         Audio/Audio.h
         Vistas/VistaPantallas.cpp
         Vistas/VistaPantallas.h
+        Proyectiles/Proyectiles.cpp
+        Proyectiles/Proyectiles.h
+        Proyectiles/Flechas.cpp
+        Proyectiles/Flechas.h
+        Proyectiles/BolaCanon.cpp
+        Proyectiles/BolaCanon.h
 )
 # raylib recomienda esto para usarlo con CMake
 target_link_libraries(Proyecto2Datos2 PRIVATE raylib)

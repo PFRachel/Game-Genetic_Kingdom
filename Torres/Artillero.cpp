@@ -8,7 +8,7 @@
 #include "../Controladores/Mapa.h"
 
 
-Artillero::Artillero(Vector2 celda, int costo) : Torre(celda, costo)
+Artillero::Artillero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego) : Torre(celda, costo, proyectilesEnJuego)
 {
     dano = 50.0f;
     alcance = 7 * CELL_SIZE;

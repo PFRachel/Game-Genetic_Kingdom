@@ -4,14 +4,16 @@
 
 #ifndef TORRE_H
 #define TORRE_H
+#include <memory>
+
 #include "raylib.h"
 #include <vector>
+#include "../Proyectiles/Proyectiles.h"
 
 class Enemigo;
 
 class Torre {
 public:
-    // ATRIBUTOS
 
     Vector2 getCelda()   const { return celda; }
     Vector2 getCentro()  const { return centroCelda; }
@@ -53,7 +55,7 @@ public:
 
 protected:
 
-    Torre(Vector2 celda, int costo);        // Constructor
+    Torre(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego);        // Constructor
 
 
 
@@ -69,6 +71,7 @@ protected:
     int alcance;
     int nivelTorre;
     int costoMejora;
+    std::vector<std::unique_ptr<Proyectiles>>* proyectilesMapa = nullptr;
 
 
 };

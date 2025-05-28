@@ -10,7 +10,7 @@ class VistaMapa {
 public:
     void Dibujar(const Mapa& mapa,
                  Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero,
-                 Texture2D puertaImg, Texture2D puenteImg, Texture2D suelo);
+                 Texture2D puertaImg, Texture2D puenteImg, Texture2D suelo, const std::vector<unique_ptr<Proyectiles>>& ProyectilesDibujar);
 
     void DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
                            Texture2D arqImg, Texture2D magoImg, Texture2D artilleroImg,
