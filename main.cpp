@@ -13,7 +13,7 @@
 
 
 enum class Estado {MENU, PLAYING, PAUSE};
-Estado estado = Estado::PLAYING;
+Estado estado = Estado::MENU;
 
 
 
@@ -21,7 +21,11 @@ int main() {
     const int ancho = GRID_SIZE * CELL_SIZE + 180;
     const int alto = GRID_SIZE * CELL_SIZE;
 
-    InitWindow(ancho, alto, "Genetic Kingdom");
+    Image FondoMENU = LoadImage("../Imagenes/MENU.png");
+    int w = FondoMENU.width;
+    int h = FondoMENU.height;
+
+    InitWindow(w, h, "Genetic Kingdom");
     InitAudioDevice();
     SetMasterVolume(0.8f);
     SetTargetFPS(60);
@@ -31,11 +35,25 @@ int main() {
     VistaPantallas vista_pantallas;
     Audio AudioManager;
 
+
+    // IMAGNES MENU
+
+
+
+    Texture2D MENU = LoadTextureFromImage(FondoMENU);
+    Texture2D Play = LoadTexture("../Imagenes/PLAYPNG.png");
+    Texture2D Music = LoadTexture("../Imagenes/MusicPNG.png");
+    Texture2D lblGK = LoadTexture("../Imagenes/GeneticKingPNG.png");
+
+    // IMAGENES JUEGO
+
     Texture2D puerta = LoadTexture("../Imagenes/puerta.png");
     Texture2D puente = LoadTexture("../Imagenes/Puente.png");
     Texture2D torreArq = LoadTexture("../Imagenes/TorresArqueros.png");
     Texture2D torreMago = LoadTexture("../Imagenes/TorreMagos.png");
     Texture2D torreArtillero = LoadTexture("../Imagenes/TorresArtilleros.png");
+
+
 
     while (!WindowShouldClose()) {
 
@@ -72,11 +90,10 @@ int main() {
 
         BeginDrawing();
 
-
         switch (estado)
         {
-            //case Estado::MENU:     dibujarPantallaMenu();     break;
-            case Estado::PLAYING:  vista_pantallas.dibujarJuego(juego, vista, torreArq, torreMago, torreArtillero, puerta, puente);            break;
+            case Estado::MENU:     vista_pantallas.dibujarMenu(w, h, MENU, Play, Music, lblGK);     break;
+            case Estado::PLAYING:  vista_pantallas.dibujarJuego(ancho, alto, juego, vista, torreArq, torreMago, torreArtillero, puerta, puente);            break;
             //case Estado::PAUSE:    dibujarPausa();            break;
         }
         EndDrawing();
@@ -93,6 +110,8 @@ int main() {
     CloseWindow();
     return 0;
 }
+
+
 
 
 
