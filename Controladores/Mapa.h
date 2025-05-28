@@ -64,6 +64,9 @@ private:
     int numRonda = 0;
     int frameCounter = 0;
 
+    // ANIMACION
+    std::vector<Flecha> flechas;
+
 
     bool esperandoNuevaOla = false;
 

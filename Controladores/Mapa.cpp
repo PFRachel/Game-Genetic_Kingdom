@@ -105,6 +105,7 @@ void Mapa::UpdateMapa(float tiempo) {
     for (auto& torre : torres)
         torre->update(tiempo, enemigos);
 
+
     if (oleadaActual) {
         // 1) Simula la oleada (spawn & movimiento)
         oleadaActual->actualizarTodos(frameCounter);

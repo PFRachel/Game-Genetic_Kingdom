@@ -8,8 +8,10 @@
 
 void VistaMapa::Dibujar(const Mapa& mapa,
                         Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero,
-                        Texture2D puertaImg, Texture2D puenteImg) {
+                        Texture2D puertaImg, Texture2D puenteImg, Texture2D suelo) {
     // Configurar escala base para todas las texturas
+    DrawTexture(suelo, -225, -50, WHITE);
+
     const float escala = 1.2f; // Ajustar según necesidad
     const float padding = (1.0f - escala) * CELL_SIZE / 2;
 
@@ -22,7 +24,8 @@ void VistaMapa::Dibujar(const Mapa& mapa,
                 static_cast<float>(CELL_SIZE)
             };
 
-            DrawRectangleRec(celda, DARKGREEN);
+            // DrawRectangleRec(celda, DARKGREEN);
+
             DrawRectangleLinesEx(celda, 1, GRAY);
 
             Texture2D* textura = nullptr;

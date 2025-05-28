@@ -19,8 +19,8 @@ void VistaPantallas::dibujarMenu(int w, int h, Texture2D fondoMenu, Texture2D bo
     int yBtn = 150;
 
     DrawTexture(lblGK, xBtn, yBtn, WHITE);
-    DrawTexture(botonPlay, xBtn + 125, yBtn + 250, WHITE);
-    DrawTexture(botonMusic, xBtn + 125, yBtn + 400 , WHITE);
+    DrawTexture(botonPlay, xBtn + 120, yBtn + 225, WHITE);
+    DrawTexture(botonMusic, xBtn + 120, yBtn + 375 , WHITE);
 
     // detección de clic
     Rectangle rBtn = { (float)xBtn, (float)yBtn,
@@ -35,7 +35,7 @@ void VistaPantallas::dibujarMenu(int w, int h, Texture2D fondoMenu, Texture2D bo
 }
 
 
-void VistaPantallas::dibujarJuego(int w, int h, Mapa& juego, VistaMapa vista, Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero, Texture2D puerta, Texture2D puente) {
+void VistaPantallas::dibujarJuego(int w, int h, Mapa& juego, VistaMapa vista, Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero, Texture2D puerta, Texture2D puente, Texture suelo) {
         // Crear camino y oleada
 
         SetWindowSize(w, h);
@@ -47,7 +47,7 @@ void VistaPantallas::dibujarJuego(int w, int h, Mapa& juego, VistaMapa vista, Te
         Vector2 posPuerta = juego.obtenerPosicionPuerta();
 
         juego.GetTorreSeleccionada();
-        vista.Dibujar(juego, torreArq, torreMago, torreArtillero, puerta, puente);
+        vista.Dibujar(juego, torreArq, torreMago, torreArtillero, puerta, puente, suelo);
 
         if (juego.getOleada())
         {

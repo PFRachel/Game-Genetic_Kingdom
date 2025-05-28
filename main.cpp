@@ -52,6 +52,7 @@ int main() {
     Texture2D torreArq = LoadTexture("../Imagenes/TorresArqueros.png");
     Texture2D torreMago = LoadTexture("../Imagenes/TorreMagos.png");
     Texture2D torreArtillero = LoadTexture("../Imagenes/TorresArtilleros.png");
+    Texture2D suelo = LoadTexture("../Imagenes/Suelo.png");
 
 
 
@@ -93,7 +94,7 @@ int main() {
         switch (estado)
         {
             case Estado::MENU:     vista_pantallas.dibujarMenu(w, h, MENU, Play, Music, lblGK);     break;
-            case Estado::PLAYING:  vista_pantallas.dibujarJuego(ancho, alto, juego, vista, torreArq, torreMago, torreArtillero, puerta, puente);            break;
+            case Estado::PLAYING:  vista_pantallas.dibujarJuego(ancho, alto, juego, vista, torreArq, torreMago, torreArtillero, puerta, puente, suelo);            break;
             //case Estado::PAUSE:    dibujarPausa();            break;
         }
         EndDrawing();
