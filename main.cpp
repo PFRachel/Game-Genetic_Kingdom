@@ -62,7 +62,9 @@ int main() {
 
 
         float tiempoJuego = GetFrameTime();
-        UpdateMusicStream(AudioManager.MainTheme);
+        if ((estado == Estado::MENU || estado == Estado::PLAYING)
+        && IsMusicStreamPlaying(AudioManager.MainTheme))
+            UpdateMusicStream(AudioManager.MainTheme);
 
 
         switch (estado)
@@ -83,12 +85,15 @@ int main() {
             case Estado::PLAYING:
             juego.ProcesarClick();
             if (juego.UpdateMapa(tiempoJuego)) {
+                PlaySound(AudioManager.GameOverSfx);
                 estado = Estado::GAMEOVER;
                 break;
             };
 
             case Estado::GAMEOVER:
                 if (IsKeyPressed(KEY_SPACE) && estado == Estado::GAMEOVER) {
+                    StopSound(AudioManager.GameOverSfx);
+                    PlayMusicStream(AudioManager.MainTheme);
                     juego = Mapa();
                     estado = Estado::MENU;
                 }

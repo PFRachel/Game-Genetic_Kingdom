@@ -11,4 +11,5 @@
 class Audio {
     public:
     Music MainTheme = LoadMusicStream(("../Audio/MainTheme.wav"));
+    Sound GameOverSfx = LoadSound(("../Audio/GameOver.mp3"));
 };
