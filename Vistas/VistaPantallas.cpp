@@ -27,7 +27,7 @@ void VistaPantallas::dibujarMenu(int w, int h, Texture2D fondoMenu, Texture2D bo
 }
 
 
-void VistaPantallas::dibujarJuego(int w, int h, Mapa& juego, VistaMapa vista, Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero, Texture2D puerta, Texture2D puente, Texture suelo) {
+void VistaPantallas::dibujarJuego(int w, int h, Mapa& juego, VistaMapa& vista, Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero, Texture2D puerta, Texture2D puente, Texture suelo) {
         // Crear camino y oleada
 
         SetWindowSize(w, h);
@@ -72,9 +72,9 @@ void VistaPantallas::dibujarJuego(int w, int h, Mapa& juego, VistaMapa vista, Te
                 juego.ContinuarOleada();
             }
         }
-        if (vista.DetectarClickEstadisticas()) {
-            vista.mostrandoEstadisticas = !vista.mostrandoEstadisticas;
-        }
+    if (vista.DetectarClickEstadisticas() && juego.getOleada()) {
+        vista.mostrandoEstadisticas = !vista.mostrandoEstadisticas;
+    }
 
         if (vista.mostrandoEstadisticas) {
             vista.DibujarVentanaEstadisticas(juego);

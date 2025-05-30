@@ -293,6 +293,12 @@ bool VistaMapa::DetectarClickEstadisticas() {
 }
 
 void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {
+
+
+    auto oleada = mapa.getOleada();
+    if (oleada == nullptr) return;
+
+
     Rectangle ventana = { 200, 100, 600, 400 };
     DrawRectangleRec(ventana, RAYWHITE);
     DrawRectangleLinesEx(ventana, 3, BLACK);
@@ -316,7 +322,6 @@ void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {
     DrawText("ESTADÍSTICAS DEL JUEGO", 220, y, 22,  DARKGRAY); y += 40;
 
     char buffer[128];
-    auto oleada = mapa.getOleada();
     if (oleada !=  nullptr) {/* aquí verifica que oleada sea válido, según sea puntero o referencia */
         sprintf(buffer, "Generación actual: %d", oleada->getGeneracion());
         DrawText(buffer, 220, y, 18, BLACK); y += 25;
@@ -324,7 +329,7 @@ void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {
         sprintf(buffer, "Enemigos muertos en esta oleada: %d", oleada->getMuertos());
         DrawText(buffer, 220, y, 18, BLACK); y += 25;
 
-        sprintf(buffer, "Mutaciones ocurridas: %d", oleada->getGeneracion());//oleada->getMutaciones());
+        sprintf(buffer, "Mutaciones ocurridas: %d", oleada->getMutaciones());
         DrawText(buffer, 220, y, 18, BLACK); y += 25;
 
         sprintf(buffer, "Probabilidad de mutación: %.2f%%", oleada->getProbabilidadMutacion() * 100);
@@ -337,6 +342,7 @@ void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {
             DrawText(linea.c_str(), 220, y, 17, BLACK);
             y += 28;
         }
+        EndScissorMode();
 
     }
 }

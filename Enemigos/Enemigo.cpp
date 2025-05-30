@@ -130,6 +130,8 @@ void Enemigo::inicializarGenesAleatorios() {
     genes[3] = std::min(resistenciaMagia      * factorAleatorio(), 0.99f);
     genes[4] = std::min(resistenciaArtilleria * factorAleatorio(), 0.99f);
 
+    genes[1] = std::max(genes[1], 1.0f);
+
     // 2) Decodificar de nuevo en los atributos del enemigo
     velocidad             = genes[0];
     vida                  = static_cast<int>(genes[1]);
