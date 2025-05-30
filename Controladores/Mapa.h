@@ -70,7 +70,7 @@ private:
 
 public:
     Mapa();
-    void UpdateMapa(float tiempo);
+    bool UpdateMapa(float tiempo);
     bool CeldaLibre(int fila, int col);
     bool IntentarColocarTemporal(int fila, int col);
     void ColocarTorre(int fila, int col);
@@ -84,6 +84,7 @@ public:
     bool MejorarTorre();
     bool UsarHabilidadTorre();
     Vector2 obtenerPosicionPuerta() const;
+    bool hayEnemigoEnPuente() const;
     const std::vector<unique_ptr<Proyectiles>>& getProyectiles() const {return proyectiles;};
 
     bool IniciarOleada();

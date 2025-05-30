@@ -13,6 +13,8 @@ void VistaPantallas::dibujarMenu(int w, int h, Texture2D fondoMenu, Texture2D bo
 {
     ClearBackground(RAYWHITE);
     SetWindowSize(w, h);
+    SetWindowMaxSize(w, h);
+    SetWindowMinSize(w, h);
     DrawTexture(fondoMenu, 0, 0, WHITE);
 
     int xBtn = 150;
@@ -21,16 +23,6 @@ void VistaPantallas::dibujarMenu(int w, int h, Texture2D fondoMenu, Texture2D bo
     DrawTexture(lblGK, xBtn, yBtn, WHITE);
     DrawTexture(botonPlay, xBtn + 120, yBtn + 225, WHITE);
     DrawTexture(botonMusic, xBtn + 120, yBtn + 375 , WHITE);
-
-    // detección de clic
-    Rectangle rBtn = { (float)xBtn, (float)yBtn,
-                       (float)botonPlay.width, (float)botonPlay.height };
-
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
-        CheckCollisionPointRec(GetMousePosition(), rBtn))
-    {
-        // estado = Estado::PLAYING;        // cambia a tu estado de juego
-    }
 
 }
 
@@ -89,14 +81,19 @@ void VistaPantallas::dibujarJuego(int w, int h, Mapa& juego, VistaMapa vista, Te
         }
     }
 
-void VistaPantallas::dibujarPausa(int w, int h)
+void VistaPantallas::dibujarGameOver()
 {
-    DrawRectangle(0, 0, w, h, Color{0,0,0,120});
-    const char* txt = "PAUSA";
-    int fs = 60;
-    int tw = MeasureText(txt, fs);
-    DrawText(txt, w/2 - tw/2, h/2 - fs/2, fs, YELLOW);
-    DrawText("ESC para continuar",
-             w/2 - MeasureText("ESC para continuar", 20)/2,
-             h/2 + 40, 20, RAYWHITE);
+    ClearBackground(BLACK);
+
+    const char* msg = "GAME  OVER";
+    int fs = 72;
+    DrawText(msg,
+             (GetScreenWidth()-MeasureText(msg,fs))/2,
+             GetScreenHeight()/3, fs, RED);
+
+    const char* hint = "SPACE  para  volver  a  jugar";
+    fs = 24;
+    DrawText(hint,
+             (GetScreenWidth()-MeasureText(hint,fs))/2, GetScreenHeight()/2, fs, RAYWHITE);
 }
+

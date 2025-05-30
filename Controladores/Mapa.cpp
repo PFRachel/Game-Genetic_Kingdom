@@ -9,6 +9,7 @@
 #include <ostream>
 #include "../Algoritmos/Pathfinding.h"
 #include <queue> // Bfs ver caminos
+#include "../Proyectiles/BolaCanon.h"
 
 Mapa::Mapa() {
     // Inicializa todas las celdas como LIBRE
@@ -86,20 +87,35 @@ void Mapa::ColocarTorre(int fila, int col) {
 }
 
 void Mapa::ProcesarClick() {
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        Vector2 pos = GetMousePosition();
-        int fila = pos.y / CELL_SIZE;
-        int col = pos.x / CELL_SIZE;
 
-        if (fila >= 0 && fila < GRID_SIZE && col >= 0 && col < GRID_SIZE) {
-            if (CeldaLibre(fila, col))
-                ColocarTorre(fila, col);
-            else SeleccionarTorre(pos);
-        }
+    if (!IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) return;
+
+    Vector2 pos  = GetMousePosition();
+    int fila = pos.y / CELL_SIZE;
+    int col  = pos.x / CELL_SIZE;
+
+    if (fila < 0 || fila >= GRID_SIZE || col < 0 || col >= GRID_SIZE) return;
+
+    bool libre = CeldaLibre(fila, col);
+
+    if (libre && HayOleadaActiva())
+    {
+        return;
     }
+
+    if (libre) {
+        ColocarTorre(fila, col);
+    }
+
+    else {
+        SeleccionarTorre(pos);
+    }
+
+
 }
 
-void Mapa::UpdateMapa(float tiempo) {
+
+bool Mapa::UpdateMapa(float tiempo) {
     frameCounter++;
 
     for (auto& torre : torres)
@@ -108,17 +124,17 @@ void Mapa::UpdateMapa(float tiempo) {
     std::cout << proyectiles.size() << std::endl;
     for (auto& p : proyectiles)         // p es unique_ptr
         p->update(tiempo);
+
+
     proyectiles.erase(
-        std::remove_if(proyectiles.begin(), proyectiles.end(),
-            [](const std::unique_ptr<Proyectiles>& p)
-            {
-                return p->impactada ||
-                       p->pos.x < 0 || p->pos.x > GRID_SIZE*CELL_SIZE ||
-                       p->pos.y < 0 || p->pos.y > GRID_SIZE*CELL_SIZE;
-            }),
-        proyectiles.end());
-
-
+     std::remove_if(proyectiles.begin(), proyectiles.end(),
+         [](const std::unique_ptr<Proyectiles>& p)
+         {
+             return  p->finished()                         ||
+                     p->pos.x < 0 || p->pos.x > GRID_SIZE*CELL_SIZE ||
+                     p->pos.y < 0 || p->pos.y > GRID_SIZE*CELL_SIZE;
+         }),
+     proyectiles.end());
 
 
     if (oleadaActual) {
@@ -141,11 +157,6 @@ void Mapa::UpdateMapa(float tiempo) {
            listaEnemigos.end());
         enemigos = listaEnemigos;
 
-
-
-
-
-
         if (!esperandoNuevaOla
             && enemigos.empty()
             && oleadaActual->enemigosGenerados >= oleadaActual->cantidadTotal)
@@ -154,6 +165,9 @@ void Mapa::UpdateMapa(float tiempo) {
             esperandoNuevaOla = true;
         }
     }
+
+    bool derrota = hayEnemigoEnPuente();
+    return derrota;
 }
 
 bool Mapa::IniciarOleada() {
@@ -177,20 +191,34 @@ bool Mapa::ContinuarOleada() {
     if (!oleadaActual || !esperandoNuevaOla) return false;
     esperandoNuevaOla = false;
 
-    // 1) Recalcular la ruta puerta→puente con el mapa *actual* (incluyendo torres)
+    // Recalcular la ruta puerta→puente con el mapa *actual* (incluyendo torres)
     camino = Pathfinding::Camino(*this);
 
-    // 2) Generar la siguiente generación sobre la MISMA instancia,
+    // Generar la siguiente generación sobre la MISMA instancia,
     //    pasándole el nuevo camino
     oleadaActual->generar(/*cantidadInicial=*/0, camino);
 
-    // 3) Aumentar la ronda para la UI
+    // Aumentar la ronda para la UI
     numRonda++;
 
-    // 4) Limpiar lista gráfica
+    // Limpiar lista gráfica
     enemigos.clear();
     return true;
 }
+
+bool Mapa::hayEnemigoEnPuente() const {
+    if (!oleadaActual) return false;
+
+    Vector2 Destino = { (GRID_SIZE-1) * CELL_SIZE + CELL_SIZE*0.5f, (GRID_SIZE-1) * CELL_SIZE + CELL_SIZE*0.5f };
+
+    for (auto* enemigo : oleadaActual->enemigos) {
+        if (!enemigo->estaMuerto() && Vector2Distance(enemigo->getPos(), Destino) < CELL_SIZE * 1.42f) {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 
 

@@ -6,7 +6,7 @@ Ogro::Ogro() {
     velocidad = 0.5f;
     vida = 120;
     valorRecompensa = 130;
-    resistenciaFlechas = 0.9f;//f=(float- presion simple 4bytes)
+    resistenciaFlechas = 0.9f;
     resistenciaMagia = 0.1f;
     resistenciaArtilleria = 0.2f;
     color = GREEN;

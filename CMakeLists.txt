@@ -24,8 +24,6 @@ add_executable(Proyecto2Datos2 main.cpp
         Torres/Mago.h
         Torres/Artillero.cpp
         Torres/Artillero.h
-        Torres/EstrategiaAtaque.cpp
-        Torres/EstrategiaAtaque.h
         Enemigos/Enemigo.cpp
         Enemigos/Enemigo.h
         Enemigos/Ogro.cpp
@@ -56,6 +54,8 @@ add_executable(Proyecto2Datos2 main.cpp
         Proyectiles/Flechas.h
         Proyectiles/BolaCanon.cpp
         Proyectiles/BolaCanon.h
+        Proyectiles/AuraMago.cpp
+        Proyectiles/AuraMago.h
 )
 # raylib recomienda esto para usarlo con CMake
 target_link_libraries(Proyecto2Datos2 PRIVATE raylib)

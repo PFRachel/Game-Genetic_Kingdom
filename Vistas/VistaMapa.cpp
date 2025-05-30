@@ -9,10 +9,10 @@
 void VistaMapa::Dibujar(const Mapa& mapa,
                         Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero,
                         Texture2D puertaImg, Texture2D puenteImg, Texture2D suelo, const std::vector<unique_ptr<Proyectiles>>& ProyectilesDibujar) {
-    // Configurar escala base para todas las texturas
+
     DrawTexture(suelo, -225, -50, WHITE);
 
-    const float escala = 1.2f; // Ajustar según necesidad
+    const float escala = 1.2f;
     const float padding = (1.0f - escala) * CELL_SIZE / 2;
 
     for (int fila = 0; fila < GRID_SIZE; fila++) {
@@ -23,8 +23,6 @@ void VistaMapa::Dibujar(const Mapa& mapa,
                 static_cast<float>(CELL_SIZE),
                 static_cast<float>(CELL_SIZE)
             };
-
-            // DrawRectangleRec(celda, DARKGREEN);
 
             DrawRectangleLinesEx(celda, 1, GRAY);
 
@@ -39,7 +37,6 @@ void VistaMapa::Dibujar(const Mapa& mapa,
             }
 
             if (textura) {
-                // Escalar la textura al tamaño de la celda
                 Rectangle dest = {
                     celda.x + padding,
                     celda.y + padding,
@@ -62,7 +59,7 @@ void VistaMapa::Dibujar(const Mapa& mapa,
         int tipo = mapa.GetTipoTorreSeleccionada();
         float radio = 0.f;
         switch (tipo) {
-        case TORRE_ARQUERO:   radio = RANGO_ARQUERO; break;   // usa los mismos números que en tu ctor
+        case TORRE_ARQUERO:   radio = RANGO_ARQUERO; break;
         case TORRE_MAGO:      radio = RANGO_MAGO; break;
         case TORRE_ARTILLERO: radio = RANGO_ARTILLERO; break;
         }
@@ -70,10 +67,9 @@ void VistaMapa::Dibujar(const Mapa& mapa,
         Vector2 centro = { colMouse*CELL_SIZE + CELL_SIZE/2.0f,
                            filaMouse*CELL_SIZE + CELL_SIZE/2.0f };
 
-        DibujarRadio(centro, radio, Color{0,0,0,80});          // gris semitransparente
+        DibujarRadio(centro, radio, Color{0,0,0,80});
     }
 
-    // 2. — Radio de la torre seleccionada (si existe)
     if (auto t = mapa.GetTorreSeleccionada())
     {
         DibujarRadio(t->getCentro(), (float)t->getAlcance(), Color{222, 53, 53, 80}, 3);
@@ -102,8 +98,7 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
     DrawRectangleRec(statsBtn, GRAY);
     DrawRectangleLinesEx(statsBtn, 2, BLACK);
     DrawText("Estadísticas", (int)statsBtn.x + 5, (int)statsBtn.y + 5, 18, BLACK);
-    ///------------------------------------
-    ///
+
     char rondaTxt[32];
     sprintf(rondaTxt, "Ronda: %d", mapa.getNumRonda());
     DrawText(rondaTxt, baseX + 25, 700, 22, BLACK);
@@ -112,7 +107,7 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
         const char* nombre;
         Texture2D imagen;
         int costo;
-        Rectangle area; // Añadimos área clickeable
+        Rectangle area;
     };
 
     TorreOpcion torres[3] = {
@@ -287,7 +282,7 @@ void VistaMapa::DibujarRadio(const Vector2& centro, float radio, Color color, fl
 {
     DrawCircleLines(centro.x, centro.y, radio, color);
     if (grosor > 1) {
-        // repetir para simular grosor porque DrawCircleLines es 1 px
+
         for (int i=1;i<grosor;i++)
             DrawCircleLines(centro.x, centro.y, radio+i, color);
     }
@@ -302,7 +297,6 @@ void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {
     DrawRectangleRec(ventana, RAYWHITE);
     DrawRectangleLinesEx(ventana, 3, BLACK);
 
-    // SCROLL SOLO SI EL MOUSE ESTÁ DENTRO DE LA VENTANA
     if (CheckCollisionPointRec(GetMousePosition(), ventana)) {
         scrollOffsetY += GetMouseWheelMove() * 20.0f;
     }

@@ -6,18 +6,23 @@
 #define PROYECTILES_H
 #include "raylib.h"
 
+
 class Enemigo;
 
 class Proyectiles {
 public:
-    Vector2 pos;          // pos actual (px)
+    Vector2 pos;          // pos actual
     Vector2 vel;          // vector velocidad
-    Enemigo* objetivo;    // puntero (no owning)
+    Enemigo* objetivo;    // puntero
     float   dano;
     bool    impactada = false;
 
-    Proyectiles(Vector2 p, Vector2 v, Enemigo* obj, float d)
-        : pos(p), vel(v), objetivo(obj), dano(d) {}
+    Proyectiles(Vector2 p, Vector2 v, Enemigo* obj, float d) : pos(p), vel(v), objetivo(obj), dano(d) {}
+
+    virtual bool  finished() const
+    {
+        return impactada;
+    }
 
     virtual void update(float dt);
     virtual void draw() const;

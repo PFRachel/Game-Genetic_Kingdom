@@ -17,7 +17,6 @@ class Flechas : public Proyectiles {
     explicit Flechas(Vector2 pos, Vector2 vel, Enemigo* objetivo, float dano);
 
     void update(float dt) override;
-
     void draw() const override;
 
 };

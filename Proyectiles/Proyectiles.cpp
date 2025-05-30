@@ -9,11 +9,9 @@
 
 
 void Proyectiles::update(float dt) {
-
 }
 
 void Proyectiles::draw() const {
-
 }
 
 

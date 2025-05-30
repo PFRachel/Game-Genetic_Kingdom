@@ -9,10 +9,12 @@
 #include "Algoritmos/Pathfinding.h"
 #include "Controladores/Oleada.h"
 #include <ctime>
+#include <iostream>
+
 #include "Audio/Audio.h"
+using namespace std;
 
-
-enum class Estado {MENU, PLAYING, PAUSE};
+enum class Estado {MENU, PLAYING, GAMEOVER};
 Estado estado = Estado::MENU;
 
 
@@ -22,8 +24,8 @@ int main() {
     const int alto = GRID_SIZE * CELL_SIZE;
 
     Image FondoMENU = LoadImage("../Imagenes/MENU.png");
-    int w = FondoMENU.width;
-    int h = FondoMENU.height;
+    const int w = FondoMENU.width;
+    const int h = FondoMENU.height;
 
     InitWindow(w, h, "Genetic Kingdom");
     InitAudioDevice();
@@ -58,6 +60,7 @@ int main() {
 
     while (!WindowShouldClose()) {
 
+
         float tiempoJuego = GetFrameTime();
         UpdateMusicStream(AudioManager.MainTheme);
 
@@ -66,9 +69,10 @@ int main() {
         {
             case Estado::MENU:
                 // lógica menú
+
                 if (!IsMusicStreamPlaying(AudioManager.MainTheme)) PlayMusicStream(AudioManager.MainTheme);
 
-                if (IsKeyPressed(KEY_ENTER)) {
+                if (IsKeyPressed(KEY_ENTER) && estado == Estado::MENU) {
                     StopMusicStream(AudioManager.MainTheme);
                     PlayMusicStream(AudioManager.MainTheme);
                     estado = Estado::PLAYING;
@@ -78,14 +82,16 @@ int main() {
 
             case Estado::PLAYING:
             juego.ProcesarClick();
-            juego.UpdateMapa(tiempoJuego);
-
-                if (IsKeyPressed(KEY_ESCAPE)) estado = Estado::PAUSE;
+            if (juego.UpdateMapa(tiempoJuego)) {
+                estado = Estado::GAMEOVER;
                 break;
+            };
 
-
-            case Estado::PAUSE:
-                if (IsKeyPressed(KEY_ESCAPE)) estado = Estado::PLAYING;
+            case Estado::GAMEOVER:
+                if (IsKeyPressed(KEY_SPACE) && estado == Estado::GAMEOVER) {
+                    juego = Mapa();
+                    estado = Estado::MENU;
+                }
                 break;
         }
 
@@ -93,11 +99,12 @@ int main() {
 
         switch (estado)
         {
-            case Estado::MENU:     vista_pantallas.dibujarMenu(w, h, MENU, Play, Music, lblGK);     break;
-            case Estado::PLAYING:  vista_pantallas.dibujarJuego(ancho, alto, juego, vista, torreArq, torreMago, torreArtillero, puerta, puente, suelo);            break;
-            //case Estado::PAUSE:    dibujarPausa();            break;
+            case Estado::MENU: vista_pantallas.dibujarMenu(w, h, MENU, Play, Music, lblGK); break;
+            case Estado::PLAYING: vista_pantallas.dibujarJuego(ancho, alto, juego, vista, torreArq, torreMago, torreArtillero, puerta, puente, suelo); break;
+            case Estado::GAMEOVER: vista_pantallas.dibujarGameOver(); break;
         }
         EndDrawing();
+
 
 
     }

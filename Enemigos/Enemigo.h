@@ -50,10 +50,10 @@ public:
     float getVelocidad() const { return velocidad; }
 
     //Métodos de los algoritmos genéticos
-    // inicializa 'genes' aleatoriamente y luego decodifica a los atributos
+    // inicializa 'genes' aleatoriamente
     void inicializarGenesAleatorios();
 
-    // copia este enemigo (incluye sus genes y atributos)
+    // copia este enemigo
     virtual Enemigo* clone() const = 0;
 
     // cruza dos padres (padreA y padreB) para crear un hijo nuevo

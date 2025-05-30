@@ -12,10 +12,10 @@
 
 Arquero::Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego) : Torre(celda, costo, proyectilesEnJuego)
 {
-    dano = 10;  // Dano reducido
-    alcance = 5 * CELL_SIZE;   // Alcance elevado
-    velocidadDisparo = 2.0f;  // Ataque rapido
-    tiempoRecarga = 60.0f; // Habilidad especial
+    dano = 10;
+    alcance = 5 * CELL_SIZE;
+    velocidadDisparo = 2.0f;
+    tiempoRecarga = 60.0f;
     costoMejora = 40;
     usandoHabilidad = false;
     duracionHabilidad = 0.f;

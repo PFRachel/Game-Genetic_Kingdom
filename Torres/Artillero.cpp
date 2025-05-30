@@ -6,15 +6,18 @@
 
 #include "raymath.h"
 #include "../Controladores/Mapa.h"
+#include "../Proyectiles/BolaCanon.h"
+#include "../Proyectiles/AuraMago.h"
 
 
 Artillero::Artillero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego) : Torre(celda, costo, proyectilesEnJuego)
 {
-    dano = 50.0f;
+    dano = 100.0f;
     alcance = 7 * CELL_SIZE;
-    velocidadDisparo = 5.0f;
+    velocidadDisparo = 2.5f;
     tiempoRecarga = 100;
     costoMejora = 160;
+
 }
 
     void Artillero::update(float frameTime, const std::vector<Enemigo*>& enemigos)
@@ -22,52 +25,56 @@ Artillero::Artillero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proye
     updateTimers(frameTime);
     if(cdRestante>0.f) return;
 
+    enemigosRef = &enemigos;
+
     Enemigo* masLejano = nullptr;
-    float distanciaMinima = alcance;
+
+
     float disntanciaMaximaEnemigo = 0.0f;
 
-    for (auto* enemigo : enemigos)
-    {
-        float distanciaEnemigo = Vector2Distance(centroCelda, enemigo->getPos()); //enemigo->getpos()):
-        if (distanciaEnemigo<=distanciaMinima)
-        {
-            if (distanciaEnemigo>disntanciaMaximaEnemigo)
-            {
-                masLejano = enemigo;
-                distanciaMinima = distanciaEnemigo;
-            }
+    for (auto* enemigo : enemigos) {
+        float distancia = Vector2Distance(centroCelda, enemigo->getPos());
+        if (distancia <= alcance && distancia > disntanciaMaximaEnemigo) {
+            disntanciaMaximaEnemigo  = distancia;
+            masLejano = enemigo;
         }
     }
 
-    float alrededoresEnemigo = 3 * CELL_SIZE;
-
-    for (auto* enemigoEvaluado : enemigos)
-    {
-        if (masLejano)
-        {
-            float distanciaEnemigo = Vector2Distance(masLejano->getPos(), enemigoEvaluado->getPos()); //enemigo->getpos()):
-            if (distanciaEnemigo<=alrededoresEnemigo)
-            {
-                atacar(enemigoEvaluado);
-            }
-        }
+    if (masLejano) {
+        atacar(masLejano);
     }
 
     cdRestante = velocidadDisparo;
+
 
 }
 
     void Artillero:: atacar(Enemigo* objetivo)
 {
-    objetivo->recibirDano((float)dano, TipoAtaque::Artilleria);
+
+    Vector2 dir = Vector2Normalize(Vector2Subtract(objetivo->getPos(), centroCelda));
+
+    proyectilesMapa->push_back(
+        std::make_unique<BolaCanon>(
+            centroCelda,
+            Vector2Scale(dir, 300.f),
+            objetivo,
+            dano,
+            *const_cast<std::vector<Enemigo*>*>(enemigosRef)));
+
 
 }
 
     void Artillero::habilidadEspecial(const std::vector<Enemigo*>& enemigos)
 {
+    Color Rojo = {229, 41, 41};
+
     for (auto* enemigo : enemigos) {
-        atacar(enemigo);
+        enemigo->recibirDano(dano, TipoAtaque::Artilleria);
     }
+
+    proyectilesMapa->push_back(
+        std::make_unique<AuraMago>(centroCelda, 500.0f, 0.25f, Rojo));
     cdhabilidadEspecial = tiempoRecarga;
 }
 
@@ -75,7 +82,7 @@ Artillero::Artillero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proye
 {
     dano *= 2;
     alcance += CELL_SIZE;
-    velocidadDisparo *= 2;
+    velocidadDisparo /= 2;
     tiempoRecarga /= 2;
 }
 

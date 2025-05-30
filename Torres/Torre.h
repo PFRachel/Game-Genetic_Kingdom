@@ -15,10 +15,10 @@ class Enemigo;
 class Torre {
 public:
 
-    Vector2 getCelda()   const { return celda; }
-    Vector2 getCentro()  const { return centroCelda; }
-    int getCosto()   const { return costo; }
-    float getDano()    const { return dano;  }
+    Vector2 getCelda() const { return celda; }
+    Vector2 getCentro() const { return centroCelda; }
+    int getCosto() const { return costo; }
+    float getDano() const { return dano;  }
     int getAlcance() const { return alcance; }
     int getNivelTorre() const { return nivelTorre; }
     int getCostoMejora() const { return costoMejora; }

@@ -13,10 +13,6 @@ using namespace std;
 
 class Enemigo;
 
-
-
-
-//Subclase Torre + ataque tipo flecha
 class Arquero : public Torre{
 public:
 

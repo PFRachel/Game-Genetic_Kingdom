@@ -8,7 +8,6 @@
 
 #include "Torre.h"
 #include <vector>
-//Subclase Torre + ataque mágico
 
 class Enemigo;
 
@@ -16,6 +15,8 @@ class Mago : public Torre {
 public:
 
     explicit Mago(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego);
+
+    std::vector<Enemigo*> const* enemigosRef = nullptr;
 
     void update(float dt, const std::vector<Enemigo*>& enemigos) override;
 
