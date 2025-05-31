@@ -5,7 +5,6 @@
 #include "VistaMapa.h"
 
 #include <cmath>
-
 void VistaMapa::Dibujar(const Mapa& mapa,
                         Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero,
                         Texture2D puertaImg, Texture2D puenteImg, Texture2D suelo, const std::vector<unique_ptr<Proyectiles>>& ProyectilesDibujar) {

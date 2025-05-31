@@ -1,7 +1,4 @@
-//
-// Created by Rachel on 22/04/2025.
-//
-
+// Definición de la clase Artillero: torre de daño en área con gran alcance y habilidad ofensiva masiva.
 #ifndef ARTILLERO_H
 #define ARTILLERO_H
 #include "Torre.h"

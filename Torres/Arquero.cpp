@@ -1,9 +1,7 @@
-//
-// Created by Rachel on 22/04/2025.
-//
+// Clase Arquero: torre que ataca enemigos a distancia con flechas y puede activar una habilidad especial
+// que acelera su velocidad de disparo temporalmente.
 
 #include "Arquero.h"
-
 #include <iostream>
 #include <rgestures.h>
 #include "raymath.h"
@@ -56,7 +54,6 @@ Arquero::Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectil
 
 
 }
-
     void Arquero::atacar(Enemigo* objetivo)
 {
     Vector2 dir = Vector2Normalize(Vector2Subtract(objetivo->getPos(),
@@ -64,16 +61,11 @@ Arquero::Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectil
     proyectilesMapa->push_back(std::make_unique<Flechas>(centroCelda, Vector2Scale(dir, 400.0f), objetivo, dano));
 
 }
-
-
-
     void Arquero::habilidadEspecial(const std::vector<Enemigo*>& enemigos)
 {
     duracionHabilidad = 5.0f;
     cdhabilidadEspecial = tiempoRecarga;
 }
-
-
     void Arquero::aumentoEstadisticas()
 {
     dano *= 2;

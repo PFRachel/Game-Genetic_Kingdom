@@ -1,6 +1,10 @@
-//
-// Created by Rachel on 22/04/2025.
-//
+/**
+* se implementa del algoritmo de pathfinding A* sobre una cuadrícula.
+ *
+ * Calcula la ruta óptima desde el inicio hasta el objetivo considerando obstáculos,
+ * incluyendo movimiento en 8 direcciones (con diagonales restringidas por lógica).
+ */
+
 
 #include "Pathfinding.h"
 #include "../Controladores/Mapa.h" // para CELL_SIZE y GRID_SIZE

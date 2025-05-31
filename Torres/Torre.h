@@ -1,5 +1,5 @@
 //
-// Created by Rachel on 22/04/2025.
+// Clase base abstracta para torres del juego, define atributos comunes y métodos virtuales para actualización, ataque y mejoras.
 //
 
 #ifndef TORRE_H
@@ -56,9 +56,6 @@ public:
 protected:
 
     Torre(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego);        // Constructor
-
-
-
     Vector2 celda;
     Vector2 centroCelda;
 

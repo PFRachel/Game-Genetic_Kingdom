@@ -1,6 +1,5 @@
-//
-// Created by Rachel on 22/04/2025.
-//
+// Definición de la clase Arquero: torre con ataque a distancia y habilidad especial de disparo rápido.
+
 
 #ifndef ARQUERO_H
 #define ARQUERO_H

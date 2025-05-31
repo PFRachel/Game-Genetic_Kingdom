@@ -1,6 +1,10 @@
-//
-// Created by Rachel on 22/04/2025.
-//
+/**
+* funciones estáticas para encontrar caminos en el mapa.
+ * como:
+ * - Verificación de existencia de camino
+ * - Cálculo de ruta como celdas
+ * - Conversión a coordenadas del mundo (Vector2)
+ */
 
 #ifndef PATHFINDING_H
 #define PATHFINDING_H

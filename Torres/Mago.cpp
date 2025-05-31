@@ -1,9 +1,8 @@
 //
-// Created by Rachel on 22/04/2025.
+// Implementación de la torre Mago: inflige daño mágico en área y su habilidad especial elimina instantáneamente a enemigos dentro del alcance.
 //
 
 #include "Mago.h"
-
 #include "raymath.h"
 #include "../Controladores/Mapa.h"
 #include "../Proyectiles/AuraMago.h"
@@ -16,7 +15,6 @@ Mago::Mago(Vector2 celda, int costo,  std::vector<std::unique_ptr<Proyectiles>>*
     tiempoRecarga = 60;
     costoMejora = 80;
 }
-
     void Mago::update(float frameTime, const std::vector<Enemigo*>& enemigos)
 {
 
@@ -54,14 +52,11 @@ Mago::Mago(Vector2 celda, int costo,  std::vector<std::unique_ptr<Proyectiles>>*
         std::make_unique<AuraMago>(centroCelda, (float)alcance, 0.25f, celeste));
 
 }
-
 void Mago::instakill(Enemigo *objetivo) {
 
     objetivo->vida = 0;
 
 }
-
-
 void Mago::habilidadEspecial(const std::vector<Enemigo*>& enemigos){
 
     Color Rojo = {229, 41, 41};
@@ -76,7 +71,6 @@ void Mago::habilidadEspecial(const std::vector<Enemigo*>& enemigos){
 
     cdhabilidadEspecial = tiempoRecarga;
 }
-
 
 void Mago::aumentoEstadisticas()
 {

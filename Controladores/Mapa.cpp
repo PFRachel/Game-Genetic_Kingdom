@@ -1,8 +1,11 @@
-//
-//  lógica central del juego(MAPA)
-//
-#include "Mapa.h"
+/**
+* Lógica central del juego: gestión del mapa y torres.
+ *
+ * Controla el estado del mapa, la colocación de torres,
+ * la verificación de caminos con pathfinding y la gestión de oleadas.
+ */
 
+#include "Mapa.h"
 #include <algorithm>
 #include <cstdio>
 #include <iostream>

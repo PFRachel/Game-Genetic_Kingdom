@@ -14,8 +14,6 @@ void Oleada::generar(int cantidad, const std::vector<Vector2>& caminoEntrada) {
         tamanoPoblacion += 2;
     }
     cantidadTotal = tamanoPoblacion;
-
-
     std::cout << "[Oleada] generaciónActual="<<generacionActual
               << " tamPobl="<<tamanoPoblacion
               << " cantidadTotal="<<cantidadTotal<<"\n";
@@ -103,11 +101,6 @@ void Oleada::actualizarTodos(int currentFrame) {
 
 
     }
-
-    // Actualiza movimiento de enemigos en pantalla
-    //for (auto* e : enemigos) {
-        //e->actualizar();
-    //}
     // Actualiza movimiento y detecta muertes
     for (auto* e : enemigos) {
         if (!e->estaMuerto()) {

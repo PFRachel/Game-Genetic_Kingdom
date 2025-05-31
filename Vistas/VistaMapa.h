@@ -1,5 +1,5 @@
 //
-// Parte interfaz
+// Interfaz para la visualización del mapa y la gestión de la UI, incluyendo dibujo de torres, botones y estadísticas.
 //
 
 #ifndef VISTAMAPA_H
@@ -39,9 +39,5 @@ public:
     Rectangle habilidadEspecialBtn = {0};
     Rectangle oleadaBtn = {0};
 };
-
-
-
-
 
 #endif //VISTAMAPA_H

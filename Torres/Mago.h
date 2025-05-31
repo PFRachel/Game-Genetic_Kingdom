@@ -1,5 +1,5 @@
 //
-// Created by Rachel on 22/04/2025.
+// Declaración de la clase Mago: torre mágica con daño en área y habilidad especial de eliminación instantánea de enemigos cercanos.
 //
 
 #ifndef MAGO_H

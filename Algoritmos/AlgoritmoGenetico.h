@@ -1,7 +1,9 @@
-//
-// Created by Rachel on 22/04/2025.
-//
-
+/**
+* Esta clase implementa un algoritmo evolutivo para generar enemigos más fuertes.
+ *
+ * Utiliza selección por torneo, cruza por punto único y mutación para evolucionar
+ * una población de enemigos a lo largo de generaciones.
+ */
 #ifndef ALGORITMOGENETICO_H
 #define ALGORITMOGENETICO_H
 
