@@ -17,5 +17,7 @@ ElfoOscuro::ElfoOscuro() {
 }
 
 Enemigo* ElfoOscuro::clone() const {
-    return new ElfoOscuro(*this);
+    ElfoOscuro* copia = new ElfoOscuro(*this);       // copia “profunda” de todos los campos
+    copia->actualizarDesdeGenes();       // fuerza vida = max(gen[1], 1)
+    return copia;
 }

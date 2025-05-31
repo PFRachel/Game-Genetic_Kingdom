@@ -14,5 +14,7 @@ Ogro::Ogro() {
 }
 
 Enemigo* Ogro::clone() const {
-    return new Ogro(*this);
+    Ogro* copia = new Ogro(*this);       // copia “profunda” de todos los campos
+    copia->actualizarDesdeGenes();       // fuerza vida = max(gen[1], 1)
+    return copia;
 }

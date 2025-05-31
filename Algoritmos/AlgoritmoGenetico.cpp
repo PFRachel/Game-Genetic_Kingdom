@@ -60,6 +60,9 @@ Enemigo* AlgoritmoGenetico::crossoverPuntoUnico(
             : padreB->getGenes()[i];
         if (i < 5) std::cout << "  gen["<<i<<"]="<<nuevosGenes[i]<<"\n";
     }
+
+    nuevosGenes[1] = std::max(nuevosGenes[1], 1.0f);
+
     // Decodificar genes
     hijo->setGenes(nuevosGenes);
     return hijo;
@@ -80,6 +83,9 @@ void AlgoritmoGenetico::mutarIndividuo(
             g[i] *= factor;
             if (i >= 2 && i <= 4) // resistencias clamp
                 g[i] = std::min(g[i], 0.99f);
+            if (i == 1) {
+                g[1] = std::max(g[1], 1.0f);
+            }
 
             std::cout << "[GA][Mutación] gen " << i
                   << " mutado: " << antes
@@ -99,42 +105,59 @@ std::vector<Enemigo*> AlgoritmoGenetico::generarNuevaPoblacion(
     float pCrossover,
     float pMutacion
 ) {
-
     std::cout << "[GA] Generando nueva población. Tamaño inicial: "
               << poblacionActual.size()
               << ", objetivo: " << n << "\n";
+
     std::vector<Enemigo*> poblacionNueva;
     poblacionNueva.reserve(n);
-    // Seleccionar padres suficientes
+
+    // 1) Seleccionar padres suficientes por torneo
     auto padres = seleccionarTorneo(poblacionActual, K, n);
 
+    // 2) Para cada par de padres, o bien cruza + mutación, o clon directo
     for (int i = 0; i < n; i += 2) {
         Enemigo* a = padres[i];
         Enemigo* b = padres[(i + 1) % padres.size()];
 
-        if (GetRandomValue(0,100)/100.0f < pCrossover) {
-            auto c1 = crossoverPuntoUnico(a,b);
-            mutarIndividuo(c1,pMutacion);
-            poblacionNueva.push_back(c1);
+        if (GetRandomValue(0, 100) / 100.0f < pCrossover) {
+            // — RUTA DE CRUCE (crossover + mutación) —
+            Enemigo* hijo1 = crossoverPuntoUnico(a, b);
+            mutarIndividuo(hijo1, pMutacion);
+            poblacionNueva.push_back(hijo1);
+
             if ((int)poblacionNueva.size() < n) {
-                auto c2 = crossoverPuntoUnico(b,a);
-                mutarIndividuo(c2,pMutacion);
-                poblacionNueva.push_back(c2);
+                Enemigo* hijo2 = crossoverPuntoUnico(b, a);
+                mutarIndividuo(hijo2, pMutacion);
+                poblacionNueva.push_back(hijo2);
             }
         } else {
-            poblacionNueva.push_back(a->clone());
-            if ((int)poblacionNueva.size() < n)
-                poblacionNueva.push_back(b->clone());
+            // — RUTA “SIN CRUCE”: clon puro —
+            // Clonar “a” y obligar a recalcular su vida desde sus propios genes
+            Enemigo* hijoA = a->clone();
+            hijoA->setGenes(a->getGenes()); // fuerza el clamp de vida ≥ 1
+            poblacionNueva.push_back(hijoA);
+
+            // Si aún caben más en el vector, clonar “b” igual
+            if ((int)poblacionNueva.size() < n) {
+                Enemigo* hijoB = b->clone();
+                hijoB->setGenes(b->getGenes()); // idem
+                poblacionNueva.push_back(hijoB);
+            }
         }
     }
 
+    // 3) Si por algún motivo quedamos cortos (debería ser raro),
+    //    rellenamos con clones del primer padre, forzando siempre vida ≥ 1
+    while ((int)poblacionNueva.size() < n) {
+        Enemigo* extra = padres[0]->clone();
+        extra->setGenes(padres[0]->getGenes());
+        poblacionNueva.push_back(extra);
+    }
 
-    while ((int)poblacionNueva.size() < n)
-        poblacionNueva.push_back(padres[0]->clone());
-
-
-
+    // 4) Informar tamaño final
     std::cout << "[GA] Población nueva generada. Tamaño final: "
               << poblacionNueva.size() << "\n";
+
     return poblacionNueva;
 }
