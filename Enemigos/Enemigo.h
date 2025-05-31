@@ -21,6 +21,19 @@ protected:
     std::vector<float> genes;   // longitud fija: [velocidad, vida, resFlechas, resMagia, resArti]
     float fitness;              // valor calculado al terminar la oleada
 
+    bool esMutado = false;      // ¿Este enemigo fue mutado por el GA?
+    int colorIndex = 0;         // índice actual del array de 4 colores mutados
+
+    // Definimos un array fijo de 4 colores (estáticos o constantes)
+    // Pueden elegirse los colores que prefieras.
+    static constexpr Color mutatedColors[4] = {
+        { 230,  20,  20, 255 },   // rojo fuerte
+        {  20, 230,  20, 255 },   // verde
+        {  20,  20, 230, 255 },   // azul
+        { 230, 230,  20, 255 }    // amarillo
+    };
+
+
 
 
 public:
@@ -74,6 +87,10 @@ public:
     // Setters GA
     void setGenes(const std::vector<float>& nuevosGenes);
     void actualizarDesdeGenes();
+
+    bool estaMutado() const { return esMutado; }
+    void marcarMutado(bool mutado) { esMutado = mutado; }
+
 
 };
 #endif //ENEMIGO_H

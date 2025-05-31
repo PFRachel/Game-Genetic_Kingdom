@@ -99,8 +99,9 @@ void AlgoritmoGenetico::mutarIndividuo(
                       << " -> " << g[i]
                       << " (factor=" << factor << ")\n";
         }
-        // Ahora que acabamos de “mutar todo el individuo”, avisamos a la oleada:
+
         oleadaActual->registrarMutacion();
+        individuo->marcarMutado(true);
     }
     // 2) Decodificar los genes (para llevarlos a atributos reales)
     individuo->actualizarDesdeGenes();

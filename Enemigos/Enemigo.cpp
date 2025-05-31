@@ -15,6 +15,11 @@ Enemigo::Enemigo() : velocidad(1.0f), vida(100), resistenciaFlechas(0.0f),
                      resistenciaMagia(0.0f), resistenciaArtilleria(0.0f), objetivoActual(0), yaContabilizado(false) {}
 
 void Enemigo::actualizar() {
+
+    if (esMutado) {
+        colorIndex = (colorIndex + 1) % 4;
+    }
+
     if (objetivoActual < camino.size()) {
         Vector2 destino = camino[objetivoActual];
         Vector2 direccion = { destino.x - posicion.x, destino.y - posicion.y };
@@ -36,16 +41,18 @@ void Enemigo::dibujar() {
     if (!estaMuerto()) {
         Vector2 centro = { posicion.x + 10, posicion.y + 10 };
 
+        Color drawCol = esMutado ? mutatedColors[colorIndex] : color;
+
         // DEBUG FANTASMAS
         Color debugCol = {255, 0, 0, 80};
         DrawCircleV(centro, 12.0f, debugCol);
 
         switch (tipoForma) {
             case 0: // Rectángulo (Ogro)
-                DrawRectangleV(posicion, {20, 20}, color);
+                DrawRectangleV(posicion, {20, 20}, drawCol);
             break;
             case 1: // Círculo (Harpía)
-                DrawCircleV(centro, 10, color);
+                DrawCircleV(centro, 10, drawCol);
             break;
 
 
