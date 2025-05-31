@@ -45,9 +45,9 @@ struct Coordenada {
 };
 
 // Costos de torres
-const int COSTO_ARQUERO = 20;
-const int COSTO_MAGO = 40;
-const int COSTO_ARTILLERO = 80;
+const int COSTO_ARQUERO = 75;
+const int COSTO_MAGO = 120;
+const int COSTO_ARTILLERO = 180;
 
 // Rangos de las torres
 const int RANGO_ARQUERO = 5 * CELL_SIZE;

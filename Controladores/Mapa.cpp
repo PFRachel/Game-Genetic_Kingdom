@@ -27,7 +27,7 @@ Mapa::Mapa() {
     grid[GRID_SIZE - 1][GRID_SIZE - 1] = PUENTE;
 
     // Dinero inicial del juego
-    dinero = 500;
+    dinero = 800;
     //torre por defecto
     tipoTorreSeleccionada = TORRE_ARQUERO;
 
@@ -150,7 +150,7 @@ bool Mapa::UpdateMapa(float tiempo) {   // Se encarga de toda la logica de actua
                if (e->estaMuerto()) {
                    dinero += e->getRecompensa();
 
-                   if (dinero > 500) dinero = 500;
+                   if (dinero > 2000) dinero = 2000;
 
 
 

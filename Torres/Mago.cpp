@@ -11,9 +11,9 @@ Mago::Mago(Vector2 celda, int costo,  std::vector<std::unique_ptr<Proyectiles>>*
 {
     dano = 30;
     alcance = 3 * CELL_SIZE;
-    velocidadDisparo = 2.0f;
+    velocidadDisparo = 3.0f;
     tiempoRecarga = 60;
-    costoMejora = 160;
+    costoMejora = 280;
 }
 
     void Mago::update(float frameTime, const std::vector<Enemigo*>& enemigos)       // Actualizacion de ataque del mago

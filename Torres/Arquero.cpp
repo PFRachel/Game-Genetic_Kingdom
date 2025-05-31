@@ -13,9 +13,9 @@ Arquero::Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectil
 {
     dano = 10;
     alcance = 5 * CELL_SIZE;
-    velocidadDisparo = 2.0f;
+    velocidadDisparo = 1.5f;
     tiempoRecarga = 60.0f;
-    costoMejora = 90;
+    costoMejora = 180;
     usandoHabilidad = false;
     duracionHabilidad = 0.f;
     proyectilesMapa = proyectilesEnJuego;

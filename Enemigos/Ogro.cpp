@@ -5,7 +5,7 @@
 Ogro::Ogro() {
     velocidad = 0.5f;
     vida = 120;
-    valorRecompensa = 130;
+    valorRecompensa = 50;
     resistenciaFlechas = 0.9f;
     resistenciaMagia = 0.1f;
     resistenciaArtilleria = 0.2f;

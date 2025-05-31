@@ -59,21 +59,20 @@ void Oleada::generar(int cantidad, const std::vector<Vector2>& caminoEntrada) {
 }
 
 void Oleada::evaluarPoblacion(int currentFrame, int maxPasosCamino) {
-    registrosFitness.clear();  // limpiar para cada nueva evaluación
+    registrosFitness.clear();
 
     for (auto* e : poblacion) {
         e->evaluarFitness(currentFrame, maxPasosCamino);
-        std::string linea = "[GA][Fitness] Enemigo tipo=" + std::to_string(e->tipoForma)
-                          + " fitness=" + std::to_string(e->getFitness()).substr(0, 7);
+        std::string linea = "[GA] Enemigo de fitness=" + std::to_string(e->getFitness()).substr(0, 7);
         registrosFitness.push_back(linea);
-        std::cout << linea << "\n";  // sigue mostrándolo en consola si quieres
+        std::cout << linea << "\n";
     }
 }
 
 void Oleada::actualizarTodos(int currentFrame) {
     contadorFrames++;
 
-    static constexpr int kSpawnFrameInterval = 120;
+    static constexpr int kSpawnFrameInterval = 60;
     // Generación progresiva dentro de la oleada
     if (enemigosGenerados < cantidadTotal && contadorFrames % kSpawnFrameInterval == 0) {
         // Saca de la población el siguiente enemigo a mostrar

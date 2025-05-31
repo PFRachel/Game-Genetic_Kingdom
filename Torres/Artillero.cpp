@@ -14,9 +14,9 @@ Artillero::Artillero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proye
 {
     dano = 100.0f;
     alcance = 7 * CELL_SIZE;
-    velocidadDisparo = 2.5f;
+    velocidadDisparo = 4.0f;
     tiempoRecarga = 100;
-    costoMejora = 290;
+    costoMejora = 460;
 
 }
 

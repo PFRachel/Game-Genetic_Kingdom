@@ -76,9 +76,9 @@ void VistaMapa::Dibujar(const Mapa& mapa, Texture2D torreArq, Texture2D torreMag
 
     char dineroTexto[50];
     int dineroActual = mapa.GetDinero();
-    if (dineroActual >= 500) {
+    if (dineroActual >= 2000) {
 
-        strcpy(dineroTexto, "MAX 500");
+        strcpy(dineroTexto, "MAX: 2000");
     } else {
 
         sprintf(dineroTexto, "Dinero: %i", dineroActual);
