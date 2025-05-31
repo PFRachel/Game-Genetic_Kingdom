@@ -16,5 +16,7 @@ Harpia::Harpia() {
 }
 
 Enemigo* Harpia::clone() const {
-    return new Harpia(*this);
+    Harpia* copia = new Harpia(*this);       // copia “profunda” de todos los campos
+    copia->actualizarDesdeGenes();       // fuerza vida = max(gen[1], 1)
+    return copia;
 }

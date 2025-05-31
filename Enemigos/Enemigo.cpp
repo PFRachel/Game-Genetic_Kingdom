@@ -150,6 +150,8 @@ void Enemigo::setGenes(const std::vector<float>& nuevosGenes) {
 void Enemigo::actualizarDesdeGenes() {
     if (genes.size() < 5) return;  // o lanza assert
 
+    genes[1] = std::max(genes[1], 1.0f);
+
     velocidad             = genes[0];
     vida                  = static_cast<int>(genes[1]);
     resistenciaFlechas    = genes[2];
