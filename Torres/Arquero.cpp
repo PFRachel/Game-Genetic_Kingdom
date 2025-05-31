@@ -1,6 +1,5 @@
-//
-// Created by Rachel on 22/04/2025.
-//
+// Clase Arquero: torre que ataca enemigos a distancia con flechas y puede activar una habilidad especial
+// que acelera su velocidad de disparo temporalmente.
 
 #include "Arquero.h"
 

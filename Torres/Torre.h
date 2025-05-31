@@ -1,5 +1,5 @@
 //
-// Created by Rachel on 22/04/2025.
+// Clase base abstracta para torres del juego, define atributos comunes y métodos virtuales para actualización, ataque y mejoras.
 //
 
 #ifndef TORRE_H

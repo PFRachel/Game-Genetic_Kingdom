@@ -1,6 +1,10 @@
-//
-// Algoritmo de pathfinding A* sobre una cuadrícula.
-//
+/**
+* se implementa del algoritmo de pathfinding A* sobre una cuadrícula.
+ *
+ * Calcula la ruta óptima desde el inicio hasta el objetivo considerando obstáculos,
+ * incluyendo movimiento en 8 direcciones (con diagonales restringidas por lógica).
+ */
+
 
 #include "Pathfinding.h"
 #include "../Controladores/Mapa.h" // para CELL_SIZE y GRID_SIZE
@@ -9,8 +13,11 @@
 #include <array>
 #include <limits>
 
+
+
 namespace {
     constexpr int N = GRID_SIZE;
+
     // 8 direcciones (↑,↓,←,→ + 4 diagonales)
     constexpr int DR[8] = {-1, 1, 0, 0, -1,-1, 1, 1};
     constexpr int DC[8] = { 0, 0,-1, 1, -1, 1,-1, 1};
@@ -73,6 +80,7 @@ std::vector<Coordenada> Pathfinding::CalcularRuta(const Mapa& mapa)
             std::reverse(ruta.begin(), ruta.end());
             return ruta;
         }
+
         for (int k = 0; k < 8; ++k) {
             int nr = r + DR[k], nc = c + DC[k];
             if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
@@ -95,6 +103,7 @@ std::vector<Coordenada> Pathfinding::CalcularRuta(const Mapa& mapa)
     }
     return {};
 }
+
 std::vector<Vector2> Pathfinding::Camino(const Mapa& mapa) {
     // 1) Obtén la ruta en índices de celda
     auto ruta = CalcularRuta(mapa);

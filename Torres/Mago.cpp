@@ -1,9 +1,8 @@
 //
-// Created by Rachel on 22/04/2025.
+// Implementación de la torre Mago: inflige daño mágico en área y su habilidad especial elimina instantáneamente a enemigos dentro del alcance.
 //
 
 #include "Mago.h"
-
 #include "raymath.h"
 #include "../Controladores/Mapa.h"
 #include "../Proyectiles/AuraMago.h"

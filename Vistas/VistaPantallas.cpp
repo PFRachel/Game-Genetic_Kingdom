@@ -1,5 +1,5 @@
 //
-// Created by Santiago on 27/5/2025.
+//Ventana grafica
 //
 #include "VistaPantallas.h"
 #include "../Controladores/Mapa.h"

@@ -1,6 +1,10 @@
-//
-//(Req 001, 005, 009)
-//
+/**
+* Clase Mapa que maneja la lógica de juego.
+ *
+ * Incluye la representación del grid, control de torres, enemigos,
+ * oleadas y utilidades relacionadas con el estado y la interacción del mapa.
+ */
+
 #ifndef MAPA_H
 #define MAPA_H
 #include <utility>
@@ -97,8 +101,6 @@ public:
 
 
 
-    // void Update();
-    // std::vector<std::unique_ptr<Torre>>& GetTorres() const { return torres; }
     Torre* GetTorreSeleccionada() const {return torreSeleccionada; }
     std::vector<Vector2> camino;
     std::vector<unique_ptr<Proyectiles>> proyectiles;

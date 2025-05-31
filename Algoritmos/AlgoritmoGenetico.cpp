@@ -1,13 +1,19 @@
-//
-// Clase implementa del algoritmo genético para evolucionar enemigos.
-//
+/**
+* esta clase implementa del algoritmo genético para evolucionar enemigos.
+ *
+ * Incluye:
+ * - seleccionarTorneo: elige los mejores individuos de forma competitiva.
+ * - crossoverPuntoUnico: combina genes de dos padres para crear un nuevo individuo.
+ * - mutarIndividuo: altera genes aleatoriamente para mantener diversidad.
+ * - generarNuevaPoblacion: crea una nueva generación aplicando selección, cruce y mutación.
+ */
+
 
 #include "AlgoritmoGenetico.h"
 #include "iostream"
 #include "../cmake-build-debug/_deps/raylib-src/src/raylib.h"  // GetRandomValue
 #include <algorithm>    // std::min, std::shuffle
 #include <cstdlib>
-
 
 // Selección por torneo
 std::vector<Enemigo*> AlgoritmoGenetico::seleccionarTorneo(

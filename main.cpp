@@ -16,9 +16,6 @@ using namespace std;
 
 enum class Estado {MENU, PLAYING, GAMEOVER};
 Estado estado = Estado::MENU;
-
-
-
 int main() {
     const int ancho = GRID_SIZE * CELL_SIZE + 180;
     const int alto = GRID_SIZE * CELL_SIZE;
@@ -99,7 +96,6 @@ int main() {
                 }
                 break;
         }
-
         BeginDrawing();
 
         switch (estado)
@@ -109,9 +105,6 @@ int main() {
             case Estado::GAMEOVER: vista_pantallas.dibujarGameOver(); break;
         }
         EndDrawing();
-
-
-
     }
 
     UnloadTexture(puerta);
@@ -119,7 +112,6 @@ int main() {
     UnloadTexture(torreArq);
     UnloadTexture(torreMago);
     UnloadTexture(torreArtillero);
-
     CloseWindow();
     return 0;
 }

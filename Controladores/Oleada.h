@@ -1,6 +1,7 @@
-//
-// definicion clase oleada
-//
+// Clase Oleada: gestiona una generación de enemigos en el juego, usando un algoritmo genético
+// para evolucionar su comportamiento en cada oleada. Crea, actualiza, evalúa y dibuja enemigos
+// siguiendo un camino definido, aplicando selección, crossover y mutación entre generaciones.
+
 #ifndef OLEADA_H
 #define OLEADA_H
 #pragma once

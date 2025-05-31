@@ -1,5 +1,5 @@
 //
-// Created by Rachel on 22/04/2025.
+// Implementación de la torre Artillero: ataca enemigos lejanos con proyectiles explosivos y usa una habilidad de daño en área.
 //
 
 #include "Artillero.h"
