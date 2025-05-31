@@ -12,7 +12,7 @@
 
 
 Enemigo::Enemigo() : velocidad(1.0f), vida(100), resistenciaFlechas(0.0f),
-                     resistenciaMagia(0.0f), resistenciaArtilleria(0.0f), objetivoActual(0) {}
+                     resistenciaMagia(0.0f), resistenciaArtilleria(0.0f), objetivoActual(0), yaContabilizado(false) {}
 
 void Enemigo::actualizar() {
     if (objetivoActual < camino.size()) {

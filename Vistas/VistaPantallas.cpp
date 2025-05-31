@@ -87,13 +87,10 @@ void VistaPantallas::dibujarGameOver()
 
     const char* msg = "GAME  OVER";
     int fs = 72;
-    DrawText(msg,
-             (GetScreenWidth()-MeasureText(msg,fs))/2,
-             GetScreenHeight()/3, fs, RED);
+    DrawText(msg, (GetScreenWidth()-MeasureText(msg,fs))/2, GetScreenHeight()/3, fs, RED);
 
     const char* hint = "SPACE  para  volver  a  jugar";
     fs = 24;
-    DrawText(hint,
-             (GetScreenWidth()-MeasureText(hint,fs))/2, GetScreenHeight()/2, fs, RAYWHITE);
+    DrawText(hint,(GetScreenWidth()-MeasureText(hint,fs))/2, GetScreenHeight()/2, fs, RAYWHITE);
 }
 

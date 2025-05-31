@@ -21,6 +21,8 @@ public:
     float duracionHabilidad;
     vector<Flechas> FlechasPantalla;
 
+    // METODOS
+
 
     explicit Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego);
 

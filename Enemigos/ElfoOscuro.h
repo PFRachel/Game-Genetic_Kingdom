@@ -1,5 +1,5 @@
 //
-//
+// clase del enemigo elfoOscuro
 //
 
 #ifndef ELFOOSCURO_H

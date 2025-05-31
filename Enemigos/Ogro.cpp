@@ -12,7 +12,6 @@ Ogro::Ogro() {
     color = GREEN;
     tipoForma = 0; // rectángulo
 }
-
 Enemigo* Ogro::clone() const {
     Ogro* copia = new Ogro(*this);       // copia “profunda” de todos los campos
     copia->actualizarDesdeGenes();       // fuerza vida = max(gen[1], 1)

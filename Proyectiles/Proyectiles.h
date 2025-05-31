@@ -11,13 +11,20 @@ class Enemigo;
 
 class Proyectiles {
 public:
+
+    // ATRIBUTOS
+
     Vector2 pos;          // pos actual
     Vector2 vel;          // vector velocidad
     Enemigo* objetivo;    // puntero
     float   dano;
     bool    impactada = false;
 
+    // Constructor
     Proyectiles(Vector2 p, Vector2 v, Enemigo* obj, float d) : pos(p), vel(v), objetivo(obj), dano(d) {}
+
+
+    // METODOS
 
     virtual bool  finished() const
     {

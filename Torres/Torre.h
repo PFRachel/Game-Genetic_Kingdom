@@ -10,10 +10,12 @@
 #include <vector>
 #include "../Proyectiles/Proyectiles.h"
 
-class Enemigo;
+class Enemigo; // Referencia a enemigo para utilizar en clase
 
 class Torre {
 public:
+
+    // METODOS
 
     Vector2 getCelda() const { return celda; }
     Vector2 getCentro() const { return centroCelda; }
@@ -28,7 +30,7 @@ public:
 
     virtual ~Torre() = default;
 
-    // METODOS
+
     virtual void update(float dt, const std::vector<Enemigo*>& enemigos) = 0;
 
     virtual void updateTimers(float tiempo){
@@ -57,7 +59,7 @@ protected:
 
     Torre(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectiles>>* proyectilesEnJuego);        // Constructor
 
-
+    // Atributos
 
     Vector2 celda;
     Vector2 centroCelda;

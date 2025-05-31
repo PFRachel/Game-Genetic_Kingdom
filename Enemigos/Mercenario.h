@@ -1,5 +1,5 @@
 //
-// Created by Rachel on 22/04/2025.
+// Clase mercenario
 //
 
 #ifndef MERCENARIO_H

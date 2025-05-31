@@ -1,5 +1,5 @@
 //
-// Created by Rachel on 22/04/2025.
+// Algoritmo de pathfinding A* sobre una cuadrícula.
 //
 
 #include "Pathfinding.h"
@@ -9,11 +9,8 @@
 #include <array>
 #include <limits>
 
-
-
 namespace {
     constexpr int N = GRID_SIZE;
-
     // 8 direcciones (↑,↓,←,→ + 4 diagonales)
     constexpr int DR[8] = {-1, 1, 0, 0, -1,-1, 1, 1};
     constexpr int DC[8] = { 0, 0,-1, 1, -1, 1,-1, 1};
@@ -37,16 +34,13 @@ namespace {
         }
     }
 }
-
 bool Pathfinding::ExisteCamino(const Mapa& mapa)
 {
     return !CalcularRuta(mapa).empty();
 }
-
 std::vector<Coordenada> Pathfinding::CalcularRuta(const Mapa& mapa)
 {
     using Nodo = std::pair<int, Coordenada>;              // (f, celda)
-
     std::priority_queue<Nodo, std::vector<Nodo>, std::greater<Nodo>> open;
     std::array<std::array<int , N>, N> g;
     std::array<std::array<bool, N>, N> cerrado {};
@@ -79,7 +73,6 @@ std::vector<Coordenada> Pathfinding::CalcularRuta(const Mapa& mapa)
             std::reverse(ruta.begin(), ruta.end());
             return ruta;
         }
-
         for (int k = 0; k < 8; ++k) {
             int nr = r + DR[k], nc = c + DC[k];
             if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
@@ -102,7 +95,6 @@ std::vector<Coordenada> Pathfinding::CalcularRuta(const Mapa& mapa)
     }
     return {};
 }
-
 std::vector<Vector2> Pathfinding::Camino(const Mapa& mapa) {
     // 1) Obtén la ruta en índices de celda
     auto ruta = CalcularRuta(mapa);

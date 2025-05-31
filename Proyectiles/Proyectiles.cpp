@@ -8,10 +8,10 @@
 
 
 
-void Proyectiles::update(float dt) {
+void Proyectiles::update(float dt) {    // Funcion de actualizar, se le hara override
 }
 
-void Proyectiles::draw() const {
+void Proyectiles::draw() const {     // Funcion de dibujar, se le hara override
 }
 
 

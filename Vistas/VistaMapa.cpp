@@ -6,9 +6,8 @@
 
 #include <cmath>
 
-void VistaMapa::Dibujar(const Mapa& mapa,
-                        Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero,
-                        Texture2D puertaImg, Texture2D puenteImg, Texture2D suelo, const std::vector<unique_ptr<Proyectiles>>& ProyectilesDibujar) {
+void VistaMapa::Dibujar(const Mapa& mapa, Texture2D torreArq, Texture2D torreMago, Texture2D torreArtillero,
+    Texture2D puertaImg, Texture2D puenteImg, Texture2D suelo, const std::vector<unique_ptr<Proyectiles>>& ProyectilesDibujar) { // Funcion para dibujar todos los detalles de mapa
 
     DrawTexture(suelo, -225, -50, WHITE);
 
@@ -76,15 +75,21 @@ void VistaMapa::Dibujar(const Mapa& mapa,
     }
 
     char dineroTexto[50];
-    sprintf(dineroTexto, "Dinero: %i", mapa.GetDinero());
+    int dineroActual = mapa.GetDinero();
+    if (dineroActual >= 500) {
+
+        strcpy(dineroTexto, "MAX 500");
+    } else {
+
+        sprintf(dineroTexto, "Dinero: %i", dineroActual);
+    }
     DrawText(dineroTexto, GRID_SIZE * CELL_SIZE + 10, 10, 20, BLACK);
 
     for (const auto& p : ProyectilesDibujar)
         if (p) p->draw();
 }
 
-void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
-                                   Texture2D arqImg, Texture2D magoImg, Texture2D artilleroImg,
+void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa, Texture2D arqImg, Texture2D magoImg, Texture2D artilleroImg, // Dibuja el menu de selecciion de las torres
                                    int dinero) {
 
 
@@ -232,21 +237,21 @@ void VistaMapa::DibujarMenuTorres(int torreSeleccionada, Mapa& mapa,
 
 }
 
-bool VistaMapa::DetectarclickEnMejora()
+bool VistaMapa::DetectarclickEnMejora() // Detecta el event click
 {
     if (mejoraBtn.width <= 0) return false;   // no hay botón
     return IsMouseButtonPressed(MOUSE_LEFT_BUTTON)
            && CheckCollisionPointRec(GetMousePosition(), mejoraBtn);
 }
 
-bool VistaMapa::DetectarclickEnHabilidadEspecial()
+bool VistaMapa::DetectarclickEnHabilidadEspecial()  // Detecta el event click en el boton de habilidad especial
 {
     return (habilidadEspecialBtn.width > 0) &&
            IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
            CheckCollisionPointRec(GetMousePosition(), habilidadEspecialBtn);
 }
 
-bool VistaMapa::DetectarClickOleada()
+bool VistaMapa::DetectarClickOleada()   // Detecar el event click en el boton de iniciar oleada
 {
     return (oleadaBtn.width > 0) &&
            IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
@@ -255,7 +260,7 @@ bool VistaMapa::DetectarClickOleada()
 
 
 
-int VistaMapa::DetectarSeleccionTorre() {
+int VistaMapa::DetectarSeleccionTorre() {       // Detecta click en el menu de seleccion de torres
     int baseX = GRID_SIZE * CELL_SIZE + 20;
     int baseY = 70;
     const float btnSize = 40.0f;
@@ -278,7 +283,7 @@ int VistaMapa::DetectarSeleccionTorre() {
     return -1;
 }
 
-void VistaMapa::DibujarRadio(const Vector2& centro, float radio, Color color, float grosor)
+void VistaMapa::DibujarRadio(const Vector2& centro, float radio, Color color, float grosor)     // Dibuja el radio de rango de las torres
 {
     DrawCircleLines(centro.x, centro.y, radio, color);
     if (grosor > 1) {
@@ -288,11 +293,11 @@ void VistaMapa::DibujarRadio(const Vector2& centro, float radio, Color color, fl
     }
 }
 // boton para estadisticas mostrar
-bool VistaMapa::DetectarClickEstadisticas() {
+bool VistaMapa::DetectarClickEstadisticas() {       // Detecta el click en el boton de estadisticas
     return CheckCollisionPointRec(GetMousePosition(), botonEstadisticas) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 }
 
-void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {
+void VistaMapa::DibujarVentanaEstadisticas(const Mapa& mapa) {      // Dibuja la ventana de estadisticas
 
 
     auto oleada = mapa.getOleada();

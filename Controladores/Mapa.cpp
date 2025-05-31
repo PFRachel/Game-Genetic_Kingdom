@@ -48,7 +48,7 @@ bool Mapa::IntentarColocarTemporal(int fila, int col)
 }
 
 
-void Mapa::ColocarTorre(int fila, int col) {
+void Mapa::ColocarTorre(int fila, int col) {    // Funcion para colocar torre, revisa que haya casilla libre y no bloquee todos los caminos
     if (!CeldaLibre(fila, col)) return;
 
     //Validación, podriamos ponerle después un sonido
@@ -115,13 +115,13 @@ void Mapa::ProcesarClick() {
 }
 
 
-bool Mapa::UpdateMapa(float tiempo) {
+bool Mapa::UpdateMapa(float tiempo) {   // Se encarga de toda la logica de actualizacion del juego
     frameCounter++;
 
     for (auto& torre : torres)
         torre->update(tiempo, enemigos);
 
-    std::cout << proyectiles.size() << std::endl;
+
     for (auto& p : proyectiles)         // p es unique_ptr
         p->update(tiempo);
 
@@ -146,7 +146,11 @@ bool Mapa::UpdateMapa(float tiempo) {
            [this](Enemigo* e) {
                if (e->estaMuerto()) {
                    dinero += e->getRecompensa();
-                   // ——— DEBUG: enemigo eliminado ———
+
+                   if (dinero > 500) dinero = 500;
+
+
+
                 std::cout << "[Eliminado] recompensa: " << e->getRecompensa()
                           << ", torres dinero total: " << dinero << "\n";
 
@@ -170,7 +174,7 @@ bool Mapa::UpdateMapa(float tiempo) {
     return derrota;
 }
 
-bool Mapa::IniciarOleada() {
+bool Mapa::IniciarOleada() {    // Funcion para iniciar la oleada
 
     if (oleadaActual) return false;
 

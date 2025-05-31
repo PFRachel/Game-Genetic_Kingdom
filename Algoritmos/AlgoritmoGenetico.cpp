@@ -1,5 +1,5 @@
 //
-// Created by Rachel on 22/04/2025.
+// Clase implementa del algoritmo genético para evolucionar enemigos.
 //
 
 #include "AlgoritmoGenetico.h"
@@ -7,6 +7,7 @@
 #include "../cmake-build-debug/_deps/raylib-src/src/raylib.h"  // GetRandomValue
 #include <algorithm>    // std::min, std::shuffle
 #include <cstdlib>
+
 
 // Selección por torneo
 std::vector<Enemigo*> AlgoritmoGenetico::seleccionarTorneo(
@@ -71,29 +72,31 @@ Enemigo* AlgoritmoGenetico::crossoverPuntoUnico(
 // Mutación por factor aleatorio pequeño
 void AlgoritmoGenetico::mutarIndividuo(
     Enemigo* individuo,
-    float tasaMutacion
+    float tasaMutacion,
+    class Oleada* oleadaActual
 ) {
-    auto& g = const_cast<std::vector<float>&>(individuo->getGenes());
-    int L = g.size();
-    for (int i = 0; i < L; ++i) {
-        if (GetRandomValue(0, 100) / 100.0f < tasaMutacion) {
-            // pequeña variación ±10%
-            float antes = g[i]; //para el print
+    if (GetRandomValue(0, 100) / 100.0f < tasaMutacion) {
+        // Solo entonces recorremos sus genes y aplicamos un cambio pequeño
+        auto& g = const_cast<std::vector<float>&>(individuo->getGenes());
+        int L = g.size();
+        for (int i = 0; i < L; ++i) {
+            float antes = g[i];
             float factor = 1.0f + (GetRandomValue(-10, 10) / 100.0f);
             g[i] *= factor;
-            if (i >= 2 && i <= 4) // resistencias clamp
+            if (i >= 2 && i <= 4) // si es gen de resistencia
                 g[i] = std::min(g[i], 0.99f);
-            if (i == 1) {
+            if (i == 1)
                 g[1] = std::max(g[1], 1.0f);
-            }
 
             std::cout << "[GA][Mutación] gen " << i
-                  << " mutado: " << antes
-                  << " -> " << g[i]
-                  << " (factor=" << factor << ")\n";
+                      << " mutado: " << antes
+                      << " -> " << g[i]
+                      << " (factor=" << factor << ")\n";
         }
+        // Ahora que acabamos de “mutar todo el individuo”, avisamos a la oleada:
+        oleadaActual->registrarMutacion();
     }
-    // Decodificar nuevamente en atributos
+    // 2) Decodificar los genes (para llevarlos a atributos reales)
     individuo->actualizarDesdeGenes();
 }
 
@@ -103,7 +106,8 @@ std::vector<Enemigo*> AlgoritmoGenetico::generarNuevaPoblacion(
     int n,
     int K,
     float pCrossover,
-    float pMutacion
+    float pMutacion,
+    class Oleada* oleadaActual
 ) {
     std::cout << "[GA] Generando nueva población. Tamaño inicial: "
               << poblacionActual.size()
@@ -123,12 +127,14 @@ std::vector<Enemigo*> AlgoritmoGenetico::generarNuevaPoblacion(
         if (GetRandomValue(0, 100) / 100.0f < pCrossover) {
             // — RUTA DE CRUCE (crossover + mutación) —
             Enemigo* hijo1 = crossoverPuntoUnico(a, b);
-            mutarIndividuo(hijo1, pMutacion);
+            mutarIndividuo(hijo1, pMutacion, oleadaActual);
+
             poblacionNueva.push_back(hijo1);
 
             if ((int)poblacionNueva.size() < n) {
                 Enemigo* hijo2 = crossoverPuntoUnico(b, a);
-                mutarIndividuo(hijo2, pMutacion);
+                mutarIndividuo(hijo2, pMutacion,oleadaActual);
+
                 poblacionNueva.push_back(hijo2);
             }
         } else {
@@ -146,7 +152,6 @@ std::vector<Enemigo*> AlgoritmoGenetico::generarNuevaPoblacion(
             }
         }
     }
-
     // 3) Si por algún motivo quedamos cortos (debería ser raro),
     //    rellenamos con clones del primer padre, forzando siempre vida ≥ 1
     while ((int)poblacionNueva.size() < n) {
@@ -154,7 +159,6 @@ std::vector<Enemigo*> AlgoritmoGenetico::generarNuevaPoblacion(
         extra->setGenes(padres[0]->getGenes());
         poblacionNueva.push_back(extra);
     }
-
     // 4) Informar tamaño final
     std::cout << "[GA] Población nueva generada. Tamaño final: "
               << poblacionNueva.size() << "\n";

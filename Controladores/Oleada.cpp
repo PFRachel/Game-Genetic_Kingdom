@@ -7,6 +7,10 @@
 #include "../Enemigos/FabricaEnemigos.h"
 #include "../Algoritmos/AlgoritmoGenetico.h"
 void Oleada::generar(int cantidad, const std::vector<Vector2>& caminoEntrada) {
+
+    enemigosMuertos     = 0;
+    mutacionesAplicadas = 0;
+
     // Determinar tamaño de población
     if (generacionActual == 0) {
         tamanoPoblacion = cantidad;
@@ -43,7 +47,7 @@ void Oleada::generar(int cantidad, const std::vector<Vector2>& caminoEntrada) {
         std::vector<Enemigo*> nuevaPob = AlgoritmoGenetico::generarNuevaPoblacion(
             poblacionVieja,
             tamanoPoblacion,
-            3, tasaCrossover, tasaMutacion
+            3, tasaCrossover, tasaMutacion, this
         );
         // Liberar población vieja
         for (auto* e : poblacionVieja) delete e;
@@ -112,8 +116,8 @@ void Oleada::actualizarTodos(int currentFrame) {
     for (auto* e : enemigos) {
         if (!e->estaMuerto()) {
             e->actualizar();
-        } else if (!e->yaContabilizado) {
-            e->yaContabilizado = true;  // para que no se registre dos veces
+        } else if (e->estaMuerto()) {
+            e->yaContabilizado = true;
             e->evaluarFitness(currentFrame, camino.size());
 
             std::cout << "[MUERTO] Enemigo eliminado. Fitness: " << e->getFitness() << std::endl;

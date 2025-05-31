@@ -14,8 +14,10 @@ class Enemigo;
 class Flechas : public Proyectiles {
     public:
 
+    // Constructor
     explicit Flechas(Vector2 pos, Vector2 vel, Enemigo* objetivo, float dano);
 
+    // METODOS
     void update(float dt) override;
     void draw() const override;
 

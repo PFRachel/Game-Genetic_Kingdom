@@ -16,7 +16,7 @@ Arquero::Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectil
     alcance = 5 * CELL_SIZE;
     velocidadDisparo = 2.0f;
     tiempoRecarga = 60.0f;
-    costoMejora = 40;
+    costoMejora = 90;
     usandoHabilidad = false;
     duracionHabilidad = 0.f;
     proyectilesMapa = proyectilesEnJuego;
@@ -24,7 +24,9 @@ Arquero::Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectil
 
 }
 
-    void Arquero::update(float frameTime, const std::vector<Enemigo*>& enemigos)
+
+
+    void Arquero::update(float frameTime, const std::vector<Enemigo*>& enemigos)        // funcion para actualizar el estado de la torre
 {
 
     updateTimers(frameTime);
@@ -40,14 +42,14 @@ Arquero::Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectil
 
     for (auto* enemigo : enemigos)
     {
-        float distanciaEnemigo = Vector2Distance(centroCelda, enemigo->getPos()); //enemigo->getpos()):
+        float distanciaEnemigo = Vector2Distance(centroCelda, enemigo->getPos()); // calculo de vectores
         if (distanciaEnemigo<=distanciaMinima)
         {
             masCercano = enemigo;
             distanciaMinima = distanciaEnemigo;
         }
     }
-    if (masCercano)
+    if (masCercano)     // Ataca solamente al enemigo mas cercano de manera individual
     {
         atacar(masCercano);
         cdRestante = intervaloActual;
@@ -57,7 +59,7 @@ Arquero::Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectil
 
 }
 
-    void Arquero::atacar(Enemigo* objetivo)
+    void Arquero::atacar(Enemigo* objetivo)     // Funcion para atacar del arquero, crea un objeto flecha
 {
     Vector2 dir = Vector2Normalize(Vector2Subtract(objetivo->getPos(),
                                                    centroCelda));
@@ -67,17 +69,18 @@ Arquero::Arquero(Vector2 celda, int costo, std::vector<std::unique_ptr<Proyectil
 
 
 
-    void Arquero::habilidadEspecial(const std::vector<Enemigo*>& enemigos)
+    void Arquero::habilidadEspecial(const std::vector<Enemigo*>& enemigos)      // Habilidad especial arquero, dispara flechas de una manera mas rapida
 {
     duracionHabilidad = 5.0f;
     cdhabilidadEspecial = tiempoRecarga;
 }
 
 
-    void Arquero::aumentoEstadisticas()
+    void Arquero::aumentoEstadisticas()     // Se aumenta las estadisticas base de la torre
 {
     dano *= 2;
     alcance += CELL_SIZE;
+    velocidadDisparo /= 2;
     tiempoRecarga /= 2;
 }
 

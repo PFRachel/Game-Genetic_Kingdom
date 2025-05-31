@@ -1,5 +1,5 @@
 //
-// Created by Rachel on 22/04/2025.
+// Esta clase implementa un algoritmo evolutivo para generar enemigos más fuertes.
 //
 
 #ifndef ALGORITMOGENETICO_H
@@ -20,29 +20,23 @@ public:
         int K,
         int numPadres
     );
-
-
     static Enemigo* crossoverPuntoUnico(
         const Enemigo* padreA,
         const Enemigo* padreB
     );
-
-
     static void mutarIndividuo(
         Enemigo* individuo,
-        float tasaMutacion
+        float tasaMutacion,
+        class Oleada* oleadaActual
     );
-
-
     static std::vector<Enemigo*> generarNuevaPoblacion(
         const std::vector<Enemigo*>& poblacionActual,
         int n,
         int K,
         float pCrossover,
-        float pMutacion
+        float pMutacion,
+        class Oleada* oleadaActual
     );
 };
-
-
 
 #endif //ALGORITMOGENETICO_H

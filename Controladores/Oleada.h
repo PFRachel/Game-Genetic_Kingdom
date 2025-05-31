@@ -1,5 +1,5 @@
 //
-// Created by Rachel on 07/05/2025.
+// definicion clase oleada
 //
 #ifndef OLEADA_H
 #define OLEADA_H
@@ -11,17 +11,15 @@ class Oleada {
 public:
 
     std::vector<Vector2> camino;
-
     // Control de Oleada
     int cantidadTotal = 0;
     int enemigosGenerados = 0;
     int contadorFrames = 0;
-
     //GA
     int generacionActual = 0;
     int tamanoPoblacion   = 10;
     float tasaCrossover   = 0.8f;
-    float tasaMutacion    = 0.05f;
+    float tasaMutacion    = 0.2f;
     //estadistica
     int enemigosMuertos = 0;
     int mutacionesAplicadas = 0;
@@ -45,8 +43,6 @@ public:
     float getProbabilidadMutacion() const;
     std::vector<std::string> registrosFitness;
     const std::vector<std::string>& getRegistrosFitness() const { return registrosFitness; }
-
-
 
 };
 
